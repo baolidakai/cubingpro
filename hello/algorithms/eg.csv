@@ -1,2 +1,41 @@
-Case,CLL_viz,CLL_alg,CLL_auf,EG1_viz,EG1_alg,EG1_auf,EG2_viz,EG2_alg,EG2_auf
-H-1,R2U2RU2R2y%27,R2 U2 R U2 R2,AUF: Left bar goes front,R%27FR2U%27R2U%27FURy%27,R' F (R2 U' R2' U') F U R,AUF: Left bar goes right,R2FU2F2R2F%27R2y%27,R2 F U2 F2 R2 F’ R2,AUF: Back bar goes right
+Case,CLL_alg,CLL_auf,EG1_alg,EG1_auf,EG2_alg,EG2_auf
+H-1,R2 U2 R U2 R2,AUF: Left bar goes front,R' F (R2 U' R2' U') F U R,AUF: Left bar goes right,R2 F U2 F2 R2 F' R2,AUF: Back bar goes right
+H-2,RU'R'FR'F'R2U'R'FR'F'R,AUF: Right bar goes right,F' U (R U' R2' F2) R U' F,AUF: Back bar goes front,R2U2RU2B2R2,AUF: Front bar goes front
+H-3,RUR'URUR'FR'F'R,AUF: Bar goes right,R'U'R'F2UF'RF',AUF: Bar goes front,R'U'RU2R2F'RU'FR,AUF: Bar goes right
+H-4,FR2U'R2U'R2UR2F',AUF: Bar goes to back,RUR'F'RUR'U'RUR',AUF: Bar goes to front,RU2B2R'URU'BR',AUF: Bar goes to back
+Pi-1,RU'R2UR2UR2U'R,AUF: Bar goes to left,R2B2R'UR'U'RU2RU'R2,AUF: Bar goes to right,FU'RU2RU'R'UR'F',AUF: Bar goes to left
+Pi-2,R'U'R'FRF'RU'R'U2R,AUF: Bar goes to back,R'FR2U'R2FR,AUF: Bar goes to front,R'U2R2U'R'F2R2F',AUF: Bar goes to front
+Pi-3,R'FRF'RU'R'U'RU'R',AUF: Adjacent bar goes to right,FR'FU'F2RUR,AUF: Adjacent bar goes to right,R'F'UR'FR2U2R'UR,AUF: Adjacent bar goes to right
+Pi-4,RU'RU'R'UR'FR2F',AUF: Slash goes to right,RU'R'URU'R'FRU'R',AUF: Slash goes to front,R'FU'RUR'F2U2R,AUF: Slash goes to front
+Pi-5,RU2R'U'RUR'U2R'FRF',AUF: Slash goes to back,RUR'URU'R2F'RFR'F'R,AUF: Slash goes to front,LU2L'UL2F2L'F'L',AUF: Slash goes to back; if treat left as primary then go to front
+Pi-6,L'U2LUL'U'LU2RU'R'F,AUF: Slash goes to back,R'FRF'R'FR2UR'U'RU'R',AUF: Slash goes to front,R'U2RU'R2F2RFR,AUF: Slash goes to front
+U-1,FRUR'U'F',AUF: Use the bar Bar goes to right,RU'R2FR2UR'U'RU'R',AUF: Bar goes to left,R'UR'FU'RU'RU2R2,AUF: Bar goes to front (If need to go to back can replace R with R')
+U-2,R'U'R2UR'U2RU2R'UR',AUF: Use the bar,RU'R'URU'R'FRU2R'FR'F'R,,FRUR'U'FR2B2,
+U-3,RU2RU'R'FR'F2U'F,,RU'R2F2RF'URUR',,RUR'U'RB2R'URU'R',
+U-4,FR'F'RU'RU'R'U2RU'R',AUF: Use the far (backslash) sticker,R'FRF'R'FR2U'R',,R2F2RURU2R2FRF'R,
+U-5,RU'R2FRF'RUR'U'RUR',AUF: Use the slash sticker,RU'R2FRD'L'U'L,,RU'R'U2LUL'U2RU'R',
+U-6,L'UL2F'L'FL'U'LUL'U'L,,L'UL2F'L'DRUR',,L'ULU2R'U'RU2L'UL,
+T-1,RUR'U'R'FRF',AUF: Use the sticker which appears twice,FRU'R2F'RUR'F'R,,L'U'LULF'L'F'R2B2,AUF: The bottom of U sticker remains attached
+T-2,L'U'LULF'L'F,,F'L'UL2FL'U'RUR',,RUR'U'R'FRFR2B2,
+T-3,RU2R2FRF'RU'R'URU2R',AUF: Use the furthest sticker (assume top at right),RU'R2FRURU2R',,R'UR'FU'RUR2,
+T-4,RU'R'URU'R'FR'F'RFR'F'R,,RUR2F'RFR'F'R2U'R'FR'F'R,,R2B2R2FRUR'U'F',
+T-5,RUR'U2RUR'UR'FRF',,RUR2F'RFR'F'R,,R'URU2R2FRF'R'F2R2,
+T-6,R'URU2R2FRF'R,AUF: Use the furthest sticker,RU'R'U2FRU2R'F,,R'U2R'F2RF2R,
+L-1,F'RUR'U'R'FR,AUF: Use the L facing me,RU'R'ULF'L2U'LF,,R2B2R2FR'F'RURU'R',
+L-2,FR'F'RURU'R',,L'ULU'R'FR2UR'F',,R2B2R2F'RUR'U'R'FR,
+L-3,RU2R2FRF'RU2R',,R'UR2U'R2U'FR2U'R',,R'U'F2RU2R'U2FR,
+L-4,R2U'RU2R'U2RU'R2,,R'FR2UR'F'RU2R',,R'U'RUR'F'RUR'U'R'F'R2,
+L-5,RU'R'URU'R'FR'F'R2UR',,RUR'F'RUR'U'FR'F'R,,FR'F'RURU'RB2R2,
+L-6,R'F'RUR'U'R'FR2U'R'U2R,,L'U'LFL'U'LUF'LFL',,F'RUR'U'R'FR'F2R2,
+S-1,RUR'URU2R',,B'UL2F2UF',,R'FR2F'U'R'U'R2URB2R2,
+S-2,R'FR2F'U'R'U'R2UR',,RUR'F2UFRUR',,RUR'URU2RB2R2,
+S-3,FR'F'RU2RU2R',,FR'F'RUL'U'L2FL',,RU'R'FR'F'R'F2R2,
+S-4,RU'R'FR'F'R,,F'R'FR2UR'U'FR'F'R,,FR'F'RU2RU2RB2R2,
+S-5,R'F'R2UR'F'R'FR2U'R',,RU'R'URU'R'U'R'F'RF,,L'U2LU2LF'L'F'L2F2,
+S-6,L'U2LU2LF'L'F,,R'FR2U'R'ULF'L'F,,R'F'R2UR'F'R'FR2U'RB2R2,
+AS-1,L'U'LU'L'U2L,,BU'R2F2U'F,,LF'L2FULUL2U'L'B2L2,
+AS-2,LF'L2FULUL2U'L,,RU'R'F'U'F2RU'R',,L'U'LU'L'U2L'B2L2,
+AS-3,F'LFL'U2L'U2L,,F'LFL'U'RUR2F'R,,L'ULF'LFLF2L2,
+AS-4,L'ULF'LFL',,FRU'R2F'RUF'LFL',,F'LFL'U2L'U2L'B2L2,
+AS-5,LFL2U'LFLF'L2UL,,L'ULU'L'ULULFL'F',,RU2R'U2R'FRFR2B2,
+AS-6,RU2R'U2R'FRF',,LF'L2ULU'R'FRF',,LFL2U'LFLF'L2UL'B2L2,

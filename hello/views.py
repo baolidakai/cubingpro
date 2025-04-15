@@ -34,7 +34,8 @@ def read_csv_data():
         reader = csv.DictReader(csvfile)
         for row in reader:
             # Example: convert values and calculate something if needed
-            row['CLL_alg'] = preprocess(row['CLL_viz'])
+            for method in ['CLL', 'EG1', 'EG2']:
+                row[f'{method}_viz'] = preprocess(row[f'{method}_alg'])
             data.append(row)
 
     return data
