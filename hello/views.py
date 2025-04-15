@@ -23,6 +23,8 @@ import re
 def preprocess(alg):
     pattern = r"[RLUDFB][2']?"
     moves = re.findall(pattern, alg)
+    if moves and (moves[0].startswith('B') or moves[-1].startswith('B')):
+        moves.append('z2')
     return ' '.join(moves)
 
 
