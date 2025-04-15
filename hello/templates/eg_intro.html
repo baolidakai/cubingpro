@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+    Overview
+</h1>
+<p>
+    EG method is the most advanced 2x2x2 speedsolving method. It consists of two steps:
+    <ol>
+        <li>Make 1 face of any color</li>
+        <li>Solve the rest</li>
+    </ol>
+    Depending on the first face cases, it consists of
+    <ol>
+        <li>When the first face solves the first layer, the algorithm set is called CLL (Corners of the Last Layer)</li>
+        <li>When the first face has adjacent corners swapped, the algorithm set is called EG1 (Erik-Gunnar)</li>
+        <li>When the first face has diagonal corners swapped, the algorithm set is called EG2</li>
+    </ol>
+    There are 128 algorithms in EG set. 42 algorithms in CLL set.
+    For video tutorial, you may visit jperm's website on <a href=""https://jperm.net/2x2/faster">advanced 2x2 method</a>.
+</p>
+
+<h2>
+    Improvement Plan
+</h2>
+<p>
+    A widely adopted strategy for improving on 2x2x2, is to follow the order:
+    <ol>
+        <li>Learn Ortega method</li>
+        <li>Learn CLL algorithms</li>
+        <li>Learn EG1 algorithms</li>
+        <li>(Optional) Use Anti-CLL algorithms for diagonal corner swap cases</li>
+        <li>Learn EG2 algorithms</li>
+        <li>(Optional) Practice one look solve except for AUF</li>
+        <li>Practice one look solve and remember AUF</li>
+    </ol>
+    The common suggestion is to practice Ortega method until sub-5, then switch to CLL method until sub-4, and learn full EG method until sub-3, and then learn one look until sub-2.<br>
+    However, it's always highly recommended to practice one look solve whenever possible.<br>
+    One look solve really have no shortcut but to start by draining your brain power and force yourself to read the case.<br>
+    There is one tip to practice one look solve even before memorizing the full EG set (which typically takes 2-4 weeks to memorize one pass and likely require months to fully memorize).<br>
+    The practical tip is to always solve 1 face, and make sure you can one look the top layer case and execute the CLL algorithm.<br>
+    This way, you're using one solve to practice CLL algorithm, one look recognition, and the only gap until one look with EG method is to learn the algorithm set.<br>
+    <br>
+    Psychologically speaking, being able to one look except for first layer permutation will be satisfying and keep you motivated to learn.<br>
+    A simple rule of thumb is: not to force yourself, make sure you are comfortable. And create intermediate learning plans e.g. just 10 EG1 algorithms, then reward yourself.<br>
+    Positive feedback is critical to learn the full EG set.<br>
+    Another helpful thing to do, is to forget about the Ao5 records during competitions, and focus on applying EG algorithm, and wish for knowing the case or being able to one look.<br>
+    It will be more rewarding to one look EG1 case and land 7 second solve, then to use Ortega smoothly and get a sub-4.<br>
+</p>
+
+<h2>
+    Cubing Theory
+</h2>
+
+<p>
+    One major way to convince yourself of switching to EG method despite the 3x algorithm set over CLL, is the following.<br>
+    Assuming color neutrality, the average move (<a href="https://www.speedsolving.com/wiki/index.php?title=Metric#HTM">HTM</a>) count is 4.028 for solving one layer (first step of CLL method).<br>
+    The average move count to solve one face is only 2.966.<br>
+    This might sound like a small difference, but in practice, even if 99.5% cases can have a 5 move solution, it's very hard to find it consistently.<br>
+    Therefore, most people consider CLL method to be non-one-lookable.<br>
+    Take a moment to appreciate the fact that more than 3 out of 4 scrambles has a face solvable in 3 moves. Hope this sells the idea of memorizing 128 algorithms.
+    <br>
+    Here is a detailed distribution of the distance to one layer and one face:<br>
+    For one layer (CLL):
+    <table>
+        <tr>
+        <th>Distance</th><th>Number of Cases</th><th>Probability</th>
+        </tr>
+        <tr><th>0</th><th>3814</th><th>0.104%</th></tr>
+        <tr><th>1</th><th>22530</th><th>0.613%</th></tr>
+        <tr><th>2</th><th>130105</th><th>3.541%</th></tr>
+        <tr><th>3</th><th>651371</th><th>17.728%</th></tr>
+        <tr><th>4</th><th>1787884</th><th>48.661%</th></tr>
+        <tr><th>5</th><th>1061152</th><th>28.882%</th></tr>
+        <tr><th>6</th><th>17296</th><th>0.471%</th></tr>
+        <tr><th>7</th><th>8</th><th>0.0002%</th></tr>
+    </table>
+    For one face (EG):
+    <table>
+        <tr>
+        <th>Distance</th><th>Number of Cases</th><th>Probability</th>
+        </tr>
+        <tr><th>0</th><th>22654</th><th>0.617%</th></tr>
+        <tr><th>1</th><th>132828</th><th>3.615%</th></tr>
+        <tr><th>2</th><th>626354</th><th>17.048%</th></tr>
+        <tr><th>3</th><th>2057908</th><th>56.01%</th></tr>
+        <tr><th>4</th><th>832588</th><th>22.661%</th></tr>
+        <tr><th>5</th><th>1828</th><th>0.05%</th></tr>
+    </table>
+</p>
+  
+{% endblock content %}

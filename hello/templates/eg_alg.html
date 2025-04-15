@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Case</th>
+            <th>CLL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in table_data %}
+            <tr>
+                <td>{{ row.Case }}</td>
+                <td>
+                    <twisty-player experimental-setup-anchor="end" puzzle="2x2x2" background="none" control-panel="none" alg="{{row.CLL_alg}} y z2"></twisty-player>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+  
+{% endblock content %}

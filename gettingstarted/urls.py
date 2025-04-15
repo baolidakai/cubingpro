@@ -21,9 +21,10 @@ from django.urls import path
 import hello.views
 
 urlpatterns = [
-    path("", hello.views.index, name="index"),
-    path("db/", hello.views.db, name="db"),
     # Uncomment this and the entry in `INSTALLED_APPS` if you wish to use the Django admin feature:
     # https://docs.djangoproject.com/en/5.2/ref/contrib/admin/
     # path("admin/", admin.site.urls),
+    path("", hello.views.index, name="index"),
+    path("2x2x2/eg_intro/", hello.views.eg_intro, name="eg_intro"),
+    path("2x2x2/eg_alg/", hello.views.eg_alg, name="eg_alg"),
 ]

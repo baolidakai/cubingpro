@@ -1,12 +1,48 @@
 from django.shortcuts import render
 
 from .models import Greeting
+from django.conf import settings
+
+import csv
+import os
 
 # Create your views here.
 
 
 def index(request):
     return render(request, "index.html")
+
+
+def eg_intro(request):
+    return render(request, "eg_intro.html")
+
+
+import re
+
+
+def preprocess(alg):
+    pattern = r"[RLUDFB][2']?"
+    moves = re.findall(pattern, alg)
+    return ' '.join(moves)
+
+
+def read_csv_data():
+    data = []
+    csv_path = os.path.join(settings.BASE_DIR, 'hello/algorithms', 'eg.csv')
+
+    with open(csv_path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            # Example: convert values and calculate something if needed
+            row['CLL_alg'] = preprocess(row['CLL_viz'])
+            data.append(row)
+
+    return data
+
+
+def eg_alg(request):
+    table_data = read_csv_data()
+    return render(request, "eg_alg.html", {'table_data': table_data})
 
 
 def db(request):
