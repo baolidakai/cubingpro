@@ -1,0 +1,367 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 20px;
+    background-color: #fdfdfd;
+    color: #3c7139;
+  }
+  
+  a, a:visited {
+    color: #3764c8; /* dark blue */
+  }
+  
+  a:hover {
+    color: #78d968; /* same green as h1 */
+  }
+  
+  h1 a {
+    text-decoration: none;
+    color: #57B647 !important; /* same green as a:hover */
+  }
+  
+  h3 {
+    margin: 0;
+    padding: 0;
+    clear: both;
+  }
+  
+  code {
+    font-size: 15px;
+    background-color: #a3efa1; /*#57B647;*/
+    color: #3c7139;
+  }
+  
+  #active-algs h3 {
+    margin-bottom: 10px;
+  }
+  
+  h3 small {
+    font-size: 12px;
+  }
+  
+  abbr {
+    border-bottom: 1px dashed;
+    cursor: help;
+  }
+  
+  p {
+    line-height: 1.4;
+  }
+  
+  .clearfix {
+    clear: both;
+  }
+  
+  #container {
+    margin: 3em;
+    height: auto !important;
+    height: 97%;
+  }
+  
+  #sidebar {
+    float: left;
+    margin-right: 3em;
+    position: absolute;
+    width: 230px;
+  }
+  
+  nav {
+    padding: 0;
+    margin: 1.5em;
+  }
+  
+  nav ul {
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  nav li ul {
+    padding-left: 5px;
+  }
+  
+  nav li {
+    line-height: 30px;
+  }
+  
+  nav li.copyright {
+    margin-top: 2em;
+  }
+  
+  nav li a {
+    padding: 0 5px;
+    display: block;
+    text-decoration: none;
+  }
+  
+  nav li ul {
+    display: none;
+  }
+  
+  nav li h3 {
+    padding: 0 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  nav li a:hover, nav h3:hover {
+    background-color: #F8F8F8; /* beige */
+  }
+  
+  .smaller {
+    font-size: smaller;
+  }
+  
+  .simple-list-item:not(:last-child) {
+      margin-bottom: 10px;
+  }
+  
+  #cheat-sheet {
+    display: none;
+  }
+  
+  #cheat-sheet table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  
+  #cheat-sheet table img {
+    width: 100%;
+  }
+  
+  .tabs {
+    width: 100%;
+  }
+  
+  .tabs li, a.button {
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 17px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    background-color: #a3efa1;
+    color: #3c7139;
+    text-decoration: none;
+  }
+  
+  .tabs li {
+    display: inline-block !important;
+    margin: 0 5px 10px 0;
+  }
+  
+  .tabs li.active {
+    background-color: #e0fddc;
+  }
+  
+  a.button {
+    margin: auto auto 10px 10px;
+    color: #3764c8;
+    background-color: #fbfbfb;
+  }
+  
+  a.button:hover {
+    color: #78d968;
+  }
+  
+  #content {
+    padding: 1.5em;
+    position: absolute;
+    left: 260px;
+    margin-right: 3em;
+    min-width: 450px;
+  }
+  
+  #content ul.alg-list, #content ul.tabs {
+    list-style-type: none;
+    float: left;
+  }
+  
+  #content .alg-list li, #content .tabs li {
+    display: inline;
+    cursor: pointer;
+  }
+  
+  #content ul li .alg-nickname, #content ul li .alg {
+    display: none;
+  }
+  
+  #content ul li .details {
+    display: inline;
+  }
+  
+  .alg-list {
+    padding: 0;
+    clear: both;
+  }
+  
+  .collapsible .section {
+    display: none;
+  }
+  
+  #active-algs {
+    display: none;
+    margin: 3em;
+  }
+  
+  #active-algs .details {
+    display: block;
+    float: left;
+    margin-left: 5em;
+  }
+  
+  #active-algs .details .alg {
+    display: block;
+  }
+  
+  #active-algs {
+    min-width: 565px;
+    float: left;
+    width: 100%;
+  }
+  
+  #active-algs li {
+    display: block;
+    height: 125px;
+  }
+  
+  .width-100px .alg-list .overview, .alg-list.width-100px .overview {
+    width: 100px;
+  }
+  
+  .width-75px .overview {
+    width: 75px;
+  }
+  
+  .overview {
+    text-align: center;
+    display: inline-block;
+    float: left;
+    padding: 5px 5px 15px 5px;
+  }
+  
+  .tall-images .overview {
+    padding: 5px 5px 25px 5px;
+  }
+  
+  #active-algs .overview {
+    padding: 5px 5px 15px 5px;
+  }
+  
+  #active-algs a, a:visited {
+    padding-bottom: 5px;
+    text-decoration: none;
+  }
+  
+  #active-algs.activateable img {
+    display: none;
+  }
+  
+  #active-algs.show-all-images img {
+    display: inline;
+  }
+  
+  #active-algs.show-all-images img.activateable {
+    padding-left: 10px;
+  }
+  
+  #active-algs.activateable img.activateable {
+    display: inline;
+  }
+  
+  .alg-list .activateable {
+    display: none;
+  }
+  
+  #active-algs .deactivateable {
+    display: none;
+  }
+  
+  .alg-list .activateable {
+    display: none !important;
+  }
+  
+  .inactive {
+    opacity: 0.66;
+  }
+  
+  .red {
+    color: red;
+  }
+  
+  .right {
+    float: right;
+  }
+  
+  .introduction {
+    display: block;
+    float: left;
+    width: 100%;
+  }
+  
+  #square-1-ep .alg-list {
+    width: 860px;
+    margin: 0;
+  }
+  
+  .append-title {
+    display: none;
+  }
+  
+  /* I'm sorry. I didn't realize IDs couldn't start with a number. */
+  [id='3x3x3-beginners-method'] h3 {
+    margin-top: 20px;
+  }
+  
+  [id='3x3x3-beginners-method'] .step4 td {
+    width: 20%;
+  }
+  
+  [id='3x3x3-ocllcp'] .alg-list {
+    width: 660px;
+  }
+  
+  p img {
+    vertical-align: middle;
+  }
+  
+  /* Homepage */
+  #home {
+    min-width: 804px;
+    max-width: 1300px;
+  }
+  
+  #home img {
+    float: right;
+    padding: 0 15px 15px 15px;
+  }
+  
+  #content.home {
+    width: 70%;
+  }
+  
+  .side-by-side {
+    display: inline;
+    clear: both;
+  }
+  
+  .side-by-side p {
+    display: inline;
+    float: left;
+    text-align: center;
+    margin-right: 10px;
+  }
+  
+  .side-by-side img {
+    display: block;
+    padding-top: 10px;
+  }
+  
+  #skewb-my-method .side-by-side, #skewb-my-method .side-by-side p {
+    width: 175px;
+  }
+  
+  /* Guestbook */
+  #guestbook {
+    width: 37em;
+  }
+  
