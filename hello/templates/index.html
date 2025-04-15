@@ -1,61 +1,251 @@
-{% extends "base.html" %}
-{% load static %}
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Sarah's Cubing Site — Home</title>
 
-{% block content %}
+    <meta name="author" content="Sarah Strong">
+    <meta name="description" content="Speedcuber Sarah Strong's collection of Rubik's Cube algorithms.">
+    <meta name="keywords" content="sarah, strong, sarah strong, rubik's cube, cubing, speedcubing, algorithms, algs">
 
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="{% static 'lang-logo.png'%}">
-    </a>
-    <h1>Getting Started with Python on Heroku</h1>
-    <p>TESTTESTTEST</p>
-    <p>This is a sample Python3 application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python"><span class="glyphicon glyphicon-flash"></span> Getting Started on Heroku with Python</a>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python-fir"><span class="glyphicon glyphicon-flash"></span> Getting Started on Heroku Fir with Python</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/python-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
+    <link rel="stylesheet" href="/css/main.css">
+    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-CJZ283K1S6&amp;cx=c&amp;_slc=1"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+    <script src="/js/vendor/jquery.ba-replacetext.min.js"></script>
+    <script src="/js/abbreviations.js" type="text/javascript"></script>
+    <script src="https://cdn.cubing.net/v0/js/cubing/twisty" type="module"></script>
+  </head>
+  <body style="">
+
+    <div id="container">
+      <div id="header">
+        <h1 class="title"><a href="/">Sarah's Cubing Site</a></h1>
+      </div>
+
+      <div id="sidebar">
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+
+            <li>
+              <h3>3x3x3</h3>
+              <ul>
+                <li><a href="/3x3x3/vhls">VHLS</a></li>
+                <li><a href="/3x3x3/wvls">WVLS</a></li>
+                <li><a href="/3x3x3/oll">OLL</a></li>
+                <li><a href="/3x3x3/pll">PLL</a></li>
+                <li><a href="/3x3x3/ocllcp">OCLLCP / COLL</a></li>
+                <li><a href="/3x3x3/ell">ELL</a></li>
+                <li><a href="/3x3x3/oellcp">OELLCP</a></li>
+                <li><a href="/3x3x3/els">ELS</a></li>
+                <li><a href="/3x3x3/cls">CLS</a></li>
+                <li><a href="/3x3x3/pll-skip-cases">PLL Skip Cases</a></li>
+                <li><a href="/3x3x3/pll-recognition-guide">PLL Recognition Guide</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <h3>5x5x5</h3>
+              <ul>
+                <li><a href="/5x5x5/l2c">L2C</a></li>
+                <li><a href="/5x5x5/l2e">L2E</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <h3>Megaminx</h3>
+              <ul>
+                <li><a href="/megaminx/ocll">OCLL</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <h3>Pyraminx</h3>
+              <ul>
+                <li><a href="/pyraminx/l3c">L3C</a></li>
+                <li><a href="/pyraminx/l3e">L3E</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <h3>Square-1</h3>
+              <ul>
+                <li><a href="/square-1/eo">EO</a></li>
+                <li><a href="/square-1/cp">CP</a></li>
+                <li><a href="/square-1/ep">EP</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <h3>Skewb</h3>
+              <ul>
+                <li><a href="/skewb/my-method">My Method</a></li>
+              </ul>
+            </li>
+
+            <li><a href="/more-resources">More Resources</a></li>
+            
+            <li><a href="/guestbook">Guestbook</a></li>
+
+            <li class="smaller copyright">© 2024 Sarah Strong</li>
+          </ul>
+
+          <a data-show-cheat-sheet="" class="smaller">Show notation »</a>
+
+          <div id="cheat-sheet">
+            <table>
+              <tbody><tr>
+                <td align="center"><i><strong>U</strong></i></td>
+                <td align="center"><i><strong>U'</strong></i></td>
+                <td align="center"><i><strong>U2</strong></i></td>
+              </tr>
+
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-U.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Uprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-U2.png"></td>
+              </tr>
+            </tbody></table>
+
+            <table>
+                <tbody><tr><td align="center"><i><strong>D</strong></i></td>
+                <td align="center"><i><strong>D'</strong></i></td>
+                <td align="center"><i><strong>D2</strong></i></td>
+              </tr>
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-D.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Dprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-D2.png"></td>
+              </tr>
+            </tbody></table>
+
+            <table>
+              <tbody><tr>
+                <td align="center"><i><strong>R</strong></i></td>
+                <td align="center"><i><strong>R'</strong></i></td>
+                <td align="center"><i><strong>R2</strong></i></td>
+              </tr>
+
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-R.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Rprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-R2.png"></td>
+              </tr>
+            </tbody></table>
+
+            <table>
+                <tbody><tr><td align="center"><i><strong>L</strong></i></td>
+                <td align="center"><i><strong>L'</strong></i></td>
+                <td align="center"><i><strong>L2</strong></i></td>
+              </tr>
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-L.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Lprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-L2.png"></td>
+              </tr>
+            </tbody></table>
+
+            <table>
+              <tbody><tr>
+                <td align="center"><i><strong>F</strong></i></td>
+                <td align="center"><i><strong>F'</strong></i></td>
+                <td align="center"><i><strong>F2</strong></i></td>
+              </tr>
+
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-F.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Fprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-F2.png"></td>
+              </tr>
+            </tbody></table>
+
+            <table>
+              <tbody><tr>
+                <td align="center"><i><strong>B</strong></i></td>
+                <td align="center"><i><strong>B'</strong></i></td>
+                <td align="center"><i><strong>B2</strong></i></td>
+              </tr>
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-B.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Bprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-B2.png"></td>
+              </tr>
+            </tbody></table>
+
+            <table>
+              <tbody><tr>
+                <td align="center"><i><strong>M</strong></i></td>
+                <td align="center"><i><strong>M'</strong></i></td>
+                <td align="center"><i><strong>M2</strong></i></td>
+              </tr>
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-M.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Mprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-M2.png"></td>
+              </tr>
+            </tbody></table>
+
+            <table>
+              <tbody><tr>
+                <td align="center"><i><strong>E</strong></i></td>
+                <td align="center"><i><strong>E'</strong></i></td>
+                <td align="center"><i><strong>E2</strong></i></td>
+              </tr>
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-E.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Eprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-E2.png"></td>
+              </tr>
+            </tbody></table>
+            <table>
+              <tbody><tr>
+                <td align="center"><i><strong>S</strong></i></td>
+                <td align="center"><i><strong>S'</strong></i></td>
+                <td align="center"><i><strong>S2</strong></i></td>
+              </tr>
+              <tr>
+                <td align="center"><img src="/images/beginners-method/move-S.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-Sprime.png"></td>
+                <td align="center"><img src="/images/beginners-method/move-S2.png"></td>
+              </tr>
+
+            </tbody></table>
+          </div>
+        </nav>
+      </div>
+
+      <div id="content" class="home">
+        <div id="home">
+  <img src="images/sarah.png" width="325" height="363" alt="Sarah Strong">
+
+  <p>
+    Hi. I'm <a href="https://www.worldcubeassociation.org/results/p.php?i=2007STRO01" target="_blank">Sarah Strong</a>. I've been speedcubing since early 2007.
+  </p>
+
+  <p>
+    I'll be using this site to store and share algorithms and other cubing-related things.
+  </p>
+  
+  <p>
+    My ultimate goal with this site is to add as many of the algorithms I've learned, or want to eventually learn.
+  </p>
+  <p>
+    The algorithms are from many different sites, which are all mentioned in the descriptions of each page.
+  </p>
+  
 </div>
-<div class="container">
-  <div class="lead">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to either of the following tutorials:
-    <ul>
-      <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python" class="alert-link">Getting Started on Heroku with Python</a></li>
-      <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python-fir" class="alert-link">Getting Started on Heroku Fir with Python</a></li>
-    </ul>
-  </div>
-  <hr />
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku using Git.</li>
-        <li>When Heroku received the source code, it fetched all the dependencies in <a href="https://github.com/heroku/python-getting-started/blob/main/requirements.txt">requirements.txt</a>, creating a deployable build artifact.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the build artifact can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started on Heroku with Python</a> or <a href="https://devcenter.heroku.com/articles/getting-started-with-python-fir">Getting Started on Heroku Fir with Python</a> guide, then please head back to the tutorial and follow the next steps!</li>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started on Heroku with Python</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python-fir">Getting Started on Heroku Fir with Python</a></li>
-        <li><a href="https://devcenter.heroku.com/categories/python">Python articles on the Heroku Dev Center</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="row" style="margin-top:1em">
-    <div class="col-md-12">
-      <p class="alert alert-info" role="alert">
-        Please do work through the Getting Started guide, even if you do know how to build such an application. The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-      </p>
-    </div>
-  </div>
-</div>
-{% endblock %}
+
+      </div>
+    </div> <!-- /container -->
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-43272842-1', 'cubing.net');
+    ga('send', 'pageview');
+    </script>
+  
+
+</body></html>
