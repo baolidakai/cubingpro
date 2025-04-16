@@ -54,6 +54,10 @@ def clock_7simul_flip_intro(request):
     return render(request, "7simul_flip_intro.html", {'table_data': json.dumps(table_data)})
 
 
+def clock_7simul_flip_improved(request):
+    return render(request, "7simul_flip_improved.html", {'table_data': ''})
+
+
 def db(request):
     # If you encounter errors visiting the `/db/` page on the example app, check that:
     #

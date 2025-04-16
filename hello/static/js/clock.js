@@ -240,3 +240,29 @@ const makeClocks = (scramble, operations) => {
 
     return clocks;
 };
+
+const convert_to_matrix = (str) => {
+    if (!str) {
+        return null;
+    }
+    const flatArray = str.split(',');
+    const matrix = [[], []];
+    for (let f = 0; f < 2; f++) {
+        for (let i = 0; i < 3; i++) {
+            matrix[f].push(flatArray.slice(f * 9 + i * 3, f * 9 + i * 3 + 3));
+        }
+    }
+    return matrix;
+};
+
+const convert_to_change_pin_matrix = (str) => {
+    if (!str) {
+        return null;
+    }
+    const flatArray = str.split(',');
+    const matrix = [];
+    for (let i = 0; i < 2; i++) {
+        matrix.push(flatArray.slice(i * 2, i * 2 + 2));
+    }
+    return matrix;
+};

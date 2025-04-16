@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+    Overview
+</h1>
+<p>
+    After reading <a href="/clock/7simul_flip_intro">intro to 7 simul flip</a>, you may notice some of the suboptimal part of it.<br>
+    First of all, before x2, there is an instruction to quickly inspect the C - U which will be later applied in solve on the new face.<br>
+    With practice, this might become an instinct, but the number actually remains unchanged throughout the process. Therefore, memorizing C - U as M5 is very simple during inspection.<br>
+    Another suboptimal part is during step 5, we need to align ur to dl, while dl is subject to change. However, this number is simply U - L which could be memorized as M6 during inspection.<br>
+    These are the two optimization that most 7 simul flip solvers adopt for quicker solves.<br>
+    In this page, I will present how to calculate each of the 14 moves during inspection.<br>
+</p>
+
+<h2>
+    Applications
+</h2>
+<p>
+    The first application, is you may decide to memorize 6 &le; X &le; 14 steps during inspection. So you can more efficiently speed solve the puzzle.<br>
+    The second application, is you may memorize 14 steps and then blindfold the puzzle.<br>
+    Another clock blindfold method would be to remember the position of each of the 14 clock face (corner clock are always identical on both sides). Then solve them one by one using a fixed algorithm.<br>
+    This method would be much faster to execute, although much more calculation during the memorization.
+</p>
+
+<div id="appendable-div">
+</div>
+
+<script>
+    // Get Django variable safely into JavaScript
+    const table_data = JSON.parse('{{ table_data|escapejs }}');
+    for (let i = 0; i < table_data.length; i++) {
+        const li = document.createElement("div");
+        li.innerHTML = table_data[i].paragraph;
+        li.id = `item-${i}`;
+        document.getElementById("appendable-div").appendChild(li);
+        const viz = document.createElement("div");
+        viz.style = "max-width: 640px; margin: auto;";
+        const adj = document.createElement("div");
+        adj.id = `adjuster-${i}`;
+        adj.className = "has-text-centered";
+        const canvas = document.createElement("canvas");
+        canvas.id = `canvas-${i}`;
+        adj.appendChild(canvas);
+        viz.appendChild(adj);
+        document.getElementById("appendable-div").appendChild(viz);
+        let scramble = table_data[i].scramble.split(',').map(Number);
+        let operations = table_data[i].operations.split(',').map(Number);
+        let clocks = makeClocks(scramble, operations);
+        if (!table_data[i].annotation) {
+            table_data[i].annotation = null;
+        }
+        if (!table_data[i].operations) {
+            table_data[i].operations = null;
+        }
+        if (!table_data[i].change_pins) {
+            table_data[i].change_pins = null;
+        }
+        render(clocks, "x2", adj.id, canvas.id, convert_to_matrix(table_data[i].annotation), convert_to_change_pin_matrix(table_data[i].change_pins));
+    }
+</script>
+
+{% endblock content %}
