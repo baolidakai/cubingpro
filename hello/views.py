@@ -5,6 +5,7 @@ from django.conf import settings
 
 import csv
 import os
+import json
 
 # Create your views here.
 
@@ -28,28 +29,29 @@ def preprocess(alg):
     return ' '.join(moves)
 
 
-def read_csv_data():
+def read_csv_data(filepath, delimiter):
     data = []
-    csv_path = os.path.join(settings.BASE_DIR, 'hello/algorithms', 'eg.csv')
+    csv_path = os.path.join(settings.BASE_DIR, filepath)
 
     with open(csv_path, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
+        reader = csv.DictReader(csvfile, delimiter=delimiter)
         for row in reader:
             # Example: convert values and calculate something if needed
             for method in ['CLL', 'EG1', 'EG2']:
-                row[f'{method}_viz'] = preprocess(row[f'{method}_alg'])
+                row[f'{method}_viz'] = preprocess(row.get(f'{method}_alg', ''))
             data.append(row)
 
     return data
 
 
 def eg_alg(request):
-    table_data = read_csv_data()
+    table_data = read_csv_data('hello/algorithms/eg.csv', ',')
     return render(request, "eg_alg.html", {'table_data': table_data})
 
 
 def clock_7simul_flip_intro(request):
-    return render(request, "7simul_flip_intro.html")
+    table_data = read_csv_data('hello/tutorials/7sf.csv', ';')
+    return render(request, "7simul_flip_intro.html", {'table_data': json.dumps(table_data)})
 
 
 def db(request):

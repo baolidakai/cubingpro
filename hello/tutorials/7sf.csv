@@ -1,0 +1,40 @@
+scramble;operations;change_pins;annotation;paragraph
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;;;;"
+<p>Scramble: UR5+ DR3+ DL3+ UL2+ U5- R1+ D5+ L1+ ALL1- y2 U3- R2+ D3+ L4- ALL1+</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;;;UL,L,DL,U,C,D,UR,R,DR,ul,l,dl,u,c,d,ur,r,dr;"
+Memorize 4 numbers using aforementioned arithmetics applying modulo 12.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,,,,,,,,,,,,;0,1,0,0;-1,,,,,,2,,,,,,,,,,,;"
+<ol>
+<li>Memo 1: memorize M1 = D - R + ul - l. D - R = -1, ul - l = 0 => M1 = -1 or 11</li>
+<li>Memo 2: memorize M2 = c - u. M2 = 2</li>
+<li>Memo 3: memorize M3 = u - l. M3 = 4</li>
+<li>Memo 4: memorize M4 = d - r + UL - L. d - r = -2, UL - L = -3 => M4 = -5 or 7</li>
+</ol>
+<p>Now we should execute 7 simultaneous moves (14 moves in total).</p>
+<p><u>In our visualization, white pin means the pin is sticking out, otherwise it's black pin.</u></p>
+<p>As mentioned above, the execution never requires any operation on the two bottom dials.</p>
+<p>We will use left dial to represent the topleft dial, and right dial to represent the topright dial.</p>
+Step 1: only press topright pin, then execute M1 with the left dial and M2 with the right dial.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,,,,,,,,,,;0,1,0,1;1,,,,,,4,,,,,,,,,,,;"
+<p>Recall M1=-1, M2=2, M3=4, M4=-5.</p>
+Step 2: press also bottomright pin, then align D to R with left dial, and M3 with right dial.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,,,,,,,,;0,1,1,1;3,,,,,,1,,,,,,,,,,,;"
+<p>Recall M1=-1, M2=2, M3=4, M4=-5.</p>
+Step 3: press also bottomleft pin, then align C to R with left dial, and align DR to R with right dial. Remember instantly C-U=3.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,-5,3,,,,,,;1,1,1,0;,,,,,,,,,-5,,,,,,3,,;"
+<p>Recall M1=-1, M2=2, M3=4, M4=-5. C-U=3.</p>
+Step 4: press down topleft pin and pop up bottomright pin, then do x2, then M4 with left dial, and apply C-U with right dial (on the new face).<br>
+You may forget all the memos now, as they are used up already.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,-5,3,2,-1,,,,;1,0,1,0;,,,,,,,,,2,,,,,,-1,,;"
+Step 5: press down bottomright pin, then align d to r with left dial (this will change dl), and ur to dl with right dial. These two steps are not simultaneous since dl will be changed by left dial.<br>
+You may either practice to quickly compute the dl destination so you can do this simultaneously, or see the 7sf improved version in next tab to learn the method to memorize this number.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,-5,3,2,-1,,,,;0,0,1,0;,,,,,,,,,2,,,,,,-1,,;"
+Step 6: 
+"
