@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+    Overview
+</h1>
+<p>
+    If you don't know how to solve Rubik's Clock using the Flip Method, please read <a href=""
+        https://www.stefan-pochmann.info/spocc/speedsolving/clock/">Stefan Pochmann's website</a>.<br>
+    Flip method is a very good method and can already help you achieve world class.<br>
+    But most top clock solvers use the so-called 7 simul method.<br>
+    7 simul flip is also known as 7sfndmw4lm, standing for 7-simul flip no D move with 4 letters memory. Further
+    reading: <a href="https://note.com/squid_sushi/n/nc1c62514b0f1">this website</a> has a very comprehensive tutorial
+    as well.<br>
+    The main benefit of this approach, compared to the most popular 7-simul version (Tommy's version), is you are no
+    longer required to use pinky finger for bottom dials, although you need one x2 flip.<br>
+    This intro focus on the 4 letters memory version. But in practice it's ideal to memorize at least 6 letters and it's
+    very easy to fit into the 15 seconds inspection, compared to Tommy's 7 simul version.<br>
+    A reason I personally like this method, is the possibility of extending it to memorize 8 letters or even more. And
+    it's a very good method for speed blindfold, which is introduced in <a href="/clock/7simul_flip_improved">7sf+ and
+        speed BLD</a>.
+</p>
+
+<h2>
+    Notation
+</h2>
+<p>
+
+</p>
+
+<h2>
+    Method
+</h2>
+<p>
+    In 7 simul flip, we use a fixed pin order to solve the clock. The best way to illustrate this method is to use a
+    demo example.<br>
+</p>
+
+<div style="max-width: 640px; margin: auto;">
+    <div id="adjuster" class="has-text-centered">
+        <canvas id="canvas"></canvas>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const elmAdjuster = document.getElementById("adjuster");
+        const elmCanvas = document.getElementById("canvas");
+        const render = (clocks, flip) => {
+            const ctx = elmCanvas.getContext("2d");
+
+            const width = elmAdjuster.clientWidth;
+            const height = width / 2;
+
+            const dpr = window.devicePixelRatio;
+            if (elmCanvas.width != "" + width * dpr) {
+                canvas.width = "" + width * dpr;
+            }
+            if (elmCanvas.height != "" + height * dpr) {
+                canvas.height = "" + height * dpr;
+            }
+            ctx.save();
+            ctx.scale(dpr, dpr);
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+
+            ctx.clearRect(0, 0, width, height);
+
+            for (let f = 0; f < 2; f++) {
+                ctx.save();
+                ctx.scale(height, height);
+                ctx.translate(f, 0);
+
+                // 52 mm
+                ctx.translate(.05, .05);
+                ctx.scale(.9, .9);
+
+                ctx.beginPath();
+                ctx.arc(.5, .5, .5, 0, 2 * Math.PI);
+                if (f == 0) {
+                    ctx.fillStyle = "#444";
+                    ctx.fill();
+                } else {
+                    ctx.lineWidth = 1 / height / .9;
+                    ctx.strokeStyle = "#aaa";
+                    ctx.stroke();
+                }
+
+                for (let y = 0; y < 2; y++) {
+                    for (let x = 0; x < 2; x++) {
+                        ctx.beginPath();
+                        // 30 mm, 3.35 mm
+                        ctx.arc(x * .29 + .355, y * .29 + .355, .032, 0, 2 * Math.PI);
+                        ctx.fillStyle = f == 0 ? "#fff" : "#111";
+                        ctx.fill();
+                    }
+                }
+
+                for (let y = 0; y < 3; y++) {
+                    for (let x = 0; x < 3; x++) {
+                        ctx.save();
+
+                        // 30 mm, 14.5 mm
+                        ctx.translate(x * .29 + .065 + .005, y * .29 + .065 + .005);
+                        ctx.scale(.28, .28);
+
+                        ctx.beginPath();
+                        ctx.arc(.5, .5, .5, 0, 2 * Math.PI);
+                        ctx.fillStyle = f == 0 ? "#111" : "#fff";
+                        ctx.fill();
+
+                        if (f == 1) {
+                            ctx.beginPath();
+                            ctx.arc(.5, .5, .5, 0, 2 * Math.PI);
+                            ctx.lineWidth = 1 / height / .9 / .28;
+                            ctx.strokeStyle = "#ccc";
+                            ctx.stroke();
+                        }
+
+                        for (let i = 0; i < 12; i++) {
+                            ctx.save();
+                            ctx.translate(.5, .5);
+                            ctx.rotate(i / 12 * 2 * Math.PI);
+
+                            if (
+                                flip == "y2" && i == 0 ||
+                                flip == "x2" && f == 0 && i == 0 ||
+                                flip == "x2" && f == 1 && i == 6
+                            ) {
+                                ctx.fillStyle = "#c22";
+                                ctx.fillRect(-.045, -.46, .03, .08);
+                                ctx.fillRect(.015, -.46, .03, .08);
+                            }
+                            else if (i % 3 == 0) {
+                                ctx.fillStyle = f == 0 ? "#fff" : "#111";
+                                ctx.fillRect(-.015, -.46, .03, .08);
+                            } else {
+                                ctx.beginPath();
+                                // 11.3 mm, 0.62 mm
+                                ctx.arc(.0, -.40, .015, 0, 2 * Math.PI);
+                                ctx.fillStyle = f == 0 ? "#fff" : "#111";
+                                ctx.fill();
+                            }
+
+                            ctx.restore();
+                        }
+
+                        ctx.beginPath();
+                        // 10 mm
+                        ctx.arc(.5, .5, .34, 0, 2 * Math.PI);
+                        ctx.fillStyle = f == 0 ? "#fff" : "#111";
+                        ctx.fill();
+
+                        ctx.save();
+                        ctx.translate(.5, .5);
+                        let angle;
+                        if (f == 0) {
+                            angle = clocks[0][y][x];
+                        } else {
+                            if (flip == "y2") {
+                                angle = clocks[1][y][x];
+                            } else {
+                                angle = clocks[1][2 - y][2 - x] + 6;
+                            }
+                        }
+                        ctx.rotate(angle / 12 * 2 * Math.PI);
+
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(-.05, -.13);
+                        ctx.lineTo(0, -.31);
+                        ctx.lineTo(.05, -.13);
+                        ctx.fillStyle = f == 0 ? "#111" : "#fff";
+                        ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.arc(0, 0, .05, 0, 2 * Math.PI);
+                        ctx.fillStyle = f == 0 ? "#111" : "#fff";
+                        ctx.fill();
+
+                        ctx.restore();
+
+                        ctx.restore();
+                    }
+                }
+
+                ctx.restore();
+            }
+            ctx.restore();
+        };
+        const makeClocks = scramble => {
+            // [f, x, y]
+            const T = [
+                [[0, 1, 0], [0, 2, 0], [0, 1, 1], [0, 2, 1], [1, 0, 0]], // UR
+                [[0, 1, 1], [0, 2, 1], [0, 1, 2], [0, 2, 2], [1, 0, 2]], // DR
+                [[0, 0, 1], [0, 1, 1], [0, 0, 2], [0, 1, 2], [1, 2, 2]], // DL
+                [[0, 0, 0], [0, 1, 0], [0, 0, 1], [0, 1, 1], [1, 2, 0]], // UL
+                [[0, 0, 0], [0, 1, 0], [0, 2, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [1, 0, 0], [1, 2, 0]], // U
+                [[0, 1, 0], [0, 2, 0], [0, 1, 1], [0, 2, 1], [0, 1, 2], [0, 2, 2], [1, 0, 0], [1, 0, 2]], // R
+                [[0, 0, 1], [0, 1, 1], [0, 2, 1], [0, 0, 2], [0, 1, 2], [0, 2, 2], [1, 0, 2], [1, 2, 2]], // D
+                [[0, 0, 0], [0, 1, 0], [0, 0, 1], [0, 1, 1], [0, 0, 2], [0, 1, 2], [1, 2, 0], [1, 2, 2]], // L
+                [[0, 0, 0], [0, 1, 0], [0, 2, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [0, 0, 2], [0, 1, 2], [0, 2, 2], [1, 0, 0], [1, 2, 0], [1, 0, 2], [1, 2, 2]], // ALL
+            ];
+
+            const clocks = [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]];
+
+            for (let i = 0; i < 14; i++) {
+                for (const t of T[i < 9 ? i : i - 9 + 4]) {
+                    let [f, x, y] = t;
+                    let angle = scramble[i];
+                    if (i < 9) {
+                        f = 1 - f;
+                        angle = -angle;
+                    }
+                    if (f == 1) {
+                        angle = -angle;
+                    }
+                    clocks[f][y][x] += angle;
+                }
+            }
+
+            for (let f = 0; f < 2; f++) {
+                for (let y = 0; y < 3; y++) {
+                    for (let x = 0; x < 3; x++) {
+                        clocks[f][y][x] = (clocks[f][y][x] % 12 + 12) % 12;
+                    }
+                }
+            }
+
+            return clocks;
+        };
+
+        let scramble = Array(14);
+        for (let i = 0; i < 14; i++) {
+            scramble[i] = Math.random() * 12 | 0;
+        }
+        let clocks = makeClocks(scramble);
+        render(clocks, "x2");
+    });
+</script>
+
+{% endblock content %}

@@ -48,6 +48,10 @@ def eg_alg(request):
     return render(request, "eg_alg.html", {'table_data': table_data})
 
 
+def clock_7simul_flip_intro(request):
+    return render(request, "7simul_flip_intro.html")
+
+
 def db(request):
     # If you encounter errors visiting the `/db/` page on the example app, check that:
     #
