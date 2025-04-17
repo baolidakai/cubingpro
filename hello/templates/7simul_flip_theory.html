@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>
-    Overview
+    7 Simul Flip Theory
 </h1>
 <p>
     Here we present the proof of the above solution, by formulating the problem of solving Rubik's clock as solving a
@@ -49,8 +49,41 @@
 <div id="appendable-div-3">
 </div>
 
+<p>
+    After applying all the moves, clock a will become a0 + a linear combination of x1, x2, ...<br>
+    We could either derive these linear combinations by manually tracing the effect of each move, or with a computer program.<br>
+    Eventually, we want to find a solution of x1, x2, ..., x14, such that each clock become 0.
+</p>
+
+<p>
+    If you are familiar with linear algebra, this could be represented as an equation:
+</p>
+
+<p>$$
+    \begin{bmatrix} a_0 \\ b_0 \\ c_0 \\ \vdots \\ n_0 \end{bmatrix} +
+    T \cdot \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ \vdots \\ x_{14} \end{bmatrix} =  \begin{bmatrix} 0 \\ 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+$$</p>
+
+<p>Notice T is a 14x14 matrix, and it happens to be invertible.</p>
+
+<p>$$
+    \Rightarrow \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ \vdots \\ x_{14} \end{bmatrix} = -T^{-1} \cdot \begin{bmatrix} a_0 \\ b_0 \\ c_0 \\ \vdots \\ n_0 \end{bmatrix}
+$$</p>
+
+<p>If we denote
+    $$
+    S = -T^{-1}
+    $$, then
+    $$
+    x_1 = S_{1,1}a_0 + S_{1, 2}b_0 + \cdots + S_{1, 14}n_0
+    $$
+    In other word, each $$x_i$$ is a linear combination of $$a_0, b_0, \cdots, n_0$$
+    The solution after cleaning up will be the results presented in <a href="/clock/7simul_flip_improved">7sf+ and
+        speed BLD</a>
+</p>
+
 <script>
-const visualizeClock = (index, clocks, annotation, change_pin = null) => {
+const visualizeClock = (index, clocks, annotation, change_pin = null, plot_pointer = true) => {
     const viz = document.createElement("div");
     viz.style = "max-width: 640px; margin: auto;";
     const adj = document.createElement("div");
@@ -61,13 +94,13 @@ const visualizeClock = (index, clocks, annotation, change_pin = null) => {
     adj.appendChild(canvas);
     viz.appendChild(adj);
     document.getElementById(`appendable-div-${index}`).appendChild(viz);
-    render(clocks, "x2", adj.id, canvas.id, convert_to_matrix(annotation), convert_to_change_pin_matrix(change_pin));
+    render(clocks, "x2", adj.id, canvas.id, convert_to_matrix(annotation), convert_to_change_pin_matrix(change_pin), plot_pointer);
 };
 
-visualizeClock(0, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0,d0,g0,b0,e0,h0,c0,f0,i0,,k0,,j0,l0,n0,,m0,");
-visualizeClock(1, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0,d0,g0,b0,e0,h0,c0,f0,i0,,k0,,j0,l0,n0,,m0,");
-visualizeClock(2, [[[1, 1, 0], [1, 1, 1], [1, 1, 1]], [[0, 0, -1], [0, 0, 0], [-1, 0, -1]]], "", "0,1,0,0");
-visualizeClock(3, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0+x1,d0+x1,g0+x1,b0+x1,e0+x1,h0+x1,c0,f0+x1,i0+x1,,k0,,j0,l0,n0,,m0,", "0,1,0,0");
+visualizeClock(0, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0,d0,g0,b0,e0,h0,c0,f0,i0,,k0,,j0,l0,n0,,m0,", "", false);
+visualizeClock(1, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0,d0,g0,b0,e0,h0,c0,f0,i0,,k0,,j0,l0,n0,,m0,", "", false);
+visualizeClock(2, [[[1, 1, 0], [1, 1, 1], [1, 1, 1]], [[0, 0, -1], [0, 0, 0], [-1, 0, -1]]], "", "0,1,0,0", true);
+visualizeClock(3, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0+x1,d0+x1,g0+x1,b0+x1,e0+x1,h0+x1,c0,f0+x1,i0+x1,,k0,,j0,l0,n0,,m0,", "0,1,0,0", false);
 </script>
 
 {% endblock content %}

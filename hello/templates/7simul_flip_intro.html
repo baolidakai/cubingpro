@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>
-    Overview
+    7 Simul Flip Intro
 </h1>
 <p>
     If you don't know how to solve Rubik's Clock using the Flip Method, please read <a href=""
@@ -87,7 +87,11 @@
         if (!table_data[i].change_pins) {
             table_data[i].change_pins = null;
         }
-        render(clocks, "x2", adj.id, canvas.id, convert_to_matrix(table_data[i].annotation), convert_to_change_pin_matrix(table_data[i].change_pins));
+        let plot_pointer = true;
+        if (table_data[i].annotation && table_data[i].annotation.startsWith("UL")) {
+            plot_pointer = false;            
+        }
+        render(clocks, "x2", adj.id, canvas.id, convert_to_matrix(table_data[i].annotation), convert_to_change_pin_matrix(table_data[i].change_pins), plot_pointer);
     }
 </script>
 

@@ -1,4 +1,4 @@
-const render = (clocks, flip, adjuster_id, canvas_id, text_matrix = null, change_pin = null) => {
+const render = (clocks, flip, adjuster_id, canvas_id, text_matrix = null, change_pin = null, plot_pointer = true) => {
     const elmAdjuster = document.getElementById(adjuster_id);
     const elmCanvas = document.getElementById(canvas_id);
     const ctx = elmCanvas.getContext("2d");
@@ -112,7 +112,7 @@ const render = (clocks, flip, adjuster_id, canvas_id, text_matrix = null, change
                 // Optionally, add a text.
                 if (text_matrix && text_matrix.length > 0) {
                     ctx.translate(.1, .1);
-                    ctx.font = "0.5px Arial";
+                    ctx.font = "0.4px Arial";
                     ctx.fillStyle = "#c22";
                     ctx.textAlign = "center";
                     ctx.textBaseline = "middle";
@@ -120,34 +120,37 @@ const render = (clocks, flip, adjuster_id, canvas_id, text_matrix = null, change
                     ctx.translate(-.1, -.1);
                 }
 
-                ctx.save();
-                ctx.translate(.5, .5);
-                let angle;
-                if (f == 0) {
-                    angle = clocks[0][y][x];
-                } else {
-                    if (flip == "y2") {
-                        angle = clocks[1][y][x];
+                if (plot_pointer) {
+                    ctx.save();
+
+                    ctx.translate(.5, .5);
+                    let angle;
+                    if (f == 0) {
+                        angle = clocks[0][y][x];
                     } else {
-                        angle = clocks[1][2 - y][2 - x] + 6;
+                        if (flip == "y2") {
+                            angle = clocks[1][y][x];
+                        } else {
+                            angle = clocks[1][2 - y][2 - x] + 6;
+                        }
                     }
+                    ctx.rotate(angle / 12 * 2 * Math.PI);
+
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(-.05, -.13);
+                    ctx.lineTo(0, -.31);
+                    ctx.lineTo(.05, -.13);
+                    ctx.fillStyle = f == 0 ? "#111" : "#fff";
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(0, 0, .05, 0, 2 * Math.PI);
+                    ctx.fillStyle = f == 0 ? "#111" : "#fff";
+                    ctx.fill();
+
+                    ctx.restore();
                 }
-                ctx.rotate(angle / 12 * 2 * Math.PI);
-
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(-.05, -.13);
-                ctx.lineTo(0, -.31);
-                ctx.lineTo(.05, -.13);
-                ctx.fillStyle = f == 0 ? "#111" : "#fff";
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(0, 0, .05, 0, 2 * Math.PI);
-                ctx.fillStyle = f == 0 ? "#111" : "#fff";
-                ctx.fill();
-
-                ctx.restore();
 
                 ctx.restore();
             }
