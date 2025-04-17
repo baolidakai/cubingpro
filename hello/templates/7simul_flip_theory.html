@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+    Overview
+</h1>
+<p>
+    Here we present the proof of the above solution, by formulating the problem of solving Rubik's clock as solving a
+    linear algebra equation.<br>
+    We will explain how to formulate the problem as a matrix equation, with the example of filling only a few row
+    entries in the matrix.<br>
+    The entries could also be computed using a computer program.
+</p>
+
+<h2>Problem formulation</h2>
+<p>
+    Denote initial values of the clock as a0, b0, c0, d0, ...
+</p>
+
+<div id="appendable-div-0">
+</div>
+
+
+<p>
+    There are 14 operations in 7 simul flip method. In step 1, we execute left dial (operation 1), then right dial
+    (operation 2). In step 2, we execute left dial (operation 3), then right dial (operation 4) ...<br>
+    We annotate the clockwise turn count on each operation. If we turn more than 180 degrees clockwise, annotate as a
+    negative.<br>
+    For example, if we turn left dial at first step by 60 degrees counterclockwise, then x1 = -2.<br>
+    If we turn right dial at first step by 120 degrees clockwise, then x2 = 4.<br>
+</p>
+
+<div id="appendable-div-1">
+</div>
+
+<p>
+    Let's consider the effect of applying x1 move(s) onto the clock value.<br>
+    See the visualilzation below of how would one clockwise move affect the clocks.<br>
+    We know that clock a will be incremented by 1, clock b will be incremented by 1, etc.
+</p>
+
+<div id="appendable-div-2">
+</div>
+
+<p>
+    Therefore, after applying x1 moves(s), the clock become:
+</p>
+
+<div id="appendable-div-3">
+</div>
+
+<script>
+const visualizeClock = (index, clocks, annotation, change_pin = null) => {
+    const viz = document.createElement("div");
+    viz.style = "max-width: 640px; margin: auto;";
+    const adj = document.createElement("div");
+    adj.id = `adjuster-${index}`;
+    adj.className = "has-text-centered";
+    const canvas = document.createElement("canvas");
+    canvas.id = `canvas-${index}`;
+    adj.appendChild(canvas);
+    viz.appendChild(adj);
+    document.getElementById(`appendable-div-${index}`).appendChild(viz);
+    render(clocks, "x2", adj.id, canvas.id, convert_to_matrix(annotation), convert_to_change_pin_matrix(change_pin));
+};
+
+visualizeClock(0, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0,d0,g0,b0,e0,h0,c0,f0,i0,,k0,,j0,l0,n0,,m0,");
+visualizeClock(1, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0,d0,g0,b0,e0,h0,c0,f0,i0,,k0,,j0,l0,n0,,m0,");
+visualizeClock(2, [[[1, 1, 0], [1, 1, 1], [1, 1, 1]], [[0, 0, -1], [0, 0, 0], [-1, 0, -1]]], "", "0,1,0,0");
+visualizeClock(3, [[[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0]]], "a0+x1,d0+x1,g0+x1,b0+x1,e0+x1,h0+x1,c0,f0+x1,i0+x1,,k0,,j0,l0,n0,,m0,", "0,1,0,0");
+</script>
+
+{% endblock content %}

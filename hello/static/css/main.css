@@ -93,7 +93,7 @@ body {
   }
   
   nav li ul {
-    display: none;
+    display: block;
   }
   
   nav li h3 {

@@ -11,6 +11,7 @@
     Another suboptimal part is during step 5, we need to align ur to dl, while dl is subject to change. However, this number is simply U - L which could be memorized as M6 during inspection.<br>
     These are the two optimization that most 7 simul flip solvers adopt for quicker solves.<br>
     In this page, I will present how to calculate each of the 14 moves during inspection.<br>
+    <u>If you are curious, see the derivations in <a href="/clock/7simul_flip_theory">theoretical derivation</a>.</u>
 </p>
 
 <h2>
@@ -23,12 +24,222 @@
     This method would be much faster to execute, although much more calculation during the memorization.
 </p>
 
+<h2>
+    Method
+</h2>
+<p>
+    We now demonstrate this method with the same example as before.
+</p>
+
 <div id="appendable-div">
 </div>
+
+<h2>
+    Summary
+</h2>
+<p>
+    The method is compiled as a table below, and also showing a recommended progression path you may follow for your speedsolve.<br>
+    I personally use milestone 3 which is easy to memorize under 15 seconds with practice, and able to trim down my execution time by about 1 second, compared with milestone 1.
+</p>
+<p><strong>Milestone 1: Same as intro</strong></p>
+<table border="1" style="width: 100%; text-align: center;">
+    <thead>
+        <tr>
+            <th>Pin Location</th>
+            <th>Left Dial</th>
+            <th>Right Dial</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>dr</td>
+            <td>M1 = D - R + ul - l</td>
+            <td>M2 = c - u</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>Align D to R</td>
+            <td>M3 = u - l</td>
+        </tr>
+        <tr>
+            <td>UL</td>
+            <td>Align C to R</td>
+            <td>Align DR to R</td>
+        </tr>
+        <tr>
+            <td>(After x2) ur</td>
+            <td>M4 = -r+d-L+UL</td>
+            <td>Before x2, inspect and memorize C - U</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>Align d to r</td>
+            <td>Align ur to dl after left dial is done</td>
+        </tr>
+        <tr>
+            <td>UL</td>
+            <td>Align c to r</td>
+            <td>Align dr to r</td>
+        </tr>
+        <tr>
+            <td>\</td>
+            <td>AUF ul</td>
+            <td>AUF ur</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Milestone 2: Memorize 6 numbers</strong></p>
+<table border="1" style="width: 100%; text-align: center;">
+    <thead>
+        <tr>
+            <th>Pin Location</th>
+            <th>Left Dial</th>
+            <th>Right Dial</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>dr</td>
+            <td>M1 = D - R + ul - l</td>
+            <td>M2 = c - u</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>Align D to R</td>
+            <td>M3 = u - l</td>
+        </tr>
+        <tr>
+            <td>UL</td>
+            <td>Align C to R</td>
+            <td>Align DR to R</td>
+        </tr>
+        <tr>
+            <td>(After x2) ur</td>
+            <td>M4 = -r+d-L+UL</td>
+            <td>M5 = C - U</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>Align d to r</td>
+            <td>M6 = U - L</td>
+        </tr>
+        <tr>
+            <td>UL</td>
+            <td>Align c to r</td>
+            <td>Align dr to r</td>
+        </tr>
+        <tr>
+            <td>\</td>
+            <td>AUF ul</td>
+            <td>AUF ur</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Milestone 3: Memorize 8 numbers (highly recommended)</strong></p>
+<table border="1" style="width: 100%; text-align: center;">
+    <thead>
+        <tr>
+            <th>Pin Location</th>
+            <th>Left Dial</th>
+            <th>Right Dial</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>dr</td>
+            <td>M1 = D - R + ul - l</td>
+            <td>M2 = c - u</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>M3 = R - D</td>
+            <td>M4 = u - l</td>
+        </tr>
+        <tr>
+            <td>UL</td>
+            <td>Align C to R</td>
+            <td>Align DR to R</td>
+        </tr>
+        <tr>
+            <td>(After x2) ur</td>
+            <td>M5 = -r+d-L+UL</td>
+            <td>M6 = C - U</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>M7 = r - d</td>
+            <td>M8 = U - L</td>
+        </tr>
+        <tr>
+            <td>UL</td>
+            <td>Align c to r</td>
+            <td>Align dr to r</td>
+        </tr>
+        <tr>
+            <td>\</td>
+            <td>AUF ul</td>
+            <td>AUF ur</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Milestone 4: Memorize 14 numbers (For Clock Speed BLD)</strong></p>
+<table border="1" style="width: 100%; text-align: center;">
+    <thead>
+        <tr>
+            <th>Pin Location</th>
+            <th>Left Dial</th>
+            <th>Right Dial</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>dr</td>
+            <td>M1 = D - R + ul - l</td>
+            <td>M2 = c - u</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>M3 = R - D</td>
+            <td>M4 = u - l</td>
+        </tr>
+        <tr>
+            <td>UL</td>
+            <td>M5 = D - C</td>
+            <td>M6 = R - DR + l - u</td>
+        </tr>
+        <tr>
+            <td>(After x2) ur</td>
+            <td>M7 = d - r + UL - L</td>
+            <td>M8 = C - U</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>M9 = r - d</td>
+            <td>M10 = U - L</td>
+        </tr>
+        <tr>
+            <td>UL</td>
+            <td>M11 = d - c</td>
+            <td>M12 = r - dr + L - U</td>
+        </tr>
+        <tr>
+            <td>\</td>
+            <td>M13 = R + L - UL - DR + c - u - d</td>
+            <td>M14 = U + D - C - DL - UR - l - r</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Further Reading</h2>
+<p>There are some discussion on <a href="https://www.speedsolving.com/threads/clock-blind.93140/">Clock BLD</a> and the author introduced an approach similar to the one introduced here although without theoretical derivation.</p>
 
 <script>
     // Get Django variable safely into JavaScript
     const table_data = JSON.parse('{{ table_data|escapejs }}');
+
     for (let i = 0; i < table_data.length; i++) {
         const li = document.createElement("div");
         li.innerHTML = table_data[i].paragraph;

@@ -55,7 +55,12 @@ def clock_7simul_flip_intro(request):
 
 
 def clock_7simul_flip_improved(request):
-    return render(request, "7simul_flip_improved.html", {'table_data': ''})
+    table_data = read_csv_data('hello/tutorials/7sf_improved.csv', ';')
+    return render(request, "7simul_flip_improved.html", {'table_data': json.dumps(table_data)})
+
+
+def clock_7simul_flip_theory(request):
+    return render(request, "7simul_flip_theory.html", {})
 
 
 def db(request):

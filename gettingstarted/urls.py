@@ -29,4 +29,5 @@ urlpatterns = [
     path("2x2x2/eg_alg/", hello.views.eg_alg, name="eg_alg"),
     path("clock/7simul_flip_intro", hello.views.clock_7simul_flip_intro, name="7simul_flip_intro"),
     path("clock/7simul_flip_improved", hello.views.clock_7simul_flip_improved, name="7simul_flip_improved"),
+    path("clock/7simul_flip_theory", hello.views.clock_7simul_flip_theory, name="7simul_flip_theory"),
 ]

@@ -1,0 +1,54 @@
+scramble;operations;change_pins;annotation;paragraph
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;;;;"
+<p>Scramble: UR5+ DR3+ DL3+ UL2+ U5- R1+ D5+ L1+ ALL1- y2 U3- R2+ D3+ L4- ALL1+</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;;;UL,L,DL,U,C,D,UR,R,DR,ul,l,dl,u,c,d,ur,r,dr;"
+Memorize up to 14 numbers using aforementioned arithmetics applying modulo 12.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,,,,,,,,,,,,;0,1,0,0;-1,,,,,,2,,,,,,,,,,,;"
+<ol>
+<li>Memo 1: memorize M1 = D - R + ul - l. D - R = -1, ul - l = 0 => M1 = -1</li>
+<li>Memo 2: memorize M2 = c - u. M2 = 2</li>
+<li>Memo 3: memorize M3 = R - D. M3 = 1</li>
+<li>Memo 4: memorize M4 = u - l. M4 = 4</li>
+<li>Memo 5: memorize M5 = D - C. M5 = 3</li>
+<li>Memo 6: memorize M6 = R - DR + l - u. M6 = 1</li>
+<li>Memo 7: memorize M7 = d - r + UL - L. M7 = -5</li>
+<li>Memo 8: memorize M8 = C - U. M8 = 3</li>
+<li>Memo 9: memorize M9 = r - d. M9 = 2</li>
+<li>Memo 10: memorize M10 = U - L. M10 = -1</li>
+<li>Memo 11: memorize M11 = d - c. M11 = 1</li>
+<li>Memo 12: memorize M12 = r - dr + L - U. M12 = -3</li>
+<li>Memo 13: memorize M13 = R + L - UL - DR + c - u - d. M13 = -5. Notice c = 2 instead of 8 since 0 is at the bottom instead of the top, this was not relevant for other memos since we used to always compare two clocks on white side.</li>
+<li>Memo 14: memorize M14 = U + D - C - DL - UR - l - r. M14 = 3. Same as above notice l = 8 instead of 2.</li>
+</ol>
+<p>Now we should execute 7 simultaneous moves (14 moves in total).</p>
+<p><u>In our visualization, white pin means the pin is sticking out, otherwise it's black pin.</u></p>
+<p>As mentioned above, the execution never requires any operation on the two bottom dials.</p>
+<p>We will use left dial to represent the topleft dial, and right dial to represent the topright dial.</p>
+Step 1: only press topright pin, then execute M1 with the left dial and M2 with the right dial.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,,,,,,,,,,;0,1,0,1;1,,,,,,4,,,,,,,,,,,;"
+<p>Recall M1=-1, M2=2, M3=1, M4=4, M5=3, M6=1, M7=-5, M8=3, M9=2, M10=-1, M11=1, M12=-3, M13=-5, M14=3.</p>
+Step 2: press also bottomright pin, then execute M3 with left dial, and M4 with right dial.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,,,,,,,,;0,1,1,1;3,,,,,,1,,,,,,,,,,,;"
+<p>Recall M1=-1, M2=2, M3=1, M4=4, M5=3, M6=1, M7=-5, M8=3, M9=2, M10=-1, M11=1, M12=-3, M13=-5, M14=3.</p>
+Step 3: press also bottomleft pin, then execute M5 with left dial, and M6 with right dial.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,-5,3,,,,,,;1,1,1,0;,,,,,,,,,-5,,,,,,3,,;"
+<p>Recall M1=-1, M2=2, M3=1, M4=4, M5=3, M6=1, M7=-5, M8=3, M9=2, M10=-1, M11=1, M12=-3, M13=-5, M14=3.</p>
+Step 4: press down topleft pin and pop up bottomright pin, then execute M7 with left dial, and M8 with right dial.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,-5,3,2,-1,,,,;1,0,1,0;,,,,,,,,,2,,,,,,-1,,;"
+<p>Recall M1=-1, M2=2, M3=1, M4=4, M5=3, M6=1, M7=-5, M8=3, M9=2, M10=-1, M11=1, M12=-3, M13=-5, M14=3.</p>
+Step 5: press down bottomright pin, then execute M9 with left dial, and M10 with right dial.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,-5,3,2,-1,1,-3,,;0,0,1,0;,,,,,,,,,1,,,,,,-3,,;"
+<p>Recall M1=-1, M2=2, M3=1, M4=4, M5=3, M6=1, M7=-5, M8=3, M9=2, M10=-1, M11=1, M12=-3, M13=-5, M14=3.</p>
+Step 6: press down bottomleft pin, then execute M11 with left dial, and M12 with right dial.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,1,4,3,1,-5,3,2,-1,1,-3,-5,3;0,1,1,0;,,,,,,,,,-5,,,,,,3,,;"
+<p>Recall M1=-1, M2=2, M3=1, M4=4, M5=3, M6=1, M7=-5, M8=3, M9=2, M10=-1, M11=1, M12=-3, M13=-5, M14=3.</p>
+Step 7: now the last step, pop up bottom right pin (keep topleft pin up, a backslash is now sticking out), then execute M12 with left dial, and M14 with right dial.
+"
