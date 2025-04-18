@@ -192,7 +192,7 @@ const makeClocks = (scramble, operations) => {
     }
 
     // [f, x, y]
-    if (operations.length === 14) {
+    if (operations && operations.length === 14) {
         const T_op = [
             // ur
             [[0, 2, 0], [0, 0, 2], [0, 2, 2], [1, 0, 0], [1, 1, 0], [1, 0, 1], [1, 1, 1], [1, 2, 1], [1, 0, 2], [1, 1, 2], [1, 2, 2]],
@@ -268,4 +268,86 @@ const convert_to_change_pin_matrix = (str) => {
         matrix.push(flatArray.slice(i * 2, i * 2 + 2));
     }
     return matrix;
+};
+const analyze = (clocks, flip, method, letters) => {
+    const T = {
+        "UL": clocks[0][0][0],
+        "U":  clocks[0][0][1],
+        "UR": clocks[0][0][2],
+        "L":  clocks[0][1][0],
+        "C":  clocks[0][1][1],
+        "R":  clocks[0][1][2],
+        "DL": clocks[0][2][0],
+        "D":  clocks[0][2][1],
+        "DR": clocks[0][2][2],
+        "ul": flip=="y2"?clocks[1][0][0]:clocks[1][2][2],
+        "u":  flip=="y2"?clocks[1][0][1]:clocks[1][2][1],
+        "ur": flip=="y2"?clocks[1][0][2]:clocks[1][2][0],
+        "l":  flip=="y2"?clocks[1][1][0]:clocks[1][1][2],
+        "c":  flip=="y2"?clocks[1][1][1]:clocks[1][1][1],
+        "r":  flip=="y2"?clocks[1][1][2]:clocks[1][1][0],
+        "dl": flip=="y2"?clocks[1][2][0]:clocks[1][0][2],
+        "d":  flip=="y2"?clocks[1][2][1]:clocks[1][0][1],
+        "dr": flip=="y2"?clocks[1][2][2]:clocks[1][0][0],
+    };
+    const L = letters.trim().split(/ +/);
+    if (L.length!=12) {
+        return "-";
+    }
+
+    const M = [];
+    for (let line of method.split(/\n|\r\n/)) {
+        if (line=="") {
+            continue;
+        }
+        if (line[0] != "+" && line[0] != "-") {
+            line = "+" + line;
+        }
+        if (!line.match(/^((\+|-)(UL|U|UR|L|C|R|DL|D|DR|ul|u|ur|l|c|r|dl|d|dr))+$/)) {
+            M.push("N/A");
+            continue;
+        }
+
+        let m = 0;
+        for (let i=0; i<line.length;) {
+            let sign = line[i]=="+"?1:-1;
+            i++;
+            for (let c of ["UL", "UR", "DL", "DR", "U", "L", "C", "R", "D", "ul", "ur", "dl", "dr", "u", "l", "c", "r", "d"]) {
+                if (line.substr(i, c.length)==c) {
+                    m += sign*T[c];
+                    i += c.length;
+                    break;
+                }
+            }
+        }
+        M.push(L[(m%12+12)%12]);
+    }
+    return M.join(" ");
+};
+const scrambleToString = scramble => {
+    const a2s = angle => {
+        if (angle<=6) {
+            return angle+"+";
+        } else {
+            return Math.abs(angle-12)+"-";
+        }
+    };
+
+    return [
+        "UR"+a2s(scramble[0]),
+        "DR"+a2s(scramble[1]),
+        "DL"+a2s(scramble[2]),
+        "UL"+a2s(scramble[3]),
+        "U"+a2s(scramble[4]),
+        "R"+a2s(scramble[5]),
+        "D"+a2s(scramble[6]),
+        "L"+a2s(scramble[7]),
+        "ALL"+a2s(scramble[8]),
+        "y2",
+        "U"+a2s(scramble[9]),
+        "R"+a2s(scramble[10]),
+        "D"+a2s(scramble[11]),
+        "L"+a2s(scramble[12]),
+        "ALL"+a2s(scramble[13]),
+    ].join(" ");
 };

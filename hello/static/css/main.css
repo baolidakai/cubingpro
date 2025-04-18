@@ -63,6 +63,24 @@ body {
     position: absolute;
     width: 230px;
   }
+
+  @media screen {
+    .watermark {
+      display: none;
+    }
+  }
+
+  @media print {
+    #container {
+      display: none;
+    }
+    .watermark {
+      display: block;
+    }
+    .button {
+      display: none;
+    }
+  }
   
   nav {
     padding: 0;
@@ -169,6 +187,16 @@ body {
     left: 260px;
     margin-right: 3em;
     min-width: 450px;
+  }
+
+  @media print {
+    #content {
+      padding: 1.5em;
+      position: absolute;
+      left: 0px;
+      margin-right: 3em;
+      min-width: 450px;
+    }
   }
   
   #content ul.alg-list, #content ul.tabs {
@@ -365,3 +393,141 @@ body {
     width: 37em;
   }
   
+  .button.is-danger {
+    background-color: #f14668;
+    border-color: transparent;
+    color: #fff
+}
+
+.button.is-danger.is-hovered,.button.is-danger:hover {
+    background-color: #f03a5f;
+    border-color: transparent;
+    color: #fff
+}
+
+.button.is-danger.is-focused,.button.is-danger:focus {
+    border-color: transparent;
+    color: #fff
+}
+
+.button.is-danger.is-focused:not(:active),.button.is-danger:focus:not(:active) {
+    box-shadow: 0 0 0 .125em rgba(241,70,104,.25)
+}
+
+.button.is-danger.is-active,.button.is-danger:active {
+    background-color: #ef2e55;
+    border-color: transparent;
+    color: #fff
+}
+
+.button.is-danger[disabled],fieldset[disabled] .button.is-danger {
+    background-color: #f14668;
+    border-color: #f14668;
+    box-shadow: none
+}
+
+.button.is-danger.is-inverted {
+    background-color: #fff;
+    color: #f14668
+}
+
+.button.is-danger.is-inverted.is-hovered,.button.is-danger.is-inverted:hover {
+    background-color: #f2f2f2
+}
+
+.button.is-danger.is-inverted[disabled],fieldset[disabled] .button.is-danger.is-inverted {
+    background-color: #fff;
+    border-color: transparent;
+    box-shadow: none;
+    color: #f14668
+}
+
+.button.is-danger.is-loading::after {
+    border-color: transparent transparent #fff #fff!important
+}
+
+.button.is-danger.is-outlined {
+    background-color: transparent;
+    border-color: #f14668;
+    color: #f14668
+}
+
+.button.is-danger.is-outlined.is-focused,.button.is-danger.is-outlined.is-hovered,.button.is-danger.is-outlined:focus,.button.is-danger.is-outlined:hover {
+    background-color: #f14668;
+    border-color: #f14668;
+    color: #fff
+}
+
+.button.is-danger.is-outlined.is-loading::after {
+    border-color: transparent transparent #f14668 #f14668!important
+}
+
+.button.is-danger.is-outlined.is-loading.is-focused::after,.button.is-danger.is-outlined.is-loading.is-hovered::after,.button.is-danger.is-outlined.is-loading:focus::after,.button.is-danger.is-outlined.is-loading:hover::after {
+    border-color: transparent transparent #fff #fff!important
+}
+
+.button.is-danger.is-outlined[disabled],fieldset[disabled] .button.is-danger.is-outlined {
+    background-color: transparent;
+    border-color: #f14668;
+    box-shadow: none;
+    color: #f14668
+}
+
+.button.is-danger.is-inverted.is-outlined {
+    background-color: transparent;
+    border-color: #fff;
+    color: #fff
+}
+
+.button.is-danger.is-inverted.is-outlined.is-focused,.button.is-danger.is-inverted.is-outlined.is-hovered,.button.is-danger.is-inverted.is-outlined:focus,.button.is-danger.is-inverted.is-outlined:hover {
+    background-color: #fff;
+    color: #f14668
+}
+
+.button.is-danger.is-inverted.is-outlined.is-loading.is-focused::after,.button.is-danger.is-inverted.is-outlined.is-loading.is-hovered::after,.button.is-danger.is-inverted.is-outlined.is-loading:focus::after,.button.is-danger.is-inverted.is-outlined.is-loading:hover::after {
+    border-color: transparent transparent #f14668 #f14668!important
+}
+
+.button.is-danger.is-inverted.is-outlined[disabled],fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
+    background-color: transparent;
+    border-color: #fff;
+    box-shadow: none;
+    color: #fff
+}
+
+.button.is-danger.is-light {
+    background-color: #feecf0;
+    color: #cc0f35
+}
+
+.button.is-danger.is-light.is-hovered,.button.is-danger.is-light:hover {
+    background-color: #fde0e6;
+    border-color: transparent;
+    color: #cc0f35
+}
+
+.button.is-danger.is-light.is-active,.button.is-danger.is-light:active {
+    background-color: #fcd4dc;
+    border-color: transparent;
+    color: #cc0f35
+}
+
+.button.is-small {
+    font-size: .75rem
+}
+
+.button.is-small:not(.is-rounded) {
+    border-radius: 2px
+}
+
+.button.is-normal {
+    font-size: 1rem
+}
+
+.button.is-medium {
+    font-size: 1.25rem
+}
+
+.button.is-large {
+    font-size: 1.5rem
+}

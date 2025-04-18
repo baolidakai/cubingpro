@@ -21,13 +21,12 @@ from django.urls import path
 import hello.views
 
 urlpatterns = [
-    # Uncomment this and the entry in `INSTALLED_APPS` if you wish to use the Django admin feature:
-    # https://docs.djangoproject.com/en/5.2/ref/contrib/admin/
-    # path("admin/", admin.site.urls),
     path("", hello.views.index, name="index"),
     path("2x2x2/eg_intro/", hello.views.eg_intro, name="eg_intro"),
     path("2x2x2/eg_alg/", hello.views.eg_alg, name="eg_alg"),
     path("clock/7simul_flip_intro", hello.views.clock_7simul_flip_intro, name="7simul_flip_intro"),
     path("clock/7simul_flip_improved", hello.views.clock_7simul_flip_improved, name="7simul_flip_improved"),
     path("clock/7simul_flip_theory", hello.views.clock_7simul_flip_theory, name="7simul_flip_theory"),
+    path("clock/7simul_flip_tool", hello.views.clock_7simul_flip_tool, name="7simul_flip_tool"),
 ]
+

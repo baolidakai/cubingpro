@@ -63,6 +63,10 @@ def clock_7simul_flip_theory(request):
     return render(request, "7simul_flip_theory.html", {})
 
 
+def clock_7simul_flip_tool(request):
+    return render(request, "7simul_flip_tool.html", {})
+
+
 def db(request):
     # If you encounter errors visiting the `/db/` page on the example app, check that:
     #
