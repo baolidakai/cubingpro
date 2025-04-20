@@ -28,5 +28,7 @@ urlpatterns = [
     path("clock/7simul_flip_improved", hello.views.clock_7simul_flip_improved, name="7simul_flip_improved"),
     path("clock/7simul_flip_theory", hello.views.clock_7simul_flip_theory, name="7simul_flip_theory"),
     path("clock/7simul_flip_tool", hello.views.clock_7simul_flip_tool, name="7simul_flip_tool"),
+    path("pyraminx/corner_first_intro", hello.views.pyraminx_corner_first_intro, name="corner_first_intro"),
+    path("pyraminx/corner_first_alg", hello.views.pyraminx_corner_first_alg, name="corner_first_alg"),
 ]
 

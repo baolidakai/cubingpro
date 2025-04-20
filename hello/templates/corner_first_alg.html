@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>
+    (Page In Progress) Pyraminx corner first algorithms <a href="{% static 'cubingpro.com_2x2x2_eg_alg.pdf' %}" target="_blank" class="button">TODO: Printable Version</a>
+</h1>
+
+<h2>L3E (Last 3 Edges)</h2>
+<p>
+    For simplicity, we assume the corner block is already aligned with the bottom layer, and no B or B' is needed. We also assume tips are solved for better visualization.<br>
+    During an actual solve, the tips and alignment of corner and the bottom layer could be done before L3E or after.
+</p>
+<div id="L3E">
+</div>
+
+
+<h2 style="display: block !important;">WO</h2>
+<div id="WO" style="display: block !important;">
+</div>
+
+<br>
+<h2>One Flip</h2>
+<div id="OF">
+</div>
+
+<br>
+<h2>Nutella</h2>
+<div id="NU">
+</div>
+
+<br>
+<h2>Oka</h2>
+<div id="OK">
+</div>
+
+<br>
+<h2>Keyhold</h2>
+<div id="KH">
+</div>
+
+<script>
+    // Get Django variable safely into JavaScript
+    const table_data = JSON.parse('{{ table_data|escapejs }}');
+
+    for (let i = 0; i < table_data.length; i++) {
+        const overviewDiv = document.createElement("div");
+        overviewDiv.className = "overview";
+        const canvas = document.createElement("canvas");
+        canvas.id = `canvas-${i}`;
+        overviewDiv.appendChild(canvas);
+        const span = document.createElement("span");
+        // span.className = "alg";
+        span.textContent = table_data[i].Algorithm;
+        const div = document.createElement("div");
+        div.className = "details";
+        div.appendChild(span);
+        overviewDiv.appendChild(div);
+        document.getElementById(table_data[i].Type).appendChild(overviewDiv);
+        renderPyraminx(canvas.id, table_data[i].Color);
+    }
+</script>
+
+
+{% endblock content %}

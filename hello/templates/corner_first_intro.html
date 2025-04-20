@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>
+    Pyraminx corner first method intro
+</h1>
+<p>
+    Corner first method is a family of advanced pyraminx solving methods, it consists of:
+<ol>
+    <li>WO (Wedel-Odder) method</li>
+    <li>One-flip method</li>
+    <li>Nutella method</li>
+    <li>Oka method</li>
+    <li>Keyhole method</li>
+</ol>
+We split them as two main categories:
+<ol>
+    <li>Corner then Center: WO method, One-Flip method, Nutella method</li>
+    <li>Center then Corner: Oka method, Keyhole method</li>
+</ol>
+With Corner then Center methods,
+<ol>
+    <li>the first step is to build a corner or pseudocorner, such that all three edges of that corner are brought
+        together.</li>
+    <li>the second step is to use an algorithm to solve all centers and solve the corner.</li>
+    <li>the last step is to solve last 3 edges.</li>
+</ol>
+With Center then Corner methods,
+<ol>
+    <li>the first step is to build a partial corner or partial pseudocorner</li>
+    <li>the second step is to solve the centers using intuitive algorithm.</li>
+    <li>the third step is to solve the corner</li>
+    <li>the last step is to solve last 3 edges.</li>
+</ol>
+</p>
+
+<h2>
+    WO method
+</h2>
+<p>
+    With WO method,
+<ol>
+    <li>The first step is to build a corner. This step can be done intuitively.</li>
+    <li> The second step is to solve the centers using an algorithm. See the algorithms in <a
+            href="/pyraminx/corner_first_alg.html">corner first algorithms</a>.</li>
+    <li>The third step is to solve last 3 edges.</li>
+    <li>The final step is to solve tips and align the corner with the bottom.</li>
+</ol>
+The visualization below is just an example case for illustration purpose.
+</p>
+<canvas id="wo-1" width="160" height="132"></canvas>
+<canvas id="wo-2" width="160" height="132"></canvas>
+<canvas id="wo-3" width="160" height="132"></canvas>
+<canvas id="wo-4" width="160" height="132"></canvas>
+<script>
+    renderPyraminx("wo-1", " ,bbb,   y ; ,rrr,     ; ,ggg,   y ");
+    renderPyraminx("wo-2", " ,bbb, gyg ; ,rrr, byb ; ,ggg, r r ");
+    renderPyraminx("wo-3", " ,bbb, ggg ; ,rrr, bbb ; ,ggg, rrr ");
+    renderPyraminx("wo-4", "b,bbb,bbbbb;r,rrr,rrrrr;g,ggg,ggggg");
+</script>
+
+<h2>
+    One Flip method
+</h2>
+<p>
+    With One Flip method,
+<ol>
+    <li>The first step is to build a corner with exactly one edge being flipped. This step can be done intuitively.</li>
+    <li> The second step is to solve the centers and flip the edge simultaneously.</li>
+    <li>The third step is to solve last 3 edges.</li>
+    <li>The final step is to solve tips and align the corner with the bottom.</li>
+</ol>
+The visualization below is just an example case for illustration purpose.
+</p>
+<canvas id="of-1" width="160" height="132"></canvas>
+<canvas id="of-2" width="160" height="132"></canvas>
+<canvas id="of-3" width="160" height="132"></canvas>
+<canvas id="of-4" width="160" height="132"></canvas>
+<script>
+    renderPyraminx("of-1", " ,bbb,   y ; ,rrg,     ; ,rgg,   y ");
+    renderPyraminx("of-2", " ,bbb, gyg ; ,rrr, byb ; ,ggg, r r ");
+    renderPyraminx("of-3", " ,bbb, ggg ; ,rrr, bbb ; ,ggg, rrr ");
+    renderPyraminx("of-4", "b,bbb,bbbbb;r,rrr,rrrrr;g,ggg,ggggg");
+</script>
+
+<h2>
+    Nutella method
+</h2>
+<p>
+    With Nutella method,
+<ol>
+    <li>The first step is to build a corner with two edges swapped. These two edges must be oriented like the visualization below (same color should appear on the same face), not any other way. This step can be done intuitively.</li>
+    <li> The second step is to solve the centers and swap the edge simultaneously.</li>
+    <li>The third step is to solve last 3 edges.</li>
+    <li>The final step is to solve tips and align the corner with the bottom.</li>
+</ol>
+The visualization below is just an example case for illustration purpose.
+</p>
+<canvas id="nu-1" width="160" height="132"></canvas>
+<canvas id="nu-2" width="160" height="132"></canvas>
+<canvas id="nu-3" width="160" height="132"></canvas>
+<canvas id="nu-4" width="160" height="132"></canvas>
+<script>
+    renderPyraminx("nu-1", " ,bbg,   y ; ,rrr,     ; ,bgg,   y ");
+    renderPyraminx("nu-2", " ,bbb, gyg ; ,rrr, byb ; ,ggg, r r ");
+    renderPyraminx("nu-3", " ,bbb, ggg ; ,rrr, bbb ; ,ggg, rrr ");
+    renderPyraminx("nu-4", "b,bbb,bbbbb;r,rrr,rrrrr;g,ggg,ggggg");
+</script>
+
+<h2>
+    Oka method
+</h2>
+<p>
+    With Oka method,
+<ol>
+    <li>The first step is to have one corner piece correct, and another corner piece on the incorrect position but correct orientation (a RUR' or RU'R' would place it in right position and orientation).</li>
+    <li> The second step is to solve the centers using the empty slot.</li>
+    <li> The third step is to solve the corner.</li>
+    <li>The fourth step is to solve last 3 edges.</li>
+    <li>The final step is to solve tips and align the corner with the bottom.</li>
+</ol>
+The visualization below is just an example case for illustration purpose.
+</p>
+<canvas id="oka-1" width="160" height="132"></canvas>
+<canvas id="oka-2" width="160" height="132"></canvas>
+<canvas id="oka-3" width="160" height="132"></canvas>
+<canvas id="oka-4" width="160" height="132"></canvas>
+<canvas id="oka-5" width="160" height="132"></canvas>
+<script>
+    renderPyraminx("oka-1", " ,bbr,   y ; ,gr ,     ; , gg,   y ");
+    renderPyraminx("oka-2", " ,bbr, gyg ; ,gr , byb ; , gg, r r ");
+    renderPyraminx("oka-3", " ,bbb, gyg ; ,rrr, byb ; ,ggg, r r ");
+    renderPyraminx("oka-4", " ,bbb, ggg ; ,rrr, bbb ; ,ggg, rrr ");
+    renderPyraminx("oka-5", "b,bbb,bbbbb;r,rrr,rrrrr;g,ggg,ggggg");
+</script>
+
+<h2>
+    Keyhole method
+</h2>
+<p>
+    With Keyhole method,
+<ol>
+    <li>The first step is to have two pieces correct.</li>
+    <li> The second step is to solve the centers using the empty slot.</li>
+    <li> The third step is to solve the corner.</li>
+    <li>The fourth step is to solve last 3 edges.</li>
+    <li>The final step is to solve tips and align the corner with the bottom.</li>
+</ol>
+The visualization below is just an example case for illustration purpose.
+</p>
+<canvas id="kh-1" width="160" height="132"></canvas>
+<canvas id="kh-2" width="160" height="132"></canvas>
+<canvas id="kh-3" width="160" height="132"></canvas>
+<canvas id="kh-4" width="160" height="132"></canvas>
+<canvas id="kh-5" width="160" height="132"></canvas>
+<script>
+    renderPyraminx("kh-1", " ,bbb,   y ; ,rr ,     ; , gg,   y ");
+    renderPyraminx("kh-2", " ,bbb, gyg ; ,rr , byb ; , gg, r r ");
+    renderPyraminx("kh-3", " ,bbb, gyg ; ,rrr, byb ; ,ggg, r r ");
+    renderPyraminx("kh-4", " ,bbb, ggg ; ,rrr, bbb ; ,ggg, rrr ");
+    renderPyraminx("kh-5", "b,bbb,bbbbb;r,rrr,rrrrr;g,ggg,ggggg");
+</script>
+
+<h2>
+    Improvement Plan
+</h2>
+<p>
+    People sometimes start by learning Oka method and keyhole method, than transit to learn WO method, one flip method,
+    and Nutella method.<br>
+    Alternatively, people start by learning WO method, one flip method, and Nutella method, than transit to learn Oka
+    method.<br>
+    Start with the approach you are most interested in, once you gain experience, it's natural to learn more
+    algorithms.<br>
+    As you advance, good lookahead + improvement on tips execution + tps + pick the best method will help you achieve
+    good results.
+</p>
+
+{% endblock content %}

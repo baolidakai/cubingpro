@@ -67,6 +67,28 @@ def clock_7simul_flip_tool(request):
     return render(request, "7simul_flip_tool.html", {})
 
 
+def pyraminx_corner_first_intro(request):
+    # TODO: Make this a CSV.
+    return render(request, "corner_first_intro.html", {})
+
+
+def read_pyraminx_csv_data(filepath, delimiter):
+    data = []
+    csv_path = os.path.join(settings.BASE_DIR, filepath)
+
+    with open(csv_path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=delimiter)
+        for row in reader:
+            data.append(row)
+
+    return data
+
+
+def pyraminx_corner_first_alg(request):
+    table_data = read_pyraminx_csv_data('hello/algorithms/pyraminx_corner_first.csv', '|')
+    return render(request, "corner_first_alg.html", {'table_data': json.dumps(table_data)})
+
+
 def db(request):
     # If you encounter errors visiting the `/db/` page on the example app, check that:
     #
