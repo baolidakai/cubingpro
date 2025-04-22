@@ -1,5 +1,53 @@
 Type|Color|Algorithm
-L3E|b,bbr,bbbbb;y,yyg,yybyy;r,yrr,rrrrr|R'LRL'
-L3E|b,bby,bbbbb;y,gyy,yyryy;r,brr,rrrrr|LR'L'R
+L3E|b,bbr,bbbbb;y,yyg,yybyy;r,yrr,rrrrr|R'LRL' (do in all three directions without rotating)
+L3E|b,bby,bbbbb;y,gyy,yyryy;r,brr,rrrrr|LR'L'R (do in all three directions without rotating)
 L3E|b,bby,bbbbb;y,byg,yyyyy;r,yrr,rrrrr|R'LRL'UL'U'L
 L3E|b,bbb,bbbbb;y,yyr,yygyy;r,yrr,rrrrr|LR'L'RL'ULU'
+L3E|b,bby,bbbbb;y,byy,yygyy;r,rrr,rrrrr|R'LRL'RU'R'U
+L3E|b,bbr,bbbbb;y,yyy,yyyyy;r,grr,rrrrr|LR'L'RRU'R'U
+L3E|b,bbg,bbbbb;y,yyy,yyyyy;r,brr,rrrrr|R'LRL'L'ULU'
+WO| ,bbb,     ; ,rrr,   y ; ,ggg,     |R'L'R'LR
+WO| ,bbb,   y ; ,rrr,     ; ,ggg,     |LRL'R'L'
+WO| ,bbb,     ; ,rrr, y   ; ,ggg,     |LRLR'L'
+WO| ,bbb,     ; ,rrr,     ; ,ggg, y   |R'L'RLR
+WO| ,bbb,     ; ,rrr, y y ; ,ggg,     |RLR(LR'L'R)
+WO| ,bbb,   y ; ,rrr,     ; ,ggg, y   |(R'LRL')R'L2R'
+WO| ,bbb,   y ; ,rrr,   y ; ,ggg,     |R'LR'L'RL'
+WO| ,bbb,     ; ,rrr, y   ; ,ggg, y   |LR'LRL'R
+WO| ,bbb,     ; ,rrr, y y ; ,ggg,   y |R'DwRDwR'
+WO| ,bbb, y   ; ,rrr, y y ; ,ggg,     |LDw'L'Dw'L
+WO| ,bbb,   y ; ,rrr,   y ; ,ggg,   y |LR'L2'DwLUL
+WO| ,bbb, y   ; ,rrr, y   ; ,ggg, y   |R'LR2Dw'R'U'R'
+OF| ,bbb,     ; ,rrg,     ; ,rgg,     |(LR'L'R)L'UL
+OF| ,rrg,     ; ,rgg,     ; ,bbb,     |(R'LRL')RU'R'
+OF| ,bbb,     ; ,rrg,   y ; ,rgg,     |R'U(RLR'L')
+OF| ,rrg,     ; ,rgg, y   ; ,bbb,     |LU'(L'R'LR)
+OF| ,bbb,     ; ,rrg, y y ; ,rgg,     |R'DwR(L'R'LR)
+OF| ,rrg,   y ; ,rgg,     ; ,bbb, y   |LRL(R'U'R) or L'U'L'RL
+OF| ,bbb,   y ; ,rrg,   y ; ,rgg,     |R'UL'
+OF| ,rrg,     ; ,rgg, y   ; ,bbb, y   |LU'R
+OF| ,bbb, y y ; ,rrg,   y ; ,rgg,     |R'U'BU'L'
+OF| ,rrg,     ; ,rgg, y   ; ,bbb, y y |LUB'UR
+OF| ,bbb,   y ; ,rrg,   y ; ,rgg,   y |R'U'B'U'L'
+OF| ,rrg, y   ; ,rgg, y   ; ,bbb, y   |LUBUR
+NU| ,bbg,     ; ,rrr,     ; ,bgg,     |(R'LRL')(RLR'L')
+NU| ,bbg,   y ; ,rrr,     ; ,bgg,     |R'LRL
+NU| ,bbg,     ; ,rrr,     ; ,bgg, y   |L'R'L'R'
+NU| ,bbg,     ; ,rrr, y y ; ,bgg,     |L'R'LR'LR
+NU| ,bbg,   y ; ,rrr,     ; ,bgg, y   |LRL'RL'R'
+NU| ,bgg,   y ; ,bbg,   y ; ,rrr,     |R'U'y'LR'L'
+NU| ,rrr,     ; ,bgg, y   ; ,bbg, y   |LUyR'LR
+NU| ,bbg,   y ; ,rrr,     ; ,bgg, y y |R'L'R'Dw'R'
+NU| ,bbg, y y ; ,rrr,     ; ,bgg, y   |LRLDwL
+NU| ,bbg,   y ; ,rrr,   y ; ,bgg,   y |L'Dw'R'L'
+NU| ,bbg, y   ; ,rrr, y   ; ,bgg, y   |RDwLR
+OK| ,bbr,     ; ,gr ,  b  ; , gg,     |L'UL
+OK| ,bbr,     ; ,gr ,  r  ; , gg,     |U'RUR'
+OK| ,bbr,     ; ,grb,     ; ,rgg,     |(RU'R'U)(L'R'LR)
+OK| ,bbr,     ; ,grr,     ; ,bgg,     |R'L'RUL
+OK| ,bb ,     ; , rb,  r  ; ,rgg,     |DwR'U'R
+OK| ,bb ,     ; , rb,  g  ; ,rgg,     |RU'R'
+OK| ,bbg,     ; ,rrb,     ; ,rgg,     |LRL'U'R'
+KH| ,bbb,     ; ,rrg,     ; ,rgg,     |(LR'L'R)L'UL
+KH| ,bbb,     ; ,rr , g   ; , gg,     |L'R'LR
+KH| ,bbb,     ; ,rr , r   ; , gg,     |U(RLR'L')
