@@ -103,9 +103,20 @@ def pyraminx_corner_first_alg(request):
     table_data = read_pyraminx_csv_data('hello/algorithms/pyraminx_corner_first.csv', '|')
     return render(request, "corner_first_alg.html", {'table_data': json.dumps(table_data)})
 
+
 def pyraminx_v_first_alg(request):
     table_data = read_pyraminx_csv_data('hello/algorithms/pyraminx_v_first.csv', ',')
     return render(request, "v_first_alg.html", {'table_data': table_data})
+
+
+def skewb_sarah_beginner(request):
+    table_data = read_csv_data('hello/algorithms/skewb_sarah_beginner.csv', ',')
+    return render(request, "sarah_beginner.html", {'table_data': table_data})
+
+
+def skewb_sarah_intermediate(request):
+    table_data = read_csv_data('hello/algorithms/skewb_sarah_intermediate.csv', ',')
+    return render(request, "sarah_intermediate.html", {'table_data': table_data})
 
 
 def db(request):

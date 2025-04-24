@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include "sarah_common.html" %}
+
+<h1>
+    Sarah's Beginner Method Overview
+</h1>
+
+<p><u>Step 1: Solve the first side.</u></p>
+<canvas id="sarah-step-1" width="300" height="200"></canvas>
+
+<p>Notice the colors should be aligned, e.g. the following face is not solved due to misalignment of side colors.</p>
+<canvas id="sarah-step-1-incorrect" width="300" height="200"></canvas>
+
+<p>As an extension to Sarah's method, there is actually an additional algorithm set called Skewb EG-2 which solves the
+    first face and then solve the rest with one algorithm.</p>
+
+<p><u>Step 2: Solve the remaining corners.</u></p>
+<p>Notice white center is already solved, but is not shown.</p>
+<canvas id="sarah-step-2" width="300" height="200"></canvas>
+
+<p><u>Step 3: Solve the U center.</u></p>
+<canvas id="sarah-step-3" width="300" height="200"></canvas>
+
+<p><u>Step 4: Solve the remaining centers.</u></p>
+<p>Notice there is no AUF needed for Skewb.</p>
+<canvas id="sarah-step-4" width="300" height="200"></canvas>
+
+<h1>
+    Sarah's Beginner Method Algorithms
+</h1>
+<p><strong>Tips: click on show notation above to understand the notations.</strong></p>
+
+<h2>Step 2: Solve the remaining corners</h2>
+<p>There are two cases for top layer corners (except for already solved):</p>
+<p>Case 1: no top corner is oriented.</p>
+<p>This case can be solved at two angles:</p>
+<table border="1" style="width: 100%; text-align: center; font-size: 1.2em;">
+    <tr>
+        <td><canvas id="sarah-step-2-case-1-angle-1" width="300" height="200"></canvas></td>
+        <td><canvas id="sarah-step-2-case-1-angle-2" width="300" height="200"></canvas></td>
+    </tr>
+    <tr>
+        <td>The algorithm is S (Sledgehammer) = f' l f l'</td>
+        <td>The algorithm is H (Hedgeslammer) = l f' l' f</td>
+    </tr>
+</table>
+<p>Case 2: two top corners are oriented.</p>
+<div class="overview">
+    <canvas id="sarah-step-2-case-2" width="300" height="200"></canvas>
+    <p class="details">S y S</p>
+</div>
+
+<h2>Step 3: Solve the U center</h2>
+<div class="overview">
+    <canvas id="sarah-step-3-case-1" width="300" height="200"></canvas>
+    <p class="details">S y2 S</p>
+</div>
+
+<h2>Step 4: Solve the remaining centers</h2>
+<p>First make rotations to match with one of the following case then apply the corresponding algorithm.</p>
+<div class="overview">
+    <p>U perm</p>
+    <canvas id="sarah-step-4-case-1" width="300" height="200"></canvas>
+    <p class="details">S y2 S</p>
+</div>
+<div class="overview">
+    <p>Z perm</p>
+    <canvas id="sarah-step-4-case-2" width="300" height="200"></canvas>
+    <p class="details">FCN: R L' U' L U L R L' R</p>
+</div>
+<div class="overview">
+    <p>H perm</p>
+    <canvas id="sarah-step-4-case-3" width="300" height="200"></canvas>
+    <p class="details">FCN: L R' U R' L' U R' U</p>
+</div>
+
+<script>
+    drawSkewb("sarah-step-1", "wwwwwbb   oo   gg   rr   ");
+    drawSkewb("sarah-step-1-incorrect", "wwwwwgb   or   gg   ro   ");
+    drawSkewb("sarah-step-2", "yyyy rrrr gggg oooo bbbb ");
+    drawSkewb("sarah-step-3", "yyyyyrrrr gggg oooo bbbb ");
+    drawSkewb("sarah-step-4", "yyyyyrrrrrgggggooooobbbbb");
+    drawSkewb("sarah-step-2-case-1-angle-1", "       rr y gg yyoo  ybb ");
+    drawSkewb("sarah-step-2-case-1-angle-2", "     yyrr  ygg   oo y bb ");
+    drawSkewb("sarah-step-2-case-2", " y y y rr  ygg   oo   bb ");
+    drawSkewb("sarah-step-3-case-1", "yyyy rrrr gggg oooo bbbby");
+    drawSkewb("sarah-step-4-case-1", "ggggowwwwwooooryyyyyrrrrg");
+    drawSkewb("sarah-step-4-case-2", "yyyyyrrrrgggggroooobbbbbo");
+    drawSkewb("sarah-step-4-case-3", "yyyyyrrrroggggboooorbbbbg");
+</script>
+
+{% endblock content %}

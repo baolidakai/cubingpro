@@ -31,5 +31,7 @@ urlpatterns = [
     path("pyraminx/corner_first_intro", hello.views.pyraminx_corner_first_intro, name="corner_first_intro"),
     path("pyraminx/corner_first_alg", hello.views.pyraminx_corner_first_alg, name="corner_first_alg"),
     path("pyraminx/v_first_alg", hello.views.pyraminx_v_first_alg, name="v_first_alg"),
+    path("skewb/sarah_beginner", hello.views.skewb_sarah_beginner, name="sarah_beginner"),
+    path("skewb/sarah_intermediate", hello.views.skewb_sarah_intermediate, name="sarah_intermediate"),
 ]
 

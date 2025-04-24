@@ -1,0 +1,68 @@
+{% load static %}
+
+<div id="extraInfo" style="display: none;">
+    <h1>
+        Notation
+    </h1>
+    <h2>Sledgehammer/Hedgeslammer Notation</h2>
+    <p>The S(Sledgehammer)/H(Hedgeslammer) is not a standard notation method, it's a jargon widely used for Skewb.</p>
+    <p>Majority of Skewb algorithms could be represented with a combination of S and H.</p>
+    <br>
+    <p>Refer to fingertricks in <a href="https://www.youtube.com/watch?v=NnupsJhuRgo&t=70s">this YouTube video</a>.</p>
+    <p>We define f and f' turn to be the clockwise and counterclockwise turn on this corner:</p>
+    <canvas id="sh-f" width="300" height="200"></canvas>
+    <p>We define l and l' turn to be the clockwise and counterclockwise turn on this corner:</p>
+    <canvas id="sh-l" width="300" height="200"></canvas>
+    <p>Here, we define the sledgehammer to be the following four moves:</p>
+    <p>f' l f l'</p>
+    <p>We define the Hedgeslammer to be the following four moves:</p>
+    <p>l f' l' f</p>
+    <br>
+    <h2>Rotation</h2>
+    <p>Rotation is standard, similar to 3x3 cube notations.</p>
+    <img src="{% static 'skewb_rotation.png' %}" alt="Image unavailable" style="max-width: 50%; height: auto; float: none !important;">        </p>
+    <h2>FCN Notation</h2>
+    <p>Let's next learn the standard FCN (fixed corner notation).</p>
+    <p>FCN is the notation used for WCA scrambling and major timer apps. Familiarize with yourself this notation so you
+        may easily understand many discussions or example solves.</p>
+    <p>Similarly to most puzzles, first letter indicates which corner on Skewb to turn; second optional apostrophe
+        indicates whether to turn counter-clockwise.</p>
+    <p>Always start with white at top, green at front, red at right.</p>
+    <p>There are four different corners to turn, the stickers affected by each corner turn is visualized below.</p>
+    <table border="1" style="width: 100%; text-align: center; font-size: 1.2em;">
+        <tr>
+            <th>U corner</th>
+            <th>B corner</th>
+        </tr>
+        <tr>
+            <td> <canvas id="fcn-u" width="300" height="200"></canvas></td>
+            <td> <canvas id="fcn-b" width="300" height="200"></canvas> </td>
+        </tr>
+        <tr>
+            <th>L corner</th>
+            <th>R corner</th>
+        </tr>
+        <tr>
+            <td> <canvas id="fcn-l" width="300" height="200"></canvas> </td>
+            <td><canvas id="fcn-r" width="300" height="200"></canvas> </td>
+        </tr>
+    </table>
+    <script>
+        drawSkewb("sh-f", "  p        p   p         ");
+        drawSkewb("sh-l", "   p  p   p              ");
+        drawSkewb("fcn-u", "pp pppp ppp     p   ppp p");
+        drawSkewb("fcn-b", "p    p ppp   p   p   pppp");
+        drawSkewb("fcn-l", "   p  ppppp ppp   p   p  ");
+        drawSkewb("fcn-r", " p      p   p   ppppp ppp");
+    </script>
+</div>
+
+<input type="checkbox" id="toggleDiv" style="transform: scale(1.5);" />
+<label for="toggleDiv" style="font-size: 1.5em;">Show notation</label>
+
+<script>
+    document.getElementById('toggleDiv').addEventListener('change', function () {
+        const extraInfo = document.getElementById('extraInfo');
+        extraInfo.style.display = this.checked ? 'block' : 'none';
+    });
+</script>

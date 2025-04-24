@@ -15,9 +15,9 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
   <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
   <script src="{% static 'js/vendor/jquery.ba-replacetext.min.js' %}"></script>
-  <script src="{% static 'js/abbreviations.js' %}" type="text/javascript"></script>
   <script src="{% static 'js/clock.js' %}" type="text/javascript"></script>
   <script src="{% static 'js/pyraminx.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/skewb.js' %}" type="text/javascript"></script>
   <script src="https://cdn.cubing.net/v0/js/cubing/twisty" type="module"></script>
   <script type="module">
     import "https://cdn.cubing.net/v0/js/cubing/twisty";
@@ -78,6 +78,17 @@
             </ul>
           </li>
 
+          <li>
+            <h3>Skewb</h3>
+            <ul>
+              <li><a href="/skewb/sarah_beginner">Sarah's Beginner</a></li>
+              <li><a href="/skewb/sarah_intermediate">Sarah's Intermediate</a></li>
+              <!-- <li><a href="/skewb/sarah_intermediate">First Layer (copy from Renzha's)</a></li> --> 
+              <!-- Sarah's advanced method -->
+              <!-- First face solver, allow user input scramble -->
+            </ul>
+          </li>
+
           <!--
           
                                 <li>
@@ -88,13 +99,6 @@
                 PLL trainer
                 OLL trainer
                 Roux
-              </ul>
-            </li>
-
-                      <li>
-              <h3>Skewb</h3>
-              <ul>
-                <li><a href="/skewb/my-method">My Method</a></li>
               </ul>
             </li>
 
