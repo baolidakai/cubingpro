@@ -1,0 +1,36 @@
+Case,alg
+DS2,(R U' R') U' (R U' R')
+DS3,(L' U L) U (L' U L)
+DS4,(R' L R L') U (L' U' L)
+DS5,L (U R U' R') L'
+DS6,R' (U' L' U L) R
+DF1,(R' L R L') U (R' L R L') U (R' L R L')
+DF2,(L R' L' R) U (L R' L' R)
+DF3,(R' L R L') U' (R' L R L')
+DF4,(R' L R L') (R U' R')
+DF5,(R U' R') (L' U' L)
+DF6,(L' U L) (R U R')
+US1,L' U' L
+US2,R U R'
+US3,L R' L' R
+US4,R' L R L'
+US5,R' L R L2' U L
+US6,L R' L' R2 U' R'
+US7,R U' R'
+US8,L' U L
+UF1,(R U R') U (R' L R L')
+UF2,(L' U' L) U' (L R' L' R)
+UF3,(L' U L) U' (R U R')
+UF4,(R U' R') U (L' U' L)
+UF5,(R U R') U (L' U L)
+UF6,(L' U' L) U' (R U' R')
+UF7,(R' L R L') U (L' U L)
+UF8,(L R' L' R) U' (R U' R')
+NP1,R U' R2' L R L'
+NP2,L' U L2 R' L' R
+NP3,(L' U' L) U (R U R')
+NP4,(R U R') U' (L' U' L)
+NP5,(R U' R') U' (R U R')
+NP6,(L' U L) U (L' U' L)
+NP7,(L' U L) (R U' R')
+NP8,(R U' R') (L' U L)

@@ -4,13 +4,15 @@
 {% block content %}
 
 <h1>
-    Pyraminx V first algorithms <a href="{% static 'cubingpro.com_pyraminx_corner_first_alg.pdf' %}" target="_blank" class="button">TODO: Printable Version</a>
+    Pyraminx V first algorithms <a href="{% static 'cubingpro.com_pyraminx_v_first_alg.pdf' %}" target="_blank"
+        class="button">Printable Version</a>
 </h1>
 
 <h2>V first / L4E (Last 4 Edges)</h2>
 <p>
     In V first method, we first solve one layer except for one edge, this is done intuitively.<br>
-    Then we apply an algorithm to solve last 4 edges together. To reduce algorithm count, we allow the top layer to be misaligned with bottom layer.<br>
+    Then we apply an algorithm to solve last 4 edges together. To reduce algorithm count, we allow the top layer to be
+    misaligned with bottom layer.<br>
     Eventually, we do top layer AUF and tips.<br>
     This method is also known as L4E (last 4 edges).<br>
     We present all the L4E algorithms here.
@@ -25,6 +27,25 @@
     renderPyraminx("v-step2", " ,ggg, bbb ; ,bbb, rrr ; ,rrr, ggg ");
     renderPyraminx("v-step3", "b,bbb,bbbbb;r,rrr,rrrrr;g,ggg,ggggg");
 </script>
+
+<br>
+
+<h2>L4E Algorithms</h2>
+<p>Tips: you may drag those pyraminx visualization in case the hidden sticker on the bottom is unclear at bird eye view.
+</p>
+
+{% for row in table_data %}
+{% if row.Case|slice:"-1:" == "1" %}
+<br>
+{% endif %}
+<div class="overview">
+    {{ row.Case }}
+    <twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="pyraminx"
+        background="none" camera-latitude=100 camera-latitude-limit=100 hint-facelets="none" control-panel="none"
+        alg="{{row.inv}}"></twisty-player>
+    {{row.alg}}
+</div>
+{% endfor %}
 
 
 {% endblock content %}

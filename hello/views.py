@@ -29,6 +29,12 @@ def preprocess(alg):
     return ' '.join(moves)
 
 
+def pyraminx_inverse(alg):
+    pattern = r"[RLUDFB][2']?"
+    moves = re.findall(pattern, alg)
+    return ' '.join(moves[::-1])
+
+
 def read_csv_data(filepath, delimiter):
     data = []
     csv_path = os.path.join(settings.BASE_DIR, filepath)
@@ -79,6 +85,8 @@ def read_pyraminx_csv_data(filepath, delimiter):
     with open(csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=delimiter)
         for row in reader:
+            if 'alg' in row:
+                row['inv'] = pyraminx_inverse(row['alg'])
             data.append(row)
 
     return data
@@ -89,8 +97,8 @@ def pyraminx_corner_first_alg(request):
     return render(request, "corner_first_alg.html", {'table_data': json.dumps(table_data)})
 
 def pyraminx_v_first_alg(request):
-    table_data = read_pyraminx_csv_data('hello/algorithms/pyraminx_v_first.csv', '|')
-    return render(request, "v_first_alg.html", {'table_data': json.dumps(table_data)})
+    table_data = read_pyraminx_csv_data('hello/algorithms/pyraminx_v_first.csv', ',')
+    return render(request, "v_first_alg.html", {'table_data': table_data})
 
 
 def db(request):
