@@ -32,7 +32,14 @@ def preprocess(alg):
 def pyraminx_inverse(alg):
     pattern = r"[RLUDFB][2']?"
     moves = re.findall(pattern, alg)
-    return ' '.join(moves[::-1])
+    moves.reverse()
+    def inv(m):
+        if m.endswith('2'):
+            return m[:-1]
+        if m.endswith("'"):
+            return m[:-1]
+        return m + "'"
+    return ' '.join([inv(m) for m in moves])
 
 
 def read_csv_data(filepath, delimiter):
