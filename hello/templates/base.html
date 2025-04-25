@@ -83,7 +83,10 @@
             <ul>
               <li><a href="/skewb/sarah_beginner">Sarah's Beginner</a></li>
               <li><a href="/skewb/sarah_intermediate">Sarah's Intermediate</a></li>
-              <!-- <li><a href="/skewb/sarah_intermediate">First Layer (copy from Renzha's)</a></li> --> 
+              <!-- NS for Sarah's intermediate -->
+               <!-- EG2 for Sarah's intermediate -->
+              <!-- <li><a href="/skewb/sarah_intermediate">First Layer (copy from Renzha's + two diagonally solved + some example solves)</a></li> --> 
+               <!-- WR solve examples -->
               <!-- Sarah's advanced method -->
               <!-- First face solver, allow user input scramble -->
             </ul>
@@ -154,6 +157,15 @@
               </ul>
             </li>
 
+                        <li>
+              <h3>3BLD</h3>
+              <ul>
+                4 steps
+                M2R2
+                3 cycle
+              </ul>
+            </li>
+
             <li>
               <h3>Hetagon</h3>
               <ul>
@@ -178,6 +190,10 @@
     <div id="home">
 
       <h1 class="watermark">cubingpro.com</h1>
+
+      {% if request.path != '/' %}
+      <a href="/" class="button">Back to Home</a>
+      {% endif %}
 
       {% block content %}{% endblock content %}
 

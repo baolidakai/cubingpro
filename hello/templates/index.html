@@ -13,5 +13,38 @@
   <p>
     Email me at my WCA ID @ gmail.com.
   </p>
+
+  <h2>Table of Content</h2>
+  <div id="toc">
+  </div>
   
+  <script>
+    const sidebar = document.querySelector('#sidebar nav ul');
+    const sidebarItems = Array.from(sidebar.querySelectorAll('a')).map(link => ({
+      name: link.textContent,
+      link: link.href,
+      category: link.closest('li').parentElement.previousElementSibling ? link.closest('li').parentElement.previousElementSibling.textContent : null
+    }));
+    const toc = document.querySelector('#toc');
+    const sidebarContainer = document.createElement('ul');
+    sidebarItems.forEach(item => {
+      if (item.name === 'Home') {
+        return;
+      }
+      const listItem = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = item.link;
+      link.textContent = item.name;
+      listItem.appendChild(link);
+      if (item.category && (!sidebarItems[sidebarItems.indexOf(item) - 1] || sidebarItems[sidebarItems.indexOf(item) - 1].category !== item.category)) {
+        const categoryElement = document.createElement('p');
+        categoryElement.style.marginLeft = '-2em';
+        categoryElement.textContent = item.category;
+        sidebarContainer.appendChild(categoryElement);
+      }
+      sidebarContainer.appendChild(listItem);
+    });
+    toc.appendChild(sidebarContainer);
+  </script>
+
 {% endblock content %}

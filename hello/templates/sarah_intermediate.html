@@ -6,15 +6,42 @@
 {% include "sarah_common.html" %}
 
 <h1>
-    (Page In Progress) Sarah's Intermediate Method Overview
+    Sarah's Intermediate Method Overview <a href="{% static 'cubingpro.com_skewb_sarah_intermediate_alg.pdf' %}" target="_blank" class="button">Printable Version</a>
 </h1>
 <p>
     You are recommended to first read <a href="/skewb/sarah_beginner">Sarah's beginner method</a> page, if you are not familiar with beginner method.<br>
 </p>
+<p><u>Step 1: Solve the first side.</u></p>
+<canvas id="sarah-step-1" width="300" height="200"></canvas>
+
+<p><u>Step 2: Solve the opposite side (corners and opposite center).</u></p>
+<p>Notice white center is already solved, but is not shown.</p>
+<canvas id="sarah-step-2" width="300" height="200"></canvas>
+
+<p><u>Step 3: Solve the remaining centers.</u></p>
+<canvas id="sarah-step-4" width="300" height="200"></canvas>
+
+<script>
+    drawSkewb("sarah-step-1", "wwwwwbb   oo   gg   rr   ");
+    drawSkewb("sarah-step-2", "yyyy rrrr gggg oooo bbbb ");
+    drawSkewb("sarah-step-4", "yyyyyrrrrrgggggooooobbbbb");
+</script>
 
 <h1>
     Sarah's Intermediate Method Algorithms
 </h1>
 <p>Tips: click on show notation above to understand the notations.</p>
+<p>Step 1 is intuitive, step 3 is identical to <a href="/skewb/sarah_beginner">Sarah's beginner method</a> step 4 algorithms.</p>
+<p>We list all step 2 algorithms.</p>
+
+{% for row in table_data %}
+<div class="overview">
+    <canvas id="{{ row.case }}" width="300" height="200"></canvas>
+    <p class="details">{{ row.alg }}</p>
+    <script>
+    drawSkewb("{{ row.case }}", "{{ row.color }}");
+    </script>
+</div>
+{% endfor %}
 
 {% endblock content %}
