@@ -17,11 +17,19 @@ Including another URLconf
 
 # from django.contrib import admin
 from django.urls import path
+import os
+from django.views.static import serve
+from django.conf import settings
+from django.urls import re_path
 
 import hello.views
 
 urlpatterns = [
     path("", hello.views.index, name="index"),
+    re_path(r'ads.txt', serve, {
+        'path': 'ads.txt',
+        'document_root': os.path.join(settings.BASE_DIR, 'hello/static'),
+    }),
     path("2x2x2/eg_intro/", hello.views.eg_intro, name="eg_intro"),
     path("2x2x2/eg_alg/", hello.views.eg_alg, name="eg_alg"),
     path("clock/7simul_flip_intro", hello.views.clock_7simul_flip_intro, name="7simul_flip_intro"),
