@@ -170,6 +170,40 @@
             resultDiv.innerHTML = `Error: ${error.message}`;
         }
     }
+
+    // Populate form fields from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventTypeParam = urlParams.get('event_type');
+    const competitorIdParam = urlParams.get('competitor_id');
+
+    // Share the URL with current parameters
+    const shareButton = document.createElement('button');
+    shareButton.textContent = 'Share URL';
+    shareButton.style.marginLeft = '10px';
+    document.querySelector('form').appendChild(shareButton);
+
+    shareButton.addEventListener('click', () => {
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('event_type', document.getElementById('event_type').value);
+        currentUrl.searchParams.set('competitor_id', document.getElementById('competitor_id').value);
+        navigator.clipboard.writeText(currentUrl.toString()).then(() => {
+            alert('URL copied to clipboard!');
+        }).catch(err => {
+            alert('Failed to copy URL: ' + err);
+        });
+    });
+
+    if (eventTypeParam) {
+        document.getElementById('event_type').value = eventTypeParam;
+    }
+    if (competitorIdParam) {
+        document.getElementById('competitor_id').value = competitorIdParam;
+    }
+
+    // Automatically fetch data if parameters are present
+    if (eventTypeParam && competitorIdParam) {
+        fetchCompetitorData(new Event('submit'));
+    }
 </script>
 
 {% endblock content %}
