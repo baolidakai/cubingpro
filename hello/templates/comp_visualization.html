@@ -7,12 +7,34 @@
     <strong>Disclaimer: This is not associated with any official WCA software.</strong>
 </p>
 <p>
-    This page does not yet support live result, and is based on daily WCA dump. There might be one day delay and also subject to your competition result being updated to WCA.
+    This page does not yet support live result, and is based on daily WCA dump. There might be one day delay and also
+    subject to your competition result being updated to WCA.
 </p>
 
 <form method="get" action="" onsubmit="fetchCompetitorData(event)">
+    <label for="event_type">Event:</label>
+    <select id="event_type" name="event_type" onchange="this.form.onsubmit(new Event('submit'));">
+        <option value="333">3x3x3</option>
+        <option value="222">2x2x2</option>
+        <option value="444">4x4x4</option>
+        <option value="555">5x5x5</option>
+        <option value="666">6x6x6</option>
+        <option value="777">7x7x7</option>
+        <option value="333bf">3x3x3 BLD</option>
+        <!-- <option value="333mbf">3x3x3 MBLD</option> -->
+        <option value="444bf">4x4x4 BLD</option>
+        <option value="555bf">5x5x5 BLD</option>
+        <option value="333fm">FMC</option>
+        <option value="333oh">3x3x3 OH</option>
+        <option value="clock">Clock</option>
+        <option value="minx">Megaminx</option>
+        <option value="pyram">Pyraminx</option>
+        <option value="skewb">Skewb</option>
+        <option value="sq1">Square-1</option>
+    </select>
     <label for="competitor_id">WCA ID:</label>
-    <input type="text" id="competitor_id" name="competitor_id" placeholder="Enter WCA ID (e.g. 2009DENG01)" value="2009DENG01">
+    <input type="text" id="competitor_id" name="competitor_id" placeholder="Enter WCA ID (e.g. 2009DENG01)"
+        value="2009DENG01">
     <button type="submit">Visualize</button>
 </form>
 
@@ -20,9 +42,10 @@
 
 <script>
     async function fetchCompetitorData(event) {
-        console.log("working...");
         event.preventDefault();
         const competitorId = document.getElementById('competitor_id').value;
+        const eventType = document.getElementById('event_type').value;
+        const selectedOptionText = document.getElementById('event_type').options[document.getElementById('event_type').selectedIndex].text;
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = 'Loading...';
 
@@ -35,43 +58,96 @@
             resultDiv.innerHTML = '';
 
             if (data["results"]) {
-                const results = data["results"];
-                let minBest = null;
+                let results = data["results"];
+                results = Object.keys(results).reverse().reduce((acc, key) => {
+                    acc[key] = results[key];
+                    return acc;
+                }, {});
+                let globalMinBest = null;
+                let globalMinAvg = null;
                 const labels = [];
-                const dataPoints = [];
-                
+                let dataPoints = {
+                    'avg': [],
+                    'best': []
+                };
+
                 Object.keys(results).forEach(key => {
                     const r = results[key];
-                    if (r["333"]) {
-                        let rMinBest = null;
-                        r["333"].forEach(d => {
-                            if (rMinBest === null || d["best"] < rMinBest) {
-                                rMinBest = d["best"];
-                            }
-                        });
-                        if (rMinBest !== null) {
-                            labels.push(key);
-                            dataPoints.push(rMinBest);
+                    if (!r[eventType]) return;
+                    labels.push(key);
+                    let rMinAvg = null;
+                    let rMinBest = null;
+                    r[eventType].forEach(d => {
+                        if (d["average"] > 0 && (rMinAvg === null || d["average"] < rMinAvg)) {
+                            rMinAvg = d["average"];
                         }
+                    });
+                    r[eventType].forEach(d => {
+                        if (d['best'] > 0 && (rMinBest === null || d["best"] < rMinBest)) {
+                            rMinBest = d["best"];
+                        }
+                    });
+                    if (rMinAvg) {
+                        if (globalMinAvg === null || rMinAvg < globalMinAvg) {
+                            globalMinAvg = rMinAvg;
+                            isNewRecord = true;
+                        } else {
+                            isNewRecord = false;
+                        }
+                        dataPoints['avg'].push({
+                            value: rMinAvg / 100.0,
+                            isNewRecord: isNewRecord
+                        });
+                    } else {
+                        dataPoints['avg'].push(null);
+                    }
+                    if (rMinBest) {
+                        if (globalMinBest === null || rMinBest < globalMinBest) {
+                            globalMinBest = rMinBest;
+                            isNewRecord = true;
+                        } else {
+                            isNewRecord = false;
+                        }
+                        dataPoints['best'].push({
+                            value: eventType === '333fm' ? rMinBest : rMinBest / 100.0,
+                            isNewRecord: isNewRecord
+                        });
+                    } else {
+                        dataPoints['best'].push(null);
                     }
                 });
-                labels.reverse();
-                dataPoints.reverse();
 
-                if (labels.length > 0 && dataPoints.length > 0) {
+                if (labels.length > 0) {
                     const canvas = document.createElement('canvas');
+                    canvas.style.width = '2000px';
+                    canvas.style.height = '500px';
+                    resultDiv.style.overflowX = 'auto';
                     canvas.id = 'lineChart';
                     resultDiv.appendChild(canvas);
 
+                    canvas.height = 1200; // Adjust the height of the chart
                     new Chart(canvas, {
                         type: 'line',
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Minimum "best" for 3x3',
-                                data: dataPoints,
+                                label: `Historical comp best for ${selectedOptionText}`,
+                                data: dataPoints['best'].map(point => point ? point.value : null),
+                                pointRadius: dataPoints['best'].map(point => point && point.isNewRecord ? 5 : 3),
+                                pointBackgroundColor: dataPoints['best'].map(point => point && point.isNewRecord ? 'rgba(255, 206, 86, 1)' : 'rgba(75, 192, 192, 1)'),
+                                spanGaps: true,
                                 borderColor: 'rgba(75, 192, 192, 1)',
                                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderWidth: 2,
+                                tension: 0.1
+                            }, {
+                                label: `Historical comp average for ${selectedOptionText}`,
+                                data: dataPoints['avg'].map(point => point ? point.value : null),
+                                pointRadius: dataPoints['avg'].map(point => point && point.isNewRecord ? 5 : 3),
+                                pointBackgroundColor: dataPoints['avg'].map(point => point && point.isNewRecord ? 'rgba(255, 206, 86, 1)' : 'rgba(255, 99, 132, 1)'),
+                                spanGaps: true,
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
                                 borderWidth: 2,
                                 tension: 0.1
                             }]
@@ -82,20 +158,6 @@
                                 legend: {
                                     display: true,
                                     position: 'top'
-                                }
-                            },
-                            scales: {
-                                x: {
-                                    title: {
-                                        display: true,
-                                        text: 'Competition'
-                                    }
-                                },
-                                y: {
-                                    title: {
-                                        display: true,
-                                        text: 'Minimum "best" for 3x3'
-                                    }
                                 }
                             }
                         }
