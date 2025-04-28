@@ -57,6 +57,10 @@ def read_csv_data(filepath, delimiter):
     return data
 
 
+def comp_visualization(request):
+    return render(request, "comp_visualization.html")
+
+
 def eg_alg(request):
     table_data = read_csv_data('hello/algorithms/eg.csv', ',')
     return render(request, "eg_alg.html", {'table_data': table_data})
