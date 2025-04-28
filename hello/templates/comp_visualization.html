@@ -32,6 +32,7 @@
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
+            resultDiv.innerHTML = '';
 
             if (data["results"]) {
                 const results = data["results"];
