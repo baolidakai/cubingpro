@@ -1,0 +1,537 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>4x4x4 BLD with U2 and r2</h1>
+
+<h2>Introduction</h2>
+<p>
+    We decompose solving a 4x4x4 blindfolded into the following steps:
+</p>
+<ol>
+    <li>Memorize the corners</li>
+    <li>Memorize the wings</li>
+    <li>Memorize the centers</li>
+    <li>Solve the centers</li>
+    <li>Solve the wings</li>
+    <li>Solve the corners</li>
+</ol>
+<p>
+    The execution order has to be center -> wing -> corner or center -> corner -> wing, because corners will influence
+    center, and wing will influence center.
+</p>
+<p>
+    The memo order is not critical and can be customized according to your preference.<br>
+    But it's recommended to put corner memo into longer term memory since it's shorter.<br>
+    And it's also helpful to let center memo and center execution be close.
+</p>
+<br>
+<p>
+    There are two major blindfold methods, we introduce U2/r2/OP here. The alternative is 3-style.<br>
+    Both methods share the same memorization, but differs in execution.<br>
+    U2/r2/OP is relatively easier to learn. 3-style is conceptually easy but harder to ensure correctness and keep track
+    of the setup/reverse moves.
+</p>
+
+<h2>Prereqs</h2>
+<p>It's recommended that you already know how to solve a 3x3x3 blindfolded using M2/OP.</p>
+<p>You should know how to handle small cycles by introducing a new cycle and deliberately end with the first piece of
+    the cycle. For example, if your existing memo is BCDEF, new cycle is GHI, you should memo BCDEFGHIG.</p>
+
+<h2>Learning Path</h2>
+<p>To decompose the complex 4BLD task, you may practice with incremental difficulty.</p>
+<p>This is just a reference, feel free to customize your learning path.</p>
+<ol>
+    <li>Only scramble centers, write down center memo, execute correctly with visual; then execute correctly with
+        blindfold</li>
+    <li>Only scramble edges, write down edge memo, execute correctly with visual; then execute correctly with blindfold
+    </li>
+    <li>Scramble the cube, solve the corner, write down center memo and edge memo, execute correctly with blindfold</li>
+    <li>Scramble only the corners, write down corner memo, execute correctly with blindfold</li>
+    <li>Scramble the whole cube, write down all memo, execute correctly with blindfold</li>
+    <li>Scramble the whole cube, memorize all of it, check memo is correct manually or with this website's tool</li>
+    <li>Solve end to end</li>
+</ol>
+<p>You may use cstimer and select 4x4x4 center only mode to assist.</p>
+<!-- <p>You may use the tool in this website to assist.</p> -->
+<p>To further reduce complexity and build up confidence, you may only scramble three centers and three edges and three
+    corners e.g. To handle parity, change the numbers above to four.</p>
+<p>Recording your own solve might also be helpful.</p>
+
+<h2>Center</h2>
+<p><u>We made the tutorial interactive, where you may specify your letter schema for center/edge/corner.</u></p>
+
+<table style="border-collapse: collapse;">
+    <tr>
+        <td></td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Up</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Ubl" maxlength="3" oninput="Update('Ubl')"
+                                value="C"></td>
+                        <td><input style="width: 50px;" type="text" id="Ubr" maxlength="3" oninput="Update('Ubr')"
+                                value="D"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Ufl" maxlength="3" oninput="Update('Ufl')"
+                                value="B"></td>
+                        <td><input style="width: 50px;" type="text" id="Ufr" maxlength="3" oninput="Update('Ufr')"
+                                value="A"></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Left</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Lbu" maxlength="3" oninput="Update('Lbu')"
+                                value="O"></td>
+                        <td><input style="width: 50px;" type="text" id="Lfu" maxlength="3" oninput="Update('Lfu')"
+                                value="M"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Lbd" maxlength="3" oninput="Update('Lbd')"
+                                value="P"></td>
+                        <td><input style="width: 50px;" type="text" id="Lfd" maxlength="3" oninput="Update('Lfd')"
+                                value="N"></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Front</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Ful" maxlength="3" oninput="Update('Ful')"
+                                value="K"></td>
+                        <td><input style="width: 50px;" type="text" id="Fur" maxlength="3" oninput="Update('Fur')"
+                                value="I"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Fdl" maxlength="3" oninput="Update('Fdl')"
+                                value="L"></td>
+                        <td><input style="width: 50px;" type="text" id="Fdr" maxlength="3" oninput="Update('Fdr')"
+                                value="J"></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Right</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Ruf" maxlength="3" oninput="Update('Ruf')"
+                                value="Y"></td>
+                        <td><input style="width: 50px;" type="text" id="Rub" maxlength="3" oninput="Update('Rub')"
+                                value="W"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Rdf" maxlength="3" oninput="Update('Rdf')"
+                                value="Z"></td>
+                        <td><input style="width: 50px;" type="text" id="Rdb" maxlength="3" oninput="Update('Rdb')"
+                                value="X"></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Back</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Bur" maxlength="3" oninput="Update('Bur')"
+                                value="S"></td>
+                        <td><input style="width: 50px;" type="text" id="Bul" maxlength="3" oninput="Update('Bul')"
+                                value="Q"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Bdr" maxlength="3" oninput="Update('Bdr')"
+                                value="T"></td>
+                        <td><input style="width: 50px;" type="text" id="Bdl" maxlength="3" oninput="Update('Bdl')"
+                                value="R"></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Down</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Dfl" maxlength="3" oninput="Update('Dfl')"
+                                value="F"></td>
+                        <td><input style="width: 50px;" type="text" id="Dfr" maxlength="3" oninput="Update('Dfr')"
+                                value="E"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="Dbl" maxlength="3" oninput="Update('Dbl')"
+                                value="G"></td>
+                        <td><input style="width: 50px;" type="text" id="Dbr" maxlength="3" oninput="Update('Dbr')"
+                                value="H"></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<h4>Memo</h4>
+<p>
+    The memo is similar to that of 3BLD. You start from the buffer center (Ubl), and construct cycles. Append small
+    cycles like the example in the prereqs section.
+</p>
+<p>
+    Tips:
+</p>
+<ul>
+    <li>When you see a top face sticker, instead of completing the cycle, just treat it as one of the unsolved top face
+        sticker. This will lead to shorter memo.</li>
+    <li>Develop the habit of treating a sticker as the first unsolved sticker on that face, it can help track whether
+        all stickers on a face are memorized already.</li>
+</ul>
+
+<h4>Execution</h4>
+<p>
+    The U2 method is similar to M2 method on 3BLD.
+</p>
+<p>
+    We group center memo into pairs of letters.
+</p>
+<p>
+    For each pair letter_1 and letter_2, we execute algorithm for letter_1, add U2, reverse; then algorithm for
+    letter_2, add U2, reverse.
+</p>
+<p>
+    In case the last memo is a single letter, we execute algorithm for letter, U2, reverse, U2. For simplicity, you may
+    equivalently append Ufr to your memo when it's odd.
+</p>
+
+<h4>Algorithms</h4>
+<div>
+    <label>
+        <input type="checkbox" id="toggleDiv" onclick="toggleVisibility()"> Hide Center Algorithms
+    </label>
+</div>
+<div id="toggleContent">
+    <p>Recall slice moves r = Rw R' and r' = Rw' R; l = Lw L' and l' = Lw' L.</p>
+    <p>The algorithms not marked as special could be understood intuitively and does not require brute force
+        memorization, the motivation is to execute an algorithm to set up the piece with the memo letter to Ufr as the
+        target position.</p>
+    <p>For example, to move Lbu to Ufr, you may use r u r'.</p>
+    <p>For algorithms marked as special, there is no need to apply U2 and the reverse, just directly apply the algorithm
+        (U2 is already included as part of the algorithm, no extra U2 needed).</p>
+    <p>In case of single letter being the special algorithm, you need an additional U2.</p>
+    <!-- https://www.youtube.com/watch?v=dG4J_ro_dDQ -->
+    <div id="generatedList"></div>
+</div>
+
+<script>
+    function toggleVisibility() {
+        const contentDiv = document.getElementById('toggleContent');
+        const checkbox = document.getElementById('toggleDiv');
+        contentDiv.style.display = checkbox.checked ? 'none' : 'block';
+    }
+</script>
+
+<!-- <h4>TODO: Example Walkthrough</h4> -->
+
+<h2>Wing</h2>
+<h3>Letter Schema for Wing</h3>
+<p>We made the tutorial interactive, where you may specify your letter schema for center/edge/corner.</p>
+
+<table style="border-collapse: collapse;">
+    <tr>
+        <td></td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Up</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="UBl" maxlength="3" value="Q"></td>
+                        <td><input style="width: 50px;" type="text" id="UBr" maxlength="3" value="C"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="ULb" maxlength="3" value="B"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="URb" maxlength="3" value="W"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="ULf" maxlength="3" value="M"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="URf" maxlength="3" value="D"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="UFl" maxlength="3" value="A"></td>
+                        <td><input style="width: 50px;" type="text" id="UFr" maxlength="3" value="I"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Left</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="ULb" maxlength="3" value="B"></td>
+                        <td><input style="width: 50px;" type="text" id="ULf" maxlength="3" value="M"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="LBu" maxlength="3" value="P"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="LFu" maxlength="3" value="L"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="LBd" maxlength="3" value="R"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="LFd" maxlength="3" value="N"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="LDb" maxlength="3" value="O"></td>
+                        <td><input style="width: 50px;" type="text" id="LDf" maxlength="3" value="F"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Front</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="UFl" maxlength="3" value="A"></td>
+                        <td><input style="width: 50px;" type="text" id="UFr" maxlength="3" value="I"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="LFu" maxlength="3" value="L"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="FRu" maxlength="3" value="Z"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="LFd" maxlength="3" value="N"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="FRd" maxlength="3" value="J"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="FDl" maxlength="3" value="K"></td>
+                        <td><input style="width: 50px;" type="text" id="FDr" maxlength="3" value="E"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Right</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="URf" maxlength="3" value="D"></td>
+                        <td><input style="width: 50px;" type="text" id="URb" maxlength="3" value="W"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="FRu" maxlength="3" value="Z"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="RBu" maxlength="3" value="T"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="FRd" maxlength="3" value="J"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="RBd" maxlength="3" value="X"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="RDf" maxlength="3" value="Y"></td>
+                        <td><input style="width: 50px;" type="text" id="RDb" maxlength="3" value="H"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Back</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="UBr" maxlength="3" value="C"></td>
+                        <td><input style="width: 50px;" type="text" id="UBl" maxlength="3" value="Q"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="RBu" maxlength="3" value="T"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="LBu" maxlength="3" value="P"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="RBd" maxlength="3" value="X"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="LBd" maxlength="3" value="R"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="BDr" maxlength="3" value="S"></td>
+                        <td><input style="width: 50px;" type="text" id="BDl" maxlength="3" value="G"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Down</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="FDl" maxlength="3" value="K"></td>
+                        <td><input style="width: 50px;" type="text" id="FDr" maxlength="3" value="E"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="LDf" maxlength="3" value="F"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="RDf" maxlength="3" value="Y"></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="LDb" maxlength="3" value="O"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="RDb" maxlength="3" value="H"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="BDl" maxlength="3" value="G"></td>
+                        <td><input style="width: 50px;" type="text" id="BDr" maxlength="3" value="S"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<h2>Corner</h2>
+<h3>Letter Schema for Corner</h3>
+<p>We made the tutorial interactive, where you may specify your letter schema for center/edge/corner.</p>
+
+<script>
+    // Global dictionary to store the key-value pairs
+    const letterSchema = {};
+    const hardcodedMap = {
+        "Ubr": "(special) Rw' F' U r U' l' U r' U' l F Rw U2 (if 2nd in letter pair, swap to Ufl)",
+        "Ufl": "(special) Lw F' r U l' U' r' U l U' F Lw' U2 (if 2nd in letter pair, swap to Ubr)",
+        "Ufr": "empty, just do U2 for this letter",
+        "Lbu": "r u r'",
+        "Lfu": "y' u r' u' r",
+        "Lbd": "y' r d2 r'",
+        "Lfd": "r' d r",
+        "Ful": "r u2 r'",
+        "Fur": "y' r' u r",
+        "Fdl": "y' r d r'",
+        "Fdr": "d' r' d r",
+        "Ruf": "r u' r'",
+        "Rub": "y' r' u2 r",
+        "Rdf": "y' d' r d r'",
+        "Rdb": "r' d' r",
+        "Bur": "u r u' r'",
+        "Bul": "y' r' u' r",
+        "Bdr": "y' r d' r'",
+        "Bdl": "r' d2 r",
+        "Dfr": "(special) Lw' U' r2 U' l U r2 U' l' U2 Lw U2",
+        "Dfl": "(special) D (Lw' U' r2 U' l U r2 U' l' U2 Lw U2) D'",
+        "Dbl": "(special) D2 (Lw' U' r2 U' l U r2 U' l' U2 Lw U2) D2",
+        "Dbr": "(special) D' (Lw' U' r2 U' l U r2 U' l' U2 Lw U2) D"
+    };
+
+    // Function to update the displayed HTML dynamically
+    function UpdateHTML() {
+        let updatedCode = "";
+        for (const [key, value] of Object.entries(hardcodedMap)) {
+            const userValue = document.getElementById(key).value || key;
+            updatedCode += `<li>${userValue}: ${value}</li>\n`;
+        }
+        document.getElementById("generatedList").innerHTML = `<ul>${updatedCode}</ul>`;
+    }
+
+    // Add an event listener to call UpdateHTML whenever Update is triggered
+    function Update(key) {
+        const inputElement = document.getElementById(key);
+        if (inputElement) {
+            letterSchema[key] = inputElement.value;
+        }
+        UpdateHTML(); // Update the displayed HTML
+    }
+
+    // Initialize the displayed HTML on page load
+    window.onload = function () {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+            letterSchema[input.id] = input.value || "";
+        });
+        UpdateHTML(); // Populate the initial HTML
+    };
+
+    const idsToSync = [...new Set(Array.from(document.querySelectorAll('input[type="text"]')).map(input => input.id))]
+        .filter(id => /^[A-Z]{2}/.test(id));
+    idsToSync.forEach(id => {
+        const inputs = document.querySelectorAll(`#${id}`);
+        inputs.forEach(input => {
+            input.addEventListener('input', (e) => {
+                inputs.forEach(other => {
+                    if (other !== e.target) {
+                        other.value = e.target.value;
+                    }
+                });
+                Update(e.target.id);
+            });
+        });
+    });
+</script>
+
+{% endblock content %}

@@ -23,8 +23,7 @@
     import "https://cdn.cubing.net/v0/js/cubing/twisty";
   </script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -55,7 +54,7 @@
               <li><a href="/2x2x2/eg_alg">EG algorithms</a></li>
               <!-- TODO: EG trainer with a random scramble -->
               <!-- TODO: First face solver -->
-               <!-- One look exercise with solution move prompt, and after choosing the right OLL pattern, select the right
+              <!-- One look exercise with solution move prompt, and after choosing the right OLL pattern, select the right
                 orientation, and then the right case -->
               <!-- <li><a href="/2x2x2/solves">Example WR solves</a></li> -->
             </ul>
@@ -65,7 +64,7 @@
             <h3>Clock</h3>
             <ul>
               <!-- <li><a href="/clock/7simul_intro">Tommy's 7 Simul</a></li> -->
-               <!-- Tommy's 7 Simul Tool -->
+              <!-- Tommy's 7 Simul Tool -->
               <li><a href="/clock/7simul_flip_intro">7 Simul Flip</a></li>
               <li><a href="/clock/7simul_flip_improved">7sf+ and speed BLD</a></li>
               <li><a href="/clock/7simul_flip_theory">Math Theory</a></li>
@@ -82,8 +81,8 @@
               <li><a href="/pyraminx/v_first_alg">V-first algorithms</a></li>
               <!-- <li><a href="/pyraminx/tips">Tips on Tips</a></li> -->
               <!-- Example WR solves -->
-               <!-- TODO: Pyraminx solve helper, maybe leverage https://www.reddit.com/r/Cubers/comments/1bschec/js_library_for_scramble_generation/ -->
-                <!-- Pyraminx one look helper -->
+              <!-- TODO: Pyraminx solve helper, maybe leverage https://www.reddit.com/r/Cubers/comments/1bschec/js_library_for_scramble_generation/ -->
+              <!-- Pyraminx one look helper -->
             </ul>
           </li>
 
@@ -93,11 +92,18 @@
               <li><a href="/skewb/sarah_beginner">Sarah's Beginner</a></li>
               <li><a href="/skewb/sarah_intermediate">Sarah's Intermediate</a></li>
               <!-- NS for Sarah's intermediate -->
-               <!-- EG2 for Sarah's intermediate -->
-              <!-- <li><a href="/skewb/sarah_intermediate">First Layer (copy from Renzha's + two diagonally solved + some example solves)</a></li> --> 
-               <!-- WR solve examples -->
+              <!-- EG2 for Sarah's intermediate -->
+              <!-- <li><a href="/skewb/sarah_intermediate">First Layer (copy from Renzha's + two diagonally solved + some example solves)</a></li> -->
+              <!-- WR solve examples -->
               <!-- Sarah's advanced method -->
               <!-- First face solver, allow user input scramble -->
+            </ul>
+          </li>
+
+          <li>
+            <h3>Big Cube Blind</h3>
+            <ul>
+              <li><a href="/4bld/u2r2">4BLD with U2 and r2</a></li>
             </ul>
           </li>
 
@@ -210,7 +216,39 @@
       <a href="/" class="button">Back to Home</a>
       {% endif %}
 
+      <br>
+      <button onclick="rainStars()">See a Cube Rain!</button>
+      <div id="star-container"></div>
+
       {% block content %}{% endblock content %}
+
+      <script>
+        function rainStars() {
+          for (let i = 0; i < 500; i++) {
+            const star = document.createElement('img');
+            star.classList.add('star');
+            star.src = "{% static 'fox_with_cube.png' %}";
+            star.style.top = `${-100 - Math.random() * 200}px`;
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.animationDuration = 10 + Math.random() * 5 + 's';
+            star.style.animationDelay = Math.random() * 2 + 's';
+
+            document.getElementById('star-container').appendChild(star);
+
+            setTimeout(() => {
+              star.remove();
+            }, 7000);
+          }
+
+          const originalColor = getComputedStyle(document.body).backgroundColor;
+
+          document.body.style.backgroundColor = '#000';
+
+          setTimeout(() => {
+            document.body.style.backgroundColor = originalColor;
+          }, 6500);
+        }
+      </script>
 
     </div>
 
