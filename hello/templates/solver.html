@@ -3,15 +3,144 @@
 
 {% block content %}
 
-<form method="post">
+<h1>Rubik's Cube Visual Solver</h1>
+<p>This is a near-optimal Rubik's cube solver based on Kociemba's two stage algorithm.</p>
+<p>It provides a solution for any Rubik's cube state within 20 steps, in a few seconds.</p>
+<p>We assume your cube has standard color scheme.</p>
+<p>For feature request, please email me at my WCA ID @ gmail.com. My WCA ID can be found in <a href="https://www.worldcubeassociation.org/persons/2009DENG01">this page</a>.</p>
+<p style="font-size: 30px;"><u>Pick a color on the palette and paint the cube below with the color.</u></p>
+
+<div class="palette" id="palette"></div>
+
+<form method="POST" onsubmit="prepareSubmit()">
     {% csrf_token %}
-    <label for="user_input">Enter something:</label>
-    <input type="text" name="user_input" id="user_input">
-    <button type="submit">Run</button>
+    <button type="submit" class="big-button">Solve the Cube!</button>
+    <button type="button" id="reset" class="big-button" onclick="resetGrids()">Reset the Cube</button>
+    {% if output %}
+    <div><strong>Solution:</strong> {{ output }}</div>
+    {% else %}
+    The solution will appear here.
+    {% endif %}
+    <table>
+        <tbody id="grid-table-body">
+            <!-- Rows will be dynamically created -->
+        </tbody>
+    </table>
+    <!-- Hidden input to hold the full dictionary -->
+    <input type="hidden" name="matrix_dict" id="matrix_dict">
+    {% if clean_alg %}
+    <twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="3x3x3"
+    alg="{{ clean_alg }} {{ rot }}"></twisty-player>
+    {% endif %}
 </form>
 
-{% if output %}
-    <div><strong>Output:</strong> {{ output }}</div>
-{% endif %}
+
+<script>
+    const existingGrids = JSON.parse('{{ matrix_dict|default:"{}"|escapejs }}');
+    const colors = ['yellow', 'blue', 'orange', 'red', 'green', 'white'];
+    let selectedColor = 'white';
+    const gridIds = ['U', 'F', 'L', 'R', 'B', 'D'];
+    const row = [0, 1, 1, 1, 1, 2];
+    const col = [1, 1, 0, 2, 3, 1];
+
+    const paletteEl = document.getElementById('palette');
+    const gridTableBody = document.getElementById('grid-table-body');
+    const matrixDictInput = document.getElementById('matrix_dict');
+
+    // Initialize data structure
+    const allGrids = {};  // { 'a': [ [..], [..], [..] ], 'b': [...] ... }
+
+    const tableRows = [];
+    for (let i = 0; i < 3; i++) {
+        const tr = document.createElement('tr');
+        const cells = [];
+        for (let j = 0; j < 4; j++) {
+            const td = document.createElement('td');
+            tr.appendChild(td);
+            cells.push(td);
+        }
+        gridTableBody.appendChild(tr);
+        tableRows.push(cells);
+    }
+
+    // Generate palette
+    colors.forEach((color, index) => {
+        const swatch = document.createElement('div');
+        swatch.className = 'color-swatch';
+        swatch.style.backgroundColor = color;
+        swatch.onclick = () => {
+            selectedColor = color;
+            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+            swatch.classList.add('active');
+        };
+        paletteEl.appendChild(swatch);
+        if (index === 0) {
+            selectedColor = color;
+            swatch.classList.add('active');
+        }
+    });
+
+    // Create 6 grids with unique IDs
+    gridIds.forEach((gridId, i) => {
+        const gridBlock = document.createElement('div');
+        gridBlock.className = 'grid-block';
+
+        const label = document.createElement('div');
+        label.style.textAlign = 'center';
+        label.textContent = `${gridId.toUpperCase()} face`;
+        gridBlock.appendChild(label);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        grid.dataset.gridId = gridId;
+        gridBlock.appendChild(grid);
+
+        // Initialize the 3x3 array for this grid
+        allGrids[gridId] = existingGrids[gridId] || Array(3).fill().map(() => Array(3).fill(colors[i]));
+
+        // Create 9 boxes
+        for (let row = 0; row < 3; row++) {
+            for (let col = 0; col < 3; col++) {
+                const box = document.createElement('div');
+                box.className = 'box';
+                box.dataset.row = row;
+                box.dataset.col = col;
+                box.dataset.gridId = gridId;
+                box.style.backgroundColor = allGrids[gridId][row][col];
+                box.onclick = () => {
+                    box.style.backgroundColor = selectedColor;
+                    allGrids[gridId][row][col] = selectedColor;
+                };
+                grid.appendChild(box);
+            }
+        }
+
+        const r = row[i];
+        const c = col[i];
+        tableRows[r][c].appendChild(gridBlock);
+    });
+
+    // On submit, put JSON string in hidden input
+    function prepareSubmit() {
+        matrixDictInput.value = JSON.stringify(allGrids);
+    }
+
+    function resetGrids() {
+        // Reset existingGrids and allGrids to empty
+        for (const [i, gridId] of gridIds.entries()) {
+            allGrids[gridId] = Array(3).fill().map(() => Array(3).fill('white'));
+
+            // Reset boxes visually
+            const boxes = document.querySelectorAll(`.box[data-grid-id="${gridId}"]`);
+            boxes.forEach(box => {
+                const row = box.dataset.row;
+                const col = box.dataset.col;
+                box.style.backgroundColor = colors[i];
+                allGrids[gridId][row][col] = colors[i];
+            });
+        }
+    }
+</script>
+
 
 {% endblock content %}

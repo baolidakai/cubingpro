@@ -3,11 +3,11 @@ from django.shortcuts import render
 from .models import Greeting
 from django.conf import settings
 
-from twophase import solver  as sv
-
 import csv
 import os
 import json
+
+from .brain import *
 
 # Create your views here.
 
@@ -131,16 +131,19 @@ def skewb_sarah_intermediate(request):
 
 def solver(request):
     output = ''
+    user_input = dict()
+    clean_alg = ''
+    rot = ''
     if request.method == 'POST':
-        user_input = request.POST.get('user_input', '')
+        user_input = request.POST.get('matrix_dict', '')
         
         # Run your Python logic here with the input
         try:
-            output = sv.solve(user_input)
+            output, clean_alg, rot = solve_3x3x3(user_input)
         except Exception as e:
             output = f"Error: {str(e)}"
 
-    return render(request, 'solver.html', {'output': output})
+    return render(request, 'solver.html', {'output': output, 'matrix_dict': user_input, 'clean_alg': clean_alg, 'rot': rot})
 
 
 def db(request):

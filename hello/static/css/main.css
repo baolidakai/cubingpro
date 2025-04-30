@@ -650,3 +650,76 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
   margin-top: 4px;
   display: block;
 }
+
+.palette {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.color-swatch {
+  width: 40px;
+  height: 40px;
+  margin: 20px;
+  border: 2px solid #444;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  grid-template-rows: repeat(3, 30px);
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.box {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border: 1px solid #aaa;
+  cursor: pointer;
+}
+
+.active {
+  outline: 15px solid black;
+  width: 50px;
+  height: 50px;
+}
+
+.big-button {
+  font-size: 36px;
+  /* Make the text 3 times larger */
+  padding: 20px 40px;
+  /* Increase padding to make the button larger */
+  background-color: #4CAF50;
+  /* Nice green background */
+  color: white;
+  /* White text color */
+  border: none;
+  /* Remove default border */
+  border-radius: 10px;
+  /* Rounded corners */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  transition: all 0.3s ease;
+  /* Smooth transition for hover effect */
+}
+
+.big-button:hover {
+  background-color: #45a049;
+  /* Darken the background color on hover */
+  transform: scale(1.1);
+  /* Slightly enlarge the button on hover */
+}
+
+.big-button:focus {
+  outline: none;
+  /* Remove outline on focus */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  /* Add a soft glow around the button */
+}
+
+#reset {
+  background-color: #FF4C4C;
+  /* Red background for the Reset button */
+}
