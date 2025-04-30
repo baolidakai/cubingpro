@@ -3,6 +3,8 @@ from django.shortcuts import render
 from .models import Greeting
 from django.conf import settings
 
+from twophase import solver  as sv
+
 import csv
 import os
 import json
@@ -125,6 +127,20 @@ def skewb_sarah_beginner(request):
 def skewb_sarah_intermediate(request):
     table_data = read_csv_data('hello/algorithms/skewb_sarah_intermediate.csv', ',')
     return render(request, "sarah_intermediate.html", {'table_data': table_data})
+
+
+def solver(request):
+    output = ''
+    if request.method == 'POST':
+        user_input = request.POST.get('user_input', '')
+        
+        # Run your Python logic here with the input
+        try:
+            output = sv.solve(user_input)
+        except Exception as e:
+            output = f"Error: {str(e)}"
+
+    return render(request, 'solver.html', {'output': output})
 
 
 def db(request):

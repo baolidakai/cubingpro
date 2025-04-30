@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <label for="user_input">Enter something:</label>
+    <input type="text" name="user_input" id="user_input">
+    <button type="submit">Run</button>
+</form>
+
+{% if output %}
+    <div><strong>Output:</strong> {{ output }}</div>
+{% endif %}
+
+{% endblock content %}

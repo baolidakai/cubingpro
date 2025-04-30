@@ -1,535 +1,574 @@
 body {
-    font-family: Helvetica, Arial, sans-serif;
-    line-height: 20px;
-    background-color: #fdfdfd;
-    color: #3c7139;
-  }
-  
-  a, a:visited {
-    color: #3764c8; /* dark blue */
-  }
-  
-  a:hover {
-    color: #78d968; /* same green as h1 */
-  }
-  
-  h1 a {
-    text-decoration: none;
-    color: #57B647 !important; /* same green as a:hover */
-  }
-  
-  h3 {
-    margin: 0;
-    padding: 0;
-    clear: both;
-  }
-  
-  code {
-    font-size: 15px;
-    background-color: #a3efa1; /*#57B647;*/
-    color: #3c7139;
-  }
-  
-  #active-algs h3 {
-    margin-bottom: 10px;
-  }
-  
-  h3 small {
-    font-size: 12px;
-  }
-  
-  abbr {
-    border-bottom: 1px dashed;
-    cursor: help;
-  }
-  
-  p {
-    line-height: 1.4;
-  }
-  
-  .clearfix {
-    clear: both;
-  }
-  
-  #container {
-    margin: 3em;
-    height: auto !important;
-    height: 97%;
-  }
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 20px;
+  background-color: #fdfdfd;
+  color: #3c7139;
+}
 
-  #sidebar {
-    float: left;
-    margin-right: 3em;
-    position: absolute;
-    width: 230px;
-  }
+a,
+a:visited {
+  color: #3764c8;
+  /* dark blue */
+}
 
-  @media screen {
-    .watermark {
-      display: none;
-    }
-  }
+a:hover {
+  color: #78d968;
+  /* same green as h1 */
+}
 
-  @media print {
-    #container {
-      display: none;
-    }
-    .watermark {
-      display: block;
-    }
-    .button {
-      display: none;
-    }
-  }
-  
-  nav {
-    padding: 0;
-    margin: 1.5em;
-  }
-  
-  nav ul {
-    padding: 0;
-    list-style-type: none;
-  }
-  
-  nav li ul {
-    padding-left: 5px;
-  }
-  
-  nav li {
-    line-height: 30px;
-  }
-  
-  nav li.copyright {
-    margin-top: 2em;
-  }
-  
-  nav li a {
-    padding: 0 5px;
-    display: block;
-    text-decoration: none;
-  }
-  
-  nav li ul {
-    display: block;
-  }
-  
-  nav li h3 {
-    padding: 0 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  nav li a:hover, nav h3:hover {
-    background-color: #F8F8F8; /* beige */
-  }
-  
-  .smaller {
-    font-size: smaller;
-  }
-  
-  .simple-list-item:not(:last-child) {
-      margin-bottom: 10px;
-  }
-  
-  #cheat-sheet {
+h1 a {
+  text-decoration: none;
+  color: #57B647 !important;
+  /* same green as a:hover */
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+  clear: both;
+}
+
+code {
+  font-size: 15px;
+  background-color: #a3efa1;
+  /*#57B647;*/
+  color: #3c7139;
+}
+
+#active-algs h3 {
+  margin-bottom: 10px;
+}
+
+h3 small {
+  font-size: 12px;
+}
+
+abbr {
+  border-bottom: 1px dashed;
+  cursor: help;
+}
+
+p {
+  line-height: 1.4;
+}
+
+.clearfix {
+  clear: both;
+}
+
+#container {
+  margin: 3em;
+  height: auto !important;
+  height: 97%;
+}
+
+#sidebar {
+  float: left;
+  margin-right: 3em;
+  position: absolute;
+  width: 230px;
+}
+
+@media screen {
+  .watermark {
     display: none;
   }
-  
-  #cheat-sheet table {
-    table-layout: fixed;
-    width: 100%;
+}
+
+@media print {
+  #container {
+    display: none;
   }
-  
-  #cheat-sheet table img {
-    width: 100%;
+
+  .watermark {
+    display: block;
   }
-  
-  .tabs {
-    width: 100%;
+
+  .button {
+    display: none;
   }
-  
-  .tabs li, a.button {
-    padding: 10px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    font-size: 17px;
-    font-weight: bold;
-    border: 1px solid #ccc;
-    background-color: #a3efa1;
-    color: #3c7139;
-    text-decoration: none;
-  }
-  
-  .tabs li {
-    display: inline-block !important;
-    margin: 0 5px 10px 0;
-  }
-  
-  .tabs li.active {
-    background-color: #e0fddc;
-  }
-  
-  a.button {
-    margin: auto auto 10px 10px;
-    color: #3764c8;
-    background-color: #fbfbfb;
-  }
-  
-  a.button:hover {
-    color: #78d968;
-  }
-  
+}
+
+nav {
+  padding: 0;
+  margin: 1.5em;
+}
+
+nav ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+nav li ul {
+  padding-left: 5px;
+}
+
+nav li {
+  line-height: 30px;
+}
+
+nav li.copyright {
+  margin-top: 2em;
+}
+
+nav li a {
+  padding: 0 5px;
+  display: block;
+  text-decoration: none;
+}
+
+nav li ul {
+  display: block;
+}
+
+nav li h3 {
+  padding: 0 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+nav li a:hover,
+nav h3:hover {
+  background-color: #F8F8F8;
+  /* beige */
+}
+
+.smaller {
+  font-size: smaller;
+}
+
+.simple-list-item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+#cheat-sheet {
+  display: none;
+}
+
+#cheat-sheet table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+#cheat-sheet table img {
+  width: 100%;
+}
+
+.tabs {
+  width: 100%;
+}
+
+.tabs li,
+a.button {
+  padding: 10px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  font-size: 17px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  background-color: #a3efa1;
+  color: #3c7139;
+  text-decoration: none;
+}
+
+.tabs li {
+  display: inline-block !important;
+  margin: 0 5px 10px 0;
+}
+
+.tabs li.active {
+  background-color: #e0fddc;
+}
+
+a.button {
+  margin: auto auto 10px 10px;
+  color: #3764c8;
+  background-color: #fbfbfb;
+}
+
+a.button:hover {
+  color: #78d968;
+}
+
+#content {
+  padding: 1.5em;
+  position: absolute;
+  left: 260px;
+  margin-right: 3em;
+  min-width: 450px;
+}
+
+@media print {
   #content {
     padding: 1.5em;
     position: absolute;
-    left: 260px;
+    left: 0px;
     margin-right: 3em;
     min-width: 450px;
   }
-
-  @media print {
-    #content {
-      padding: 1.5em;
-      position: absolute;
-      left: 0px;
-      margin-right: 3em;
-      min-width: 450px;
-    }
-  }
-  
-  #content ul.alg-list, #content ul.tabs {
-    list-style-type: none;
-    float: left;
-  }
-  
-  #content .alg-list li, #content .tabs li {
-    display: inline;
-    cursor: pointer;
-  }
-  
-  #content ul li .alg-nickname, #content ul li .alg {
-    display: none;
-  }
-  
-  #content ul li .details {
-    display: inline;
-  }
-  
-  .alg-list {
-    padding: 0;
-    clear: both;
-  }
-  
-  .collapsible .section {
-    display: none;
-  }
-  
-  #active-algs {
-    display: none;
-    margin: 3em;
-  }
-  
-  #active-algs .details {
-    display: block;
-    /* float: left; */
-    margin-left: 5em;
-  }
-  
-  #active-algs .details .alg {
-    display: block;
-  }
-  
-  #active-algs {
-    min-width: 565px;
-    /* float: left; */
-    width: 100%;
-  }
-  
-  #active-algs li {
-    display: block;
-    height: 125px;
-  }
-  
-  .width-100px .alg-list .overview, .alg-list.width-100px .overview {
-    width: 100px;
-  }
-  
-  .width-75px .overview {
-    width: 75px;
-  }
-  
-  .overview {
-    text-align: center;
-    display: inline-block;
-    /* float: left; */
-    padding: 5px 5px 15px 5px;
-  }
-  
-  .tall-images .overview {
-    padding: 5px 5px 25px 5px;
-  }
-  
-  #active-algs .overview {
-    padding: 5px 5px 15px 5px;
-  }
-  
-  #active-algs a, a:visited {
-    padding-bottom: 5px;
-    text-decoration: none;
-  }
-  
-  #active-algs.activateable img {
-    display: none;
-  }
-  
-  #active-algs.show-all-images img {
-    display: inline;
-  }
-  
-  #active-algs.show-all-images img.activateable {
-    padding-left: 10px;
-  }
-  
-  #active-algs.activateable img.activateable {
-    display: inline;
-  }
-  
-  .alg-list .activateable {
-    display: none;
-  }
-  
-  #active-algs .deactivateable {
-    display: none;
-  }
-  
-  .alg-list .activateable {
-    display: none !important;
-  }
-  
-  .inactive {
-    opacity: 0.66;
-  }
-  
-  .red {
-    color: red;
-  }
-  
-  .right {
-    float: right;
-  }
-  
-  .introduction {
-    display: block;
-    float: left;
-    width: 100%;
-  }
-  
-  #square-1-ep .alg-list {
-    width: 860px;
-    margin: 0;
-  }
-  
-  .append-title {
-    display: none;
-  }
-  
-  /* I'm sorry. I didn't realize IDs couldn't start with a number. */
-  [id='3x3x3-beginners-method'] h3 {
-    margin-top: 20px;
-  }
-  
-  [id='3x3x3-beginners-method'] .step4 td {
-    width: 20%;
-  }
-  
-  [id='3x3x3-ocllcp'] .alg-list {
-    width: 660px;
-  }
-  
-  p img {
-    vertical-align: middle;
-  }
-  
-  /* Homepage */
-  #home {
-    min-width: 804px;
-    max-width: 1300px;
-  }
-  
-  #home img {
-    float: right;
-    padding: 0 15px 15px 15px;
-  }
-  
-  #content.home {
-    width: 70%;
-  }
-  
-  .side-by-side {
-    display: inline;
-    clear: both;
-  }
-  
-  .side-by-side p {
-    display: inline;
-    float: left;
-    text-align: center;
-    margin-right: 10px;
-  }
-  
-  .side-by-side img {
-    display: block;
-    padding-top: 10px;
-  }
-  
-  #skewb-my-method .side-by-side, #skewb-my-method .side-by-side p {
-    width: 175px;
-  }
-  
-  /* Guestbook */
-  #guestbook {
-    width: 37em;
-  }
-  
-  .button.is-danger {
-    background-color: #f14668;
-    border-color: transparent;
-    color: #fff
 }
 
-.button.is-danger.is-hovered,.button.is-danger:hover {
-    background-color: #f03a5f;
-    border-color: transparent;
-    color: #fff
+#content ul.alg-list,
+#content ul.tabs {
+  list-style-type: none;
+  float: left;
 }
 
-.button.is-danger.is-focused,.button.is-danger:focus {
-    border-color: transparent;
-    color: #fff
+#content .alg-list li,
+#content .tabs li {
+  display: inline;
+  cursor: pointer;
 }
 
-.button.is-danger.is-focused:not(:active),.button.is-danger:focus:not(:active) {
-    box-shadow: 0 0 0 .125em rgba(241,70,104,.25)
+#content ul li .alg-nickname,
+#content ul li .alg {
+  display: none;
 }
 
-.button.is-danger.is-active,.button.is-danger:active {
-    background-color: #ef2e55;
-    border-color: transparent;
-    color: #fff
+#content ul li .details {
+  display: inline;
 }
 
-.button.is-danger[disabled],fieldset[disabled] .button.is-danger {
-    background-color: #f14668;
-    border-color: #f14668;
-    box-shadow: none
+.alg-list {
+  padding: 0;
+  clear: both;
+}
+
+.collapsible .section {
+  display: none;
+}
+
+#active-algs {
+  display: none;
+  margin: 3em;
+}
+
+#active-algs .details {
+  display: block;
+  /* float: left; */
+  margin-left: 5em;
+}
+
+#active-algs .details .alg {
+  display: block;
+}
+
+#active-algs {
+  min-width: 565px;
+  /* float: left; */
+  width: 100%;
+}
+
+#active-algs li {
+  display: block;
+  height: 125px;
+}
+
+.width-100px .alg-list .overview,
+.alg-list.width-100px .overview {
+  width: 100px;
+}
+
+.width-75px .overview {
+  width: 75px;
+}
+
+.overview {
+  text-align: center;
+  display: inline-block;
+  /* float: left; */
+  padding: 5px 5px 15px 5px;
+}
+
+.tall-images .overview {
+  padding: 5px 5px 25px 5px;
+}
+
+#active-algs .overview {
+  padding: 5px 5px 15px 5px;
+}
+
+#active-algs a,
+a:visited {
+  padding-bottom: 5px;
+  text-decoration: none;
+}
+
+#active-algs.activateable img {
+  display: none;
+}
+
+#active-algs.show-all-images img {
+  display: inline;
+}
+
+#active-algs.show-all-images img.activateable {
+  padding-left: 10px;
+}
+
+#active-algs.activateable img.activateable {
+  display: inline;
+}
+
+.alg-list .activateable {
+  display: none;
+}
+
+#active-algs .deactivateable {
+  display: none;
+}
+
+.alg-list .activateable {
+  display: none !important;
+}
+
+.inactive {
+  opacity: 0.66;
+}
+
+.red {
+  color: red;
+}
+
+.right {
+  float: right;
+}
+
+.introduction {
+  display: block;
+  float: left;
+  width: 100%;
+}
+
+#square-1-ep .alg-list {
+  width: 860px;
+  margin: 0;
+}
+
+.append-title {
+  display: none;
+}
+
+/* I'm sorry. I didn't realize IDs couldn't start with a number. */
+[id='3x3x3-beginners-method'] h3 {
+  margin-top: 20px;
+}
+
+[id='3x3x3-beginners-method'] .step4 td {
+  width: 20%;
+}
+
+[id='3x3x3-ocllcp'] .alg-list {
+  width: 660px;
+}
+
+p img {
+  vertical-align: middle;
+}
+
+/* Homepage */
+#home {
+  min-width: 804px;
+  max-width: 1300px;
+}
+
+#home img {
+  float: right;
+  padding: 0 15px 15px 15px;
+}
+
+#content.home {
+  width: 70%;
+}
+
+.side-by-side {
+  display: inline;
+  clear: both;
+}
+
+.side-by-side p {
+  display: inline;
+  float: left;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.side-by-side img {
+  display: block;
+  padding-top: 10px;
+}
+
+#skewb-my-method .side-by-side,
+#skewb-my-method .side-by-side p {
+  width: 175px;
+}
+
+/* Guestbook */
+#guestbook {
+  width: 37em;
+}
+
+.button.is-danger {
+  background-color: #f14668;
+  border-color: transparent;
+  color: #fff
+}
+
+.button.is-danger.is-hovered,
+.button.is-danger:hover {
+  background-color: #f03a5f;
+  border-color: transparent;
+  color: #fff
+}
+
+.button.is-danger.is-focused,
+.button.is-danger:focus {
+  border-color: transparent;
+  color: #fff
+}
+
+.button.is-danger.is-focused:not(:active),
+.button.is-danger:focus:not(:active) {
+  box-shadow: 0 0 0 .125em rgba(241, 70, 104, .25)
+}
+
+.button.is-danger.is-active,
+.button.is-danger:active {
+  background-color: #ef2e55;
+  border-color: transparent;
+  color: #fff
+}
+
+.button.is-danger[disabled],
+fieldset[disabled] .button.is-danger {
+  background-color: #f14668;
+  border-color: #f14668;
+  box-shadow: none
 }
 
 .button.is-danger.is-inverted {
-    background-color: #fff;
-    color: #f14668
+  background-color: #fff;
+  color: #f14668
 }
 
-.button.is-danger.is-inverted.is-hovered,.button.is-danger.is-inverted:hover {
-    background-color: #f2f2f2
+.button.is-danger.is-inverted.is-hovered,
+.button.is-danger.is-inverted:hover {
+  background-color: #f2f2f2
 }
 
-.button.is-danger.is-inverted[disabled],fieldset[disabled] .button.is-danger.is-inverted {
-    background-color: #fff;
-    border-color: transparent;
-    box-shadow: none;
-    color: #f14668
+.button.is-danger.is-inverted[disabled],
+fieldset[disabled] .button.is-danger.is-inverted {
+  background-color: #fff;
+  border-color: transparent;
+  box-shadow: none;
+  color: #f14668
 }
 
 .button.is-danger.is-loading::after {
-    border-color: transparent transparent #fff #fff!important
+  border-color: transparent transparent #fff #fff !important
 }
 
 .button.is-danger.is-outlined {
-    background-color: transparent;
-    border-color: #f14668;
-    color: #f14668
+  background-color: transparent;
+  border-color: #f14668;
+  color: #f14668
 }
 
-.button.is-danger.is-outlined.is-focused,.button.is-danger.is-outlined.is-hovered,.button.is-danger.is-outlined:focus,.button.is-danger.is-outlined:hover {
-    background-color: #f14668;
-    border-color: #f14668;
-    color: #fff
+.button.is-danger.is-outlined.is-focused,
+.button.is-danger.is-outlined.is-hovered,
+.button.is-danger.is-outlined:focus,
+.button.is-danger.is-outlined:hover {
+  background-color: #f14668;
+  border-color: #f14668;
+  color: #fff
 }
 
 .button.is-danger.is-outlined.is-loading::after {
-    border-color: transparent transparent #f14668 #f14668!important
+  border-color: transparent transparent #f14668 #f14668 !important
 }
 
-.button.is-danger.is-outlined.is-loading.is-focused::after,.button.is-danger.is-outlined.is-loading.is-hovered::after,.button.is-danger.is-outlined.is-loading:focus::after,.button.is-danger.is-outlined.is-loading:hover::after {
-    border-color: transparent transparent #fff #fff!important
+.button.is-danger.is-outlined.is-loading.is-focused::after,
+.button.is-danger.is-outlined.is-loading.is-hovered::after,
+.button.is-danger.is-outlined.is-loading:focus::after,
+.button.is-danger.is-outlined.is-loading:hover::after {
+  border-color: transparent transparent #fff #fff !important
 }
 
-.button.is-danger.is-outlined[disabled],fieldset[disabled] .button.is-danger.is-outlined {
-    background-color: transparent;
-    border-color: #f14668;
-    box-shadow: none;
-    color: #f14668
+.button.is-danger.is-outlined[disabled],
+fieldset[disabled] .button.is-danger.is-outlined {
+  background-color: transparent;
+  border-color: #f14668;
+  box-shadow: none;
+  color: #f14668
 }
 
 .button.is-danger.is-inverted.is-outlined {
-    background-color: transparent;
-    border-color: #fff;
-    color: #fff
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff
 }
 
-.button.is-danger.is-inverted.is-outlined.is-focused,.button.is-danger.is-inverted.is-outlined.is-hovered,.button.is-danger.is-inverted.is-outlined:focus,.button.is-danger.is-inverted.is-outlined:hover {
-    background-color: #fff;
-    color: #f14668
+.button.is-danger.is-inverted.is-outlined.is-focused,
+.button.is-danger.is-inverted.is-outlined.is-hovered,
+.button.is-danger.is-inverted.is-outlined:focus,
+.button.is-danger.is-inverted.is-outlined:hover {
+  background-color: #fff;
+  color: #f14668
 }
 
-.button.is-danger.is-inverted.is-outlined.is-loading.is-focused::after,.button.is-danger.is-inverted.is-outlined.is-loading.is-hovered::after,.button.is-danger.is-inverted.is-outlined.is-loading:focus::after,.button.is-danger.is-inverted.is-outlined.is-loading:hover::after {
-    border-color: transparent transparent #f14668 #f14668!important
+.button.is-danger.is-inverted.is-outlined.is-loading.is-focused::after,
+.button.is-danger.is-inverted.is-outlined.is-loading.is-hovered::after,
+.button.is-danger.is-inverted.is-outlined.is-loading:focus::after,
+.button.is-danger.is-inverted.is-outlined.is-loading:hover::after {
+  border-color: transparent transparent #f14668 #f14668 !important
 }
 
-.button.is-danger.is-inverted.is-outlined[disabled],fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
-    background-color: transparent;
-    border-color: #fff;
-    box-shadow: none;
-    color: #fff
+.button.is-danger.is-inverted.is-outlined[disabled],
+fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  box-shadow: none;
+  color: #fff
 }
 
 .button.is-danger.is-light {
-    background-color: #feecf0;
-    color: #cc0f35
+  background-color: #feecf0;
+  color: #cc0f35
 }
 
-.button.is-danger.is-light.is-hovered,.button.is-danger.is-light:hover {
-    background-color: #fde0e6;
-    border-color: transparent;
-    color: #cc0f35
+.button.is-danger.is-light.is-hovered,
+.button.is-danger.is-light:hover {
+  background-color: #fde0e6;
+  border-color: transparent;
+  color: #cc0f35
 }
 
-.button.is-danger.is-light.is-active,.button.is-danger.is-light:active {
-    background-color: #fcd4dc;
-    border-color: transparent;
-    color: #cc0f35
+.button.is-danger.is-light.is-active,
+.button.is-danger.is-light:active {
+  background-color: #fcd4dc;
+  border-color: transparent;
+  color: #cc0f35
 }
 
 .button.is-small {
-    font-size: .75rem
+  font-size: .75rem
 }
 
 .button.is-small:not(.is-rounded) {
-    border-radius: 2px
+  border-radius: 2px
 }
 
 .button.is-normal {
-    font-size: 1rem
+  font-size: 1rem
 }
 
 .button.is-medium {
-    font-size: 1.25rem
+  font-size: 1.25rem
 }
 
 .button.is-large {
-    font-size: 1.5rem
+  font-size: 1.5rem
 }
 
 #star-container {
@@ -556,4 +595,58 @@ body {
     transform: translateY(500vh);
     /* opacity: 0; */
   }
+}
+
+.underline-group {
+  display: inline-block;
+  text-align: center;
+  margin: 20px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.underline {
+  display: inline-block;
+  position: relative;
+  font-weight: bold;
+}
+
+.underline_text {
+  font-weight: bold;
+  color: #3c7139;
+}
+
+.underline.red::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background-color: red;
+}
+
+.underline.green::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background-color: green;
+}
+
+.underline.red-dotted::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  border-bottom: 2px dotted red;
+}
+
+.label {
+  font-size: 0.9em;
+  margin-top: 4px;
+  display: block;
 }

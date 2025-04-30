@@ -43,5 +43,6 @@ urlpatterns = [
     path("skewb/sarah_intermediate", hello.views.skewb_sarah_intermediate, name="sarah_intermediate"),
     path("comp_visualization", hello.views.comp_visualization, name="comp_visualization"),
     path("4bld/u2r2", hello.views.u2r2, name="u2r2"),
+    path("solver/", hello.views.solver, name="solver"),
 ]
 

@@ -18,8 +18,11 @@
     <li>Solve the corners</li>
 </ol>
 <p>
-    The execution order has to be center -> wing -> corner or center -> corner -> wing, because corners will influence
-    center, and wing will influence center.
+    The execution order has to be center -> wing -> corner, because corners will influence
+    both wing (only if parity is involved) and corner, and wing will influence center.
+</p>
+<p>
+    You may choose to execute center -> corner (leave along the single letter) -> wing ->  corner single letter and parity. But this step might be easy to forget. Consider using body gesture to remind yourself, e.g. lift up one feet to indicate corner parity.
 </p>
 <p>
     The memo order is not critical and can be customized according to your preference.<br>
@@ -197,6 +200,10 @@
     cycles like the example in the prereqs section.
 </p>
 <p>
+    We group center memo into pairs of letters.
+</p>
+<p>The last group could be a single group, called center parity.</p>
+<p>
     Tips:
 </p>
 <ul>
@@ -209,9 +216,6 @@
 <h4>Execution</h4>
 <p>
     The U2 method is similar to M2 method on 3BLD.
-</p>
-<p>
-    We group center memo into pairs of letters.
 </p>
 <p>
     For each pair letter_1 and letter_2, we execute algorithm for letter_1, add U2, reverse; then algorithm for
@@ -237,6 +241,8 @@
     <p>For algorithms marked as special, there is no need to apply U2 and the reverse, just directly apply the algorithm
         (U2 is already included as part of the algorithm, no extra U2 needed).</p>
     <p>In case of single letter being the special algorithm, you need an additional U2.</p>
+    <p>If you see Ubr or Ufl in the second letter of a pair, do the algorithm for the other piece (Ufl algorithm for
+        Ubr, and Ubr algorithm for Ufl). You may also make this swap during your memo but might lead to confusion.</p>
     <!-- https://www.youtube.com/watch?v=dG4J_ro_dDQ -->
     <div id="generatedList"></div>
 </div>
@@ -456,9 +462,117 @@
     </tr>
 </table>
 
+<h4>Memo</h4>
+<p>Memo is similar to corner.</p>
+<p>
+    Start with the buffer piece FDr.
+</p>
+<p>
+    We group wing memo into pairs of letters.
+</p>
+<p>The last group could be a single group, called wing parity.</p>
+
+<h4>Execution</h4>
+<p>
+    The r2 method is similar to M2 method on 3BLD.
+</p>
+<p>
+    For each pair letter_1 and letter_2, we execute algorithm for letter_1, add r2, reverse; then algorithm for
+    letter_2, add r2, reverse.
+</p>
+<p>
+    If the last memo is a single letter, we execute the parity algorithm r' U2 r U2 r' U2 x r U2 r U2 r U2 r2 U2 x' r'
+    U2.
+</p>
+
+<h4>Algorithms</h4>
+<div>
+    <label>
+        <input type="checkbox" id="toggleWingDiv" onclick="toggleWingVisibility()"> Hide Wing Algorithms
+    </label>
+</div>
+<div id="toggleWingContent">
+    <p>If you see UFr or BDr in the second letter of a pair, do the algorithm for the other piece (BDr algorithm for
+        UFr, and UFr algorithm for BDr). You may also make this swap during your memo but might lead to confusion.</p>
+    <div id="generatedWingList"></div>
+</div>
+
+<script>
+    function toggleWingVisibility() {
+        const contentDiv = document.getElementById('toggleWingContent');
+        const checkbox = document.getElementById('toggleWingDiv');
+        contentDiv.style.display = checkbox.checked ? 'none' : 'block';
+    }
+</script>
+
 <h2>Corner</h2>
-<h3>Letter Schema for Corner</h3>
-<p>We made the tutorial interactive, where you may specify your letter schema for center/edge/corner.</p>
+<p>Solving the corner is identical to the 3BLD Old Pochmann method.</p>
+<p>You should solve all pairs.</p>
+<p>If there is a single letter at the end, you should execute its algorithm, then you will have two edges DB and DL remain swapped.</p>
+<p>Swapping them is very straightforward: setup to 4x4x4 PLL parity case, apply the algorithm, and reverse the setup.</p>
+<p>The algorithm is U2 R U R' U' (r2 U2 r2 Uw2 r2 Uw2) U' R U' R' U2.</p>
+
+<h4>Execution</h4>
+<p>We only show two examples just as a refresher for OP method. For the complete tutorial, search for any online material should be very straightforward.</p>
+<p>Assume your memo are three letters, corresponding to &lt;Ufl, Frd&gt; &lt;Dfl&gt;</p>
+<p>Here is the scramble, apply it with your regular BLD color schema (do not use white top green front if that's not the one you use for BLD).</p>
+<p>R2 U2 R2 F2 R2 F R2 F R2 F2 R' F L F L' F R' r2 U2 r2 Uw2 r2 Uw2 U2</p>
+<p>The execution are:</p>
+<ol>
+    <li>Solve for Ufl by setup, swap (this algorithm is a portion of the Y-perm PLL in case you find it difficult to memorize), reverse:
+        <div class="underline-group">
+            <span class="underline red underline_text">F R'</span>
+            <span class="label">Setup</span>
+        </div>
+    
+        <div class="underline-group">
+            <span class="underline green">R U' R' U' R U R' F' R U R' U' R' F R</span>
+            <span class="label">Swap</span>
+        </div>
+    
+        <div class="underline-group">
+            <span class="underline red-dotted">R F'</span>
+            <span class="label">Reverse</span>
+        </div>
+
+        You may cancel moves into: F U' R' U' R U R' F' R U R' U' R' F R2 F'
+    </li>
+    <li>Solve for Frd
+        <div class="underline-group">
+            <span class="underline red underline_text">D R</span>
+            <span class="label">Setup</span>
+        </div>
+    
+        <div class="underline-group">
+            <span class="underline green">R U' R' U' R U R' F' R U R' U' R' F R</span>
+            <span class="label">Swap</span>
+        </div>
+    
+        <div class="underline-group">
+            <span class="underline red-dotted">R' D'</span>
+            <span class="label">Reverse</span>
+        </div>
+
+        You may cancel moves into: D R2 U' R' U' R U R' F' R U R' U' R' F D'
+    </li>
+    <li>Solve for Dfl
+        <div class="underline-group">
+            <span class="underline red underline_text">F'</span>
+            <span class="label">Setup</span>
+        </div>
+    
+        <div class="underline-group">
+            <span class="underline green">R U' R' U' R U R' F' R U R' U' R' F R</span>
+            <span class="label">Swap</span>
+        </div>
+    
+        <div class="underline-group">
+            <span class="underline red-dotted">F</span>
+            <span class="label">Reverse</span>
+        </div>
+    </li>
+    <li>Fix edge parity by U2 R U R' U' (r2 U2 r2 Uw2 r2 Uw2) U' R U' R' U2</li>
+</ol>
 
 <script>
     // Global dictionary to store the key-value pairs
@@ -488,15 +602,56 @@
         "Dbl": "(special) D2 (Lw' U' r2 U' l U r2 U' l' U2 Lw U2) D2",
         "Dbr": "(special) D' (Lw' U' r2 U' l U r2 U' l' U2 Lw U2) D"
     };
+    const hardcodedWingMap = {
+        "UBr": "empty",
+        "URf": "R U R' U'",
+        "UFl": "(special) l' (U B' R U' B r2 B' U R' B U') l",
+        "ULb": "L' U' L U",
+        "ULf": "B L' B'",
+        "LFd": "B L2 B'",
+        "LDb": "B L B'",
+        "LBu": "L B L' B'",
+        "UFr": "(special) D r U R2 U' r' U R2 U' D' r2 (if 2nd in letter pair, swap to BDr)",
+        "FRd": "U R U'",
+        "FDl": "(special) l2 (U B' R U' B r2 B' U R' B U') l2",
+        "LFu": "U' L' U",
+        "URb": "B' R B",
+        "RBd": "R' B' R B",
+        "RDf": "B' R' B",
+        "FRu": "B' R2 B",
+        "UBl": "(special) U B' R U' B (r2) B' U R' B U'",
+        "LBd": "U' L U",
+        "BDr": "(special) r2 D U R2 U' r U R2 U' r' D' (if 2nd in letter pair, swap to UFr)",
+        "RBu": "U R' U'",
+        "RDb": "U R2 U'",
+        "BDl": "(special) l (U B' R U' B r2 B' U R' B U') l'",
+        "LDf": "U' L2 U"
+    };
 
     // Function to update the displayed HTML dynamically
     function UpdateHTML() {
-        let updatedCode = "";
+        let entries = [];
         for (const [key, value] of Object.entries(hardcodedMap)) {
             const userValue = document.getElementById(key).value || key;
+            entries.push({ userValue, value });
+        }
+        entries.sort((a, b) => a.userValue.localeCompare(b.userValue));
+        let updatedCode = "";
+        for (const { userValue, value } of entries) {
             updatedCode += `<li>${userValue}: ${value}</li>\n`;
         }
         document.getElementById("generatedList").innerHTML = `<ul>${updatedCode}</ul>`;
+        entries = [];
+        for (const [key, value] of Object.entries(hardcodedWingMap)) {
+            const userValue = document.getElementById(key).value || key;
+            entries.push({ userValue, value });
+        }
+        entries.sort((a, b) => a.userValue.localeCompare(b.userValue));
+        updatedCode = "";
+        for (const { userValue, value } of entries) {
+            updatedCode += `<li>${userValue}: ${value}</li>\n`;
+        }
+        document.getElementById("generatedWingList").innerHTML = `<ul>${updatedCode}</ul>`;
     }
 
     // Add an event listener to call UpdateHTML whenever Update is triggered
