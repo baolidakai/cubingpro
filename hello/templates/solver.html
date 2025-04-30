@@ -5,33 +5,45 @@
 
 <h1>Rubik's Cube Visual Solver</h1>
 <p>This is a near-optimal Rubik's cube solver based on Kociemba's two stage algorithm.</p>
-<p>It provides a solution for any Rubik's cube state within 20 steps, in a few seconds.</p>
+<p>It provides a solution for most Rubik's cube state within 20 steps, within one second.</p>
 <p>We assume your cube has standard color scheme.</p>
-<p>For feature request, please email me at my WCA ID @ gmail.com. My WCA ID can be found in <a href="https://www.worldcubeassociation.org/persons/2009DENG01">this page</a>.</p>
+<p>For feature request, please email me at my WCA ID @ gmail.com. My WCA ID can be found in <a
+        href="https://www.worldcubeassociation.org/persons/2009DENG01" target="_blank">this page</a>.</p>
 <p style="font-size: 30px;"><u>Pick a color on the palette and paint the cube below with the color.</u></p>
 
 <div class="palette" id="palette"></div>
 
+{% if output %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+</script>
+{% endif %}
+
 <form method="POST" onsubmit="prepareSubmit()">
-    {% csrf_token %}
-    <button type="submit" class="big-button">Solve the Cube!</button>
-    <button type="button" id="reset" class="big-button" onclick="resetGrids()">Reset the Cube</button>
-    {% if output %}
-    <div><strong>Solution:</strong> {{ output }}</div>
-    {% else %}
-    The solution will appear here.
-    {% endif %}
     <table>
         <tbody id="grid-table-body">
             <!-- Rows will be dynamically created -->
         </tbody>
     </table>
-    <!-- Hidden input to hold the full dictionary -->
-    <input type="hidden" name="matrix_dict" id="matrix_dict">
+    {% csrf_token %}
+    <button type="submit" name="action" value="solve" class="big-button">Solve the Cube!</button>
+    <button type="submit" name="action" value="reset" id="reset" class="big-button" onclick="resetGrids()">Reset the
+        Cube</button>
+    <button type="submit" name="action" value="scramble" id="scramble" class="big-button"
+        onclick="scrambleGrids()">Auto-scramble the Cube</button>
+    {% if output %}
+    <div><strong>Solution:</strong> {{ output }}</div>
     {% if clean_alg %}
     <twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="3x3x3"
-    alg="{{ clean_alg }} {{ rot }}"></twisty-player>
+        alg="{{ clean_alg }} {{ rot }}"></twisty-player>
     {% endif %}
+    {% else %}
+    The solution will appear here.
+    {% endif %}
+    <!-- Hidden input to hold the full dictionary -->
+    <input type="hidden" name="matrix_dict" id="matrix_dict">
 </form>
 
 
@@ -128,8 +140,6 @@
     function resetGrids() {
         // Reset existingGrids and allGrids to empty
         for (const [i, gridId] of gridIds.entries()) {
-            allGrids[gridId] = Array(3).fill().map(() => Array(3).fill('white'));
-
             // Reset boxes visually
             const boxes = document.querySelectorAll(`.box[data-grid-id="${gridId}"]`);
             boxes.forEach(box => {
@@ -137,6 +147,97 @@
                 const col = box.dataset.col;
                 box.style.backgroundColor = colors[i];
                 allGrids[gridId][row][col] = colors[i];
+            });
+        }
+    }
+
+    function scrambleGrids() {
+        for (const [i, gridId] of gridIds.entries()) {
+            // Reset boxes visually
+            const boxes = document.querySelectorAll(`.box[data-grid-id="${gridId}"]`);
+            boxes.forEach(box => {
+                const row = box.dataset.row;
+                const col = box.dataset.col;
+                box.style.backgroundColor = colors[i];
+                allGrids[gridId][row][col] = colors[i];
+            });
+        }
+        // Adjust allGrids.
+        // Being lazy here, D is not required to scramble a Rubik's cube completely.
+        const moves = {
+            'U': [
+                [['U', 0, 0], ['U', 0, 2], ['U', 2, 2], ['U', 2, 0]],
+                [['L', 0, 0], ['B', 0, 0], ['R', 0, 0], ['F', 0, 0]],
+                [['L', 0, 2], ['B', 0, 2], ['R', 0, 2], ['F', 0, 2]],
+                [['U', 1, 0], ['U', 0, 1], ['U', 1, 2], ['U', 2, 1]],
+                [['L', 0, 1], ['B', 0, 1], ['R', 0, 1], ['F', 0, 1]]
+            ],
+            'L': [
+                [['U', 0, 0], ['F', 0, 0], ['D', 0, 0], ['B', 2, 2]],
+                [['U', 2, 0], ['F', 2, 0], ['D', 2, 0], ['B', 0, 2]],
+                [['L', 0, 0], ['L', 0, 2], ['L', 2, 2], ['L', 2, 0]],
+                [['L', 0, 1], ['L', 1, 2], ['L', 2, 1], ['L', 1, 0]],
+                [['U', 1, 0], ['F', 1, 0], ['D', 1, 0], ['B', 1, 2]]
+            ],
+            'F': [
+                [['F', 0, 0], ['F', 0, 2], ['F', 2, 2], ['F', 2, 0]],
+                [['U', 2, 0], ['R', 0, 0], ['D', 0, 2], ['L', 2, 2]],
+                [['L', 0, 2], ['U', 2, 2], ['R', 2, 0], ['D', 0, 0]],
+                [['U', 2, 1], ['R', 1, 0], ['D', 0, 1], ['L', 1, 2]],
+                [['F', 0, 1], ['F', 1, 2], ['F', 2, 1], ['F', 1, 0]]
+            ],
+            'R': [
+                [['R', 0, 0], ['R', 0, 2], ['R', 2, 2], ['R', 2, 0]],
+                [['U', 2, 2], ['B', 0, 0], ['D', 2, 2], ['F', 2, 2]],
+                [['U', 0, 2], ['B', 2, 0], ['D', 0, 2], ['F', 0, 2]],
+                [['R', 0, 1], ['R', 1, 2], ['R', 2, 1], ['R', 1, 0]],
+                [['U', 1, 2], ['B', 1, 0], ['D', 1, 2], ['F', 1, 2]]
+            ],
+            'B': [
+                [['B', 0, 0], ['B', 0, 2], ['B', 2, 2], ['B', 2, 0]],
+                [['U', 0, 0], ['L', 2, 0], ['D', 2, 2], ['R', 0, 2]],
+                [['U', 0, 2], ['L', 0, 0], ['D', 2, 0], ['R', 2, 2]],
+                [['B', 0, 1], ['B', 1, 2], ['B', 2, 1], ['B', 1, 0]],
+                [['U', 0, 1], ['L', 1, 0], ['D', 2, 1], ['R', 1, 2]]
+            ]
+        };
+        const keys = Object.keys(moves);
+        let scrambleString = "";
+        const numSteps = 30;
+        for (let step = 0; step < numSteps; step++) {
+            const randomKey = keys[Math.floor(Math.random() * keys.length)];
+            const n = [1, 2, 3][Math.floor(Math.random() * 3)];
+            if (step > 0) {
+                scrambleString += " ";
+            }
+            scrambleString += randomKey + { 1: '', 2: '2', 3: "'" }[n];
+            for (let i = 0; i < n; i++) {
+                // Apply a move.
+                let copiedGrids = JSON.parse(JSON.stringify(allGrids));
+                for (const moveCycle of moves[randomKey]) {
+                    for (let j = 0; j < moveCycle.length; j++) {
+                        const from = moveCycle[j];
+                        const target = moveCycle[(j + 1) % moveCycle.length];
+                        copiedGrids[target[0]][target[1]][target[2]] = allGrids[from[0]][from[1]][from[2]];
+                    }
+                }
+                for (const moveCycle of moves[randomKey]) {
+                    for (let j = 0; j < moveCycle.length; j++) {
+                        const from = moveCycle[j];
+                        allGrids[from[0]][from[1]][from[2]] = copiedGrids[from[0]][from[1]][from[2]];
+                    }
+                }
+            }
+        }
+        console.log(scrambleString);
+        // Update box color.
+        for (const [i, gridId] of gridIds.entries()) {
+            // Reset boxes visually
+            const boxes = document.querySelectorAll(`.box[data-grid-id="${gridId}"]`);
+            boxes.forEach(box => {
+                const row = box.dataset.row;
+                const col = box.dataset.col;
+                box.style.backgroundColor = allGrids[gridId][row][col];
             });
         }
     }

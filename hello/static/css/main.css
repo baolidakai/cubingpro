@@ -581,6 +581,7 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
 }
 
 .star {
+  pointer-events: none;
   position: absolute;
   width: 100px;
   height: 100px;
@@ -592,8 +593,7 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
 
 @keyframes fall {
   to {
-    transform: translateY(500vh);
-    /* opacity: 0; */
+    transform: translateY(200vh);
   }
 }
 
@@ -687,9 +687,9 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
 }
 
 .big-button {
-  font-size: 36px;
+  font-size: 30px;
   /* Make the text 3 times larger */
-  padding: 20px 40px;
+  padding: 10px 20px;
   /* Increase padding to make the button larger */
   background-color: #4CAF50;
   /* Nice green background */

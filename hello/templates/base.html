@@ -32,7 +32,15 @@
 
   <div id="container">
     <div id="header">
-      <h1 class="title" style="position: fixed; top: 0; left: 50%; margin: 0; padding: 10px;"><img src="{% static 'fox_with_cube.png' %}" alt="" width="100"><a href="/">Cubing for Professionals</a> </h1>
+      <h1 class="title" style="position: fixed; top: 0; left: 50%; margin: 0; padding: 10px;">
+        <div style="position: absolute; top: 50px; left: 50%; transform: translateX(-80%); font-size: 15px; color: #e91e63; pointer-events: none;">
+          &lt;- Can I get a forehead pat?
+        </div>
+        <button onclick="rainStars(this)" style="border: none; background: none; padding: 0; display: inline-block; line-height: 0; cursor: grab;">
+          <img src="{% static 'fox_with_cube.png' %}" alt="" width="85" style="display: block;">
+        </button>
+        <a href="/">Cubing for Professionals</a>
+      </h1>
     </div>
 
     <div id="sidebar">
@@ -223,39 +231,9 @@
       <a href="/" class="button">Back to Home</a>
       {% endif %}
 
-      <br>
-      <button onclick="rainStars()">See a Cube Rain!</button>
       <div id="star-container"></div>
 
       {% block content %}{% endblock content %}
-
-      <script>
-        function rainStars() {
-          for (let i = 0; i < 500; i++) {
-            const star = document.createElement('img');
-            star.classList.add('star');
-            star.src = "{% static 'fox_with_cube.png' %}";
-            star.style.top = `${-100 - Math.random() * 200}px`;
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.animationDuration = 10 + Math.random() * 5 + 's';
-            star.style.animationDelay = Math.random() * 2 + 's';
-
-            document.getElementById('star-container').appendChild(star);
-
-            setTimeout(() => {
-              star.remove();
-            }, 7000);
-          }
-
-          const originalColor = getComputedStyle(document.body).backgroundColor;
-
-          document.body.style.backgroundColor = '#000';
-
-          setTimeout(() => {
-            document.body.style.backgroundColor = originalColor;
-          }, 6500);
-        }
-      </script>
 
     </div>
 
