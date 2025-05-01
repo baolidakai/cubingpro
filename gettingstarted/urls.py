@@ -42,7 +42,11 @@ urlpatterns = [
     path("skewb/sarah_beginner", hello.views.skewb_sarah_beginner, name="sarah_beginner"),
     path("skewb/sarah_intermediate", hello.views.skewb_sarah_intermediate, name="sarah_intermediate"),
     path("comp_visualization", hello.views.comp_visualization, name="comp_visualization"),
+    path("fmc/dr", hello.views.dr, name="dr"),
     path("4bld/u2r2", hello.views.u2r2, name="u2r2"),
     path("solver/", hello.views.solver, name="solver"),
+    path("tutorial_editor/", hello.views.tutorial_editor, name="tutorial_editor"),
+    path("tutorial_viewer/", hello.views.tutorial_viewer, name="tutorial_viewer"),
+    path('page/<int:page_id>/', hello.views.view_page, name='view_page'),
 ]
 

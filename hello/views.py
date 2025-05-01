@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Greeting
+import markdown
+
+from .models import Greeting, Page
 from django.conf import settings
 
 import csv
@@ -127,6 +129,31 @@ def skewb_sarah_beginner(request):
 def skewb_sarah_intermediate(request):
     table_data = read_csv_data('hello/algorithms/skewb_sarah_intermediate.csv', ',')
     return render(request, "sarah_intermediate.html", {'table_data': table_data})
+
+
+def dr(request):
+    return render(request, "dr.html")
+
+
+def tutorial_editor(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        author = request.POST.get('author')
+        Page.objects.create(title=title, content=content, author=author)
+        return redirect('tutorial_viewer')
+    return render(request, "tutorial_editor.html")
+
+
+def tutorial_viewer(request):
+    pages = Page.objects.order_by('-created_at')
+    return render(request, "tutorial_viewer.html", {'pages': pages})
+
+
+def view_page(request, page_id):
+    page = get_object_or_404(Page, id=page_id)
+    html = markdown.markdown(page.content, extensions=['extra', 'nl2br'])
+    return render(request, 'view.html', {'page': page, 'html': html})
 
 
 def solver(request):

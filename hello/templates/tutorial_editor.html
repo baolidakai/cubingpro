@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>Write Tutorial</h1>
+<!-- TODO: Instructions on how to write a tutorial -->
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Title" required><br>
+    <input type="text" name="author" placeholder="Author" required><br>
+    <textarea id="editor" name="content" rows="20" cols="80"></textarea><br>
+    <button type="submit">Save</button>
+</form>
+
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script>
+    const easyMDE = new EasyMDE({
+        element: document.getElementById("editor"),
+        toolbar: [
+            "bold", "italic", "heading", "|",
+            {
+                name: "InsertTwisty",
+                action: function(editor) {
+                    editor.codemirror.replaceSelection('<twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="3x3x3" alg=""></twisty-player>');
+                },
+                className: "fa fa-cube",
+                title: "Insert Twisty"
+            },
+            "|", "preview"
+        ]
+    });
+</script>
+
+{% endblock content %}
