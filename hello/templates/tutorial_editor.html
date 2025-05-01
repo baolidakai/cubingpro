@@ -22,14 +22,23 @@
             "bold", "italic", "heading", "|",
             {
                 name: "InsertTwisty",
-                action: function(editor) {
+                action: function (editor) {
                     editor.codemirror.replaceSelection('<twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="3x3x3" alg=""></twisty-player>');
                 },
                 className: "fa fa-cube",
                 title: "Insert Twisty"
             },
             "|", "preview"
-        ]
+        ],
+        autosave: {
+            enabled: true,  // Enable autosave
+            unique_id: "editor",  // Unique ID for this specific editor instance
+            delay: 10000,  // Save every 10 seconds (default is 5000 ms)
+            saveFunction: function (editor) {
+                // Custom save function, e.g., sending the content to the server
+                console.log('Autosaving: ' + editor.value());
+            }
+        }
     });
 </script>
 
