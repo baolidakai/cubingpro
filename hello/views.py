@@ -12,6 +12,8 @@ import os
 import json
 
 from .brain import *
+import logging
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 
@@ -160,7 +162,9 @@ def view_page(request, page_id):
 
 @csrf_exempt
 def api_solver(request):
+    logger.info('here')
     if request.method == 'POST':
+        logger.info(f"Raw body: {request.body}")
         try:
             body = json.loads(request.body)
             user_input = body.get('matrix_dict', '')

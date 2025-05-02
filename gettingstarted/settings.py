@@ -70,7 +70,7 @@ if IS_HEROKU_APP:
     # https://docs.djangoproject.com/en/5.2/ref/middleware/#http-strict-transport-security
     SECURE_SSL_REDIRECT = True
 else:
-    ALLOWED_HOSTS = [".localhost", "127.0.0.1", "[::1]", "0.0.0.0", "[::]"]
+    ALLOWED_HOSTS = [".localhost", "127.0.0.1", "[::1]", "0.0.0.0", "[::]", "192.168.1.242"]
 
 
 # Application definition
@@ -237,12 +237,12 @@ LOGGING = {
     # Fallback for anything not configured via `loggers`.
     "root": {
         "handlers": ["console"],
-        "level": "INFO",
+        "level": "DEBUG",
     },
     "loggers": {
         "django": {
             "handlers": ["console"],
-            "level": "INFO",
+            "level": "DEBUG",
             # Prevent double logging due to the root logger.
             "propagate": False,
         },
