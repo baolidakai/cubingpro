@@ -164,7 +164,7 @@ def api_solver(request):
         try:
             body = json.loads(request.body)
             user_input = body.get('matrix_dict', '')
-            output, clean_alg, rot = solve_3x3x3(user_input)
+            output, clean_alg, rot = solve_3x3x3(json.dumps(user_input))
 
             return JsonResponse({
                 'output': output,
