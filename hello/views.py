@@ -14,6 +14,7 @@ import json
 from .brain import *
 import logging
 logger = logging.getLogger(__name__)
+logger.info('Here!')
 
 # Create your views here.
 
