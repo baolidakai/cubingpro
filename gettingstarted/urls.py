@@ -30,6 +30,10 @@ urlpatterns = [
         'path': 'ads.txt',
         'document_root': os.path.join(settings.BASE_DIR, 'hello/static'),
     }),
+    re_path(r'app-ads.txt', serve, {
+        'path': 'app-ads.txt',
+        'document_root': os.path.join(settings.BASE_DIR, 'hello/static'),
+    }),
     path("privacy", hello.views.privacy, name="privacy"),
     path("2x2x2/eg_intro/", hello.views.eg_intro, name="eg_intro"),
     path("2x2x2/eg_alg/", hello.views.eg_alg, name="eg_alg"),
