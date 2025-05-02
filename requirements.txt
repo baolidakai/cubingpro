@@ -4,6 +4,7 @@ dj-database-url>=2,<3
 whitenoise[brotli]>=6,<7
 RubikTwoPhase
 markdown>=3.0
+django-cors-headers
 
 # Uncomment these lines to use a Postgres database. Both are needed, since in production
 # (which uses Linux) we want to install from source, so that security updates from the
