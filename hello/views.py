@@ -4,6 +4,7 @@ import markdown
 
 from .models import Greeting, Page
 from django.conf import settings
+from django.http import JsonResponse
 
 import csv
 import os
@@ -156,9 +157,27 @@ def view_page(request, page_id):
     return render(request, 'view.html', {'page': page, 'html': html})
 
 
+def api_solver(request):
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            user_input = body.get('matrix_dict', '')
+            output, clean_alg, rot = solve_3x3x3(user_input)
+
+            return JsonResponse({
+                'output': output,
+                'clean_alg': clean_alg,
+                'rot': rot
+            })
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+
+
 def solver(request):
     output = ''
-    user_input = dict()
+    user_input = ''
     clean_alg = ''
     rot = ''
     if request.method == 'POST':
