@@ -163,9 +163,7 @@ def view_page(request, page_id):
 
 @csrf_exempt
 def api_solver(request):
-    logger.info('here')
     if request.method == 'POST':
-        logger.info(f"Raw body: {request.body}")
         try:
             body = json.loads(request.body)
             user_input = body.get('matrix_dict', '')
@@ -199,20 +197,5 @@ def solver(request):
     return render(request, 'solver.html', {'output': output, 'matrix_dict': user_input, 'clean_alg': clean_alg, 'rot': rot})
 
 
-def db(request):
-    # If you encounter errors visiting the `/db/` page on the example app, check that:
-    #
-    # When running the app on Heroku:
-    #   1. You have added the Postgres database to your app.
-    #   2. You have uncommented the `psycopg` dependency in `requirements.txt`, and the `release`
-    #      process entry in `Procfile`, git committed your changes and re-deployed the app.
-    #
-    # When running the app locally:
-    #   1. You have run `./manage.py migrate` to create the `hello_greeting` database table.
-
-    greeting = Greeting()
-    greeting.save()
-
-    greetings = Greeting.objects.all()
-
-    return render(request, "db.html", {"greetings": greetings})
+def privacy(request):
+    return render(request, "privacy.html")
