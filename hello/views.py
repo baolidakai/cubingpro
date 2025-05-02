@@ -5,6 +5,7 @@ import markdown
 from .models import Greeting, Page
 from django.conf import settings
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 import csv
 import os
@@ -157,6 +158,7 @@ def view_page(request, page_id):
     return render(request, 'view.html', {'page': page, 'html': html})
 
 
+@csrf_exempt
 def api_solver(request):
     if request.method == 'POST':
         try:
