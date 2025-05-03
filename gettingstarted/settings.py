@@ -104,13 +104,13 @@ MIDDLEWARE = [
     # excellent WhiteNoise package to do so instead. The WhiteNoise middleware must be listed
     # after Django's `SecurityMiddleware` so that security redirects are still performed.
     # See: https://whitenoise.readthedocs.io
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
+    # "whitenoise.middleware.WhiteNoiseMiddleware",
+    # "django.contrib.sessions.middleware.SessionMiddleware",
+    # "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
+    # "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
