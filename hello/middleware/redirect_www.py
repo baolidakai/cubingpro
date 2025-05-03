@@ -6,9 +6,4 @@ class RedirectToWWWMiddleware:
 
     def __call__(self, request):
         host = request.get_host()
-        print(request.get_host())
-        if host == 'cubingpro.com':
-            return HttpResponsePermanentRedirect(
-                f'https://www.cubingpromiao.com{request.get_full_path()}'
-            )
         return self.get_response(request)
