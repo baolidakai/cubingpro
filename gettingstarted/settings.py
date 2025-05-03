@@ -69,6 +69,7 @@ if IS_HEROKU_APP:
     # For maximum security, consider enabling HTTP Strict Transport Security (HSTS) headers too:
     # https://docs.djangoproject.com/en/5.2/ref/middleware/#http-strict-transport-security
     SECURE_SSL_REDIRECT = True
+    USE_X_FORWARDED_HOST = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 else:
     ALLOWED_HOSTS = [".localhost", "127.0.0.1", "[::1]", "0.0.0.0", "[::]", "192.168.1.242", "www.cubingpro.com", "cubingpro.com"]
