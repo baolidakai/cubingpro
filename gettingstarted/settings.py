@@ -44,7 +44,7 @@ SECRET_KEY = os.environ.get(
 # Debug mode will be automatically enabled when the project is run via `heroku local` (which
 # loads the environment variables set in the `.env` file, where `ENVIRONMENT=development`).
 # SECURITY WARNING: Don't run with debug turned on in production!
-DEBUG = os.environ.get("ENVIRONMENT") == "development"
+DEBUG = False #os.environ.get("ENVIRONMENT") == "development"
 
 # The `DYNO` env var is set on Heroku CI, but it's not a real Heroku app, so we have to
 # also explicitly exclude CI:
@@ -56,7 +56,7 @@ if IS_HEROKU_APP:
     # validation of the Host header in the incoming HTTP request. On other platforms you may need to
     # list the expected hostnames explicitly in production to prevent HTTP Host header attacks. See:
     # https://docs.djangoproject.com/en/5.2/ref/settings/#std-setting-ALLOWED_HOSTS
-    ALLOWED_HOSTS = ['cubingpro.com', 'www.cubingpro.com'] #"*"]
+    ALLOWED_HOSTS = ["*"]
 
     # Redirect all non-HTTPS requests to HTTPS. This requires that:
     # 1. Your app has a TLS/SSL certificate, which all `*.herokuapp.com` domains do by default.
