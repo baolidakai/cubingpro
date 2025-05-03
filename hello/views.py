@@ -20,6 +20,7 @@ logger.info('Here!')
 
 
 def index(request):
+    logger.debug("X-Forwarded-Proto: %s", request.META.get('HTTP_X_FORWARDED_PROTO'))
     return render(request, "index.html")
 
 
