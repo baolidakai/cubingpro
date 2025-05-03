@@ -44,7 +44,7 @@ SECRET_KEY = os.environ.get(
 # Debug mode will be automatically enabled when the project is run via `heroku local` (which
 # loads the environment variables set in the `.env` file, where `ENVIRONMENT=development`).
 # SECURITY WARNING: Don't run with debug turned on in production!
-DEBUG = False #os.environ.get("ENVIRONMENT") == "development"
+DEBUG = os.environ.get("ENVIRONMENT") == "development"
 
 # The `DYNO` env var is set on Heroku CI, but it's not a real Heroku app, so we have to
 # also explicitly exclude CI:
@@ -69,8 +69,8 @@ if IS_HEROKU_APP:
     # For maximum security, consider enabling HTTP Strict Transport Security (HSTS) headers too:
     # https://docs.djangoproject.com/en/5.2/ref/middleware/#http-strict-transport-security
     SECURE_SSL_REDIRECT = True
-    USE_X_FORWARDED_HOST = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    # USE_X_FORWARDED_HOST = True
+    # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 else:
     ALLOWED_HOSTS = [".localhost", "127.0.0.1", "[::1]", "0.0.0.0", "[::]", "192.168.1.242", "www.cubingpro.com", "cubingpro.com"]
 
@@ -104,13 +104,13 @@ MIDDLEWARE = [
     # excellent WhiteNoise package to do so instead. The WhiteNoise middleware must be listed
     # after Django's `SecurityMiddleware` so that security redirects are still performed.
     # See: https://whitenoise.readthedocs.io
-    # "whitenoise.middleware.WhiteNoiseMiddleware",
-    # "django.contrib.sessions.middleware.SessionMiddleware",
-    # "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    # "django.contrib.messages.middleware.MessageMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
