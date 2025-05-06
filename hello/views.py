@@ -136,6 +136,9 @@ def skewb_sarah_intermediate(request):
     table_data = read_csv_data('hello/algorithms/skewb_sarah_intermediate.csv', ',')
     return render(request, "sarah_intermediate.html", {'table_data': table_data})
 
+def yau(request):
+    return render(request, "yau.html")
+
 
 def dr(request):
     return render(request, "dr.html")

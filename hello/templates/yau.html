@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>
+    Yau method for big cubes
+</h1>
+
+<h2>Introduction</h2>
+
+<p>Yau method is a very popular speedsolving method for big cubes (4x4x4, 5x5x5, 6x6x6, 7x7x7).</p>
+<p>The steps for Yau4 method and Yau5+ method are very similar, with some adjustment needed.</p>
+<p>It's highly recommended to learn the redux (reduction) method first, which reduce a big cube into a 3x3x3 cube, and then apply normal 3x3x3 methods, and optionally handles special cases called parity (cases that would not appear for 3x3x3 cube, but possible on big cubes).</p>
+<p>The Yau method consists of the following steps:</p>
+<ol>
+    <li>Solve centers of two opposite colors</li>
+    <li>Solve three edges on the color you plan to do cross with, called cross edges</li>
+    <li>Solve the remaining four centers while preserving the three cross edges</li>
+    <li>Solve the last cross edge</li>
+    <li>Solve the last 8 edges (this is where Yau4 and Yau5+ differs)</li>
+    <li>Solve the 3x3 stage and edge parity</li>
+</ol>
+<p>For this tutorial, we assume white is the cross color.</p>
+
+<h2>Yau Method for 4x4x4</h2>
+
+<h4>Step 1: Solve centers of two opposite colors</p>
+<canvas id="yau4-1" width="300" height="250"></canvas>
+
+<h4>Step 2: Solve three cross edges</p>
+<p>During this step, you should put the cross center on your left.</p>
+<p>Note the three cross edges should be in correct relative order: e.g. for white cross, blue followed by orange, followed by green, in x' order.</p>
+<p>There are tutorials which advice on solving cross edges while deliberately put an edge in incorrect order and eventually fix that during step 4, but it's not recommended because of the hindering on solving flow.</p>
+<canvas id="yau4-2" width="300" height="250"></canvas>
+<p>This step is intuitive, make sure to utilize the fact that only two centers are already solved, and you may be very flexible during the solve.</p>
+<p>For example, you may use Rw U x' to solve the white-red cross edge.</p>
+<canvas id="yau4-2-eg" width="300" height="250"></canvas>
+
+<h4>Step 3: Solve the centers</h4>
+<p>This step is very similar to solving centers in traditional redux method.</p>
+<p>After this step, we have solved all centers and 3 cross edges.</p>
+<p>Note that the centers and cross edges do not need to be aligned (can be shifted). The alignment will be done in next step.</p>
+<canvas id="yau4-3" width="300" height="250"></canvas>
+<p>The only thing is to make sure your solution of the center does not break the cross edges.</p>
+<p>Note that for 4x4x4, lot of the center algorithms are triggers in the form of wide move, U/U'/U2, wide move.</p>
+<p>If the wide move is Rw, e.g. Rw U2 Rw', then this naturally doesn't affect three cross edges (LB, LD, LF).</p>
+<p>If the wide move is Lw, e.g. Lw U Lw', then this as-is breaks a cross edge (LB). To avoid this, replace wide move to slice move, e.g. l U l'.</p>
+<p><strong>Exercise: </strong>what should be the algorithm to solve these last 2 centers? If centers are to be solved, the top should be blue, and the front should be red.</p>
+<canvas id="yau4-3-eg" width="300" height="250"></canvas>
+<p>The answer will be U2 l' U2 Rw.</p>
+
+<h4>Step 4: Solve last cross edge</h4>
+<p>After centers and 3 cross edges are solved, we may solve the last cross edge while preserving the centers.</p>
+<p>The end state is:</p>
+<canvas id="yau4-4" width="300" height="250"></canvas>
+<p>Two cases are very common, you may set up any last cross edge case to one of the two cases (with mirrored algorithm):</p>
+<p>Case 1:</p>
+<canvas id="yau4-4-eg" width="300" height="250"></canvas>
+<p>The algorithm is Rw U' R' U' R U2 Rw' or Rw F' U' F U Rw'</p>
+<p>Case 2:</p>
+<canvas id="yau4-4-eg2" width="300" height="250"></canvas>
+<p>r U R U' Rw' U</p>
+<p>Notice that you don't have to solve the last cross edge with center aligned at cross edge, but you should align them after pairing the last cross edge.</p>
+
+<h4>Step 5: Solve the last 8 edges</h4>
+<p>There are two substeps:</p>
+<ol>
+    <li>Solve three edges using a slice</li>
+    <li>Solve the last 5 edges</li>
+</ol>
+<p>This step is identical to that of the standard reduction method.</p>
+<p>For substep 1,</p>
+<p>first make an Uw move, then insert edge at right slot and rotate cube with y', for three times.</p>
+<p>For example, to pair FR edge's bottom wing with FL edge's top wing, you may apply R U' R'. Then y' and try to pair the new FR bottom wing to new FL top wing (old FR top wing).</p>
+<canvas id="yau4-5-1" width="300" height="250"></canvas>
+<p>After inserting three times, apply a Uw' move, which will solve three edges except for one.</p>
+<p>Now move on to substep 2,</p>
+<p>the idea is the same, keep unsolved edge at FL. Then insert an edge to pair with the top wing of FL.</p>
+<p>The next step is very intuitive: Uw' to pair these two wings, then insert an edge to pair with the top wing of FR (now at top wing of BR), apply Uw.</p>
+<p>This paradigm solves 2 edges.</p>
+<p>Optionally, you may have exactly 2 edges unsolved at the end. There are L2E algorithms available, but you may start with learning the following algorithm. Insert the other unsolved edge from top layer to FR, then apply this algorithm:</p>
+<p>Uw' R U R' F R' F' R Uw</p>
+<canvas id="yau4-5-3" width="300" height="250"></canvas>
+
+<h4>Step 6: Solve the 3x3 stage and edge parity</h4>
+<p>Since the cross is already solved, you may start from F2L directly.</p>
+<p>The rest on parity is same as the redux method.</p>
+<p>Some helpful tips are:</p>
+<ul>
+    <li>Start inspecting F2L during step 5 to avoid a long pause at this step.</li>
+    <li>Try to identify OLL parity during the last F2L solve to reduce pausing.</li>
+    <li>Polish parity algorithms' fingertrick.</li>
+</ul>
+
+<h2>Yau Method for 5x5x5</h2>
+<p>We will skip the part that is identical to Yau 4x4x4, and focus on the unique parts for Yau5.</p>
+<h4>Step 5: Solve the last 8 edges</h4>
+<p>Instead of using a slice to pair up 3 edges first, the Yau5 L8E follows:</p>
+<ol>
+    <li>Repeat 4 times: put three wings of an edge on E layer and align them with Uw and Dw moves, then insert an unsolved top edge (which aligns with unsolved wings as the start of next step) which automatically sends this solved edge to the top layer. Make sure there are at least 2 E-layer edges that are solved during this step, by picking at least 2 of them deliberately.</li>
+    <li>Solve 2 F2L pairs for the solved E-layer edges. If the two pairs are diagonal, then apply a single R' move or R move so that the unsolved E-layer edges are on the same face (rotate it to the front).</li>
+    <li>Pair the rest of edges one by one using standard edge pairing.</li>
+    <li>Solve the L2E which is similar as redux. You may start with solving one edge, and optionally (if parity occurs) send the parity edge to the top layer then apply OLL parity algorithm for the last edge.</li>
+</ol>
+
+<h4>Step 6: Solve the 3x3 stage and edge parity</h4>
+<p>There will be no parity for Yau5 due to the nature of 5x5x5 cube, and parity was guaranteed to be solved during edge pairing (step 5).</p>
+
+<p><u>There is another variant of Yau 5x5x5 step 5, which doesn't enforce two E-layer edges, consider learning that as an alternative approach and experiment which one works best for you.</u></p>
+
+<h2>Yau Method for 6x6x6</h2>
+<p>Yau6 is almost identical to Yau5.</p>
+<p>The only point worth mentioning is the L2E.</p>
+<p>In Yau6, you may first solve one of the edge, and try to influence the solving order through the process so the last (maybe) unsolved edge is a top edge.</p>
+<p>The benefit is that you may leave that unsolved edge remains unsolved until the 3x3x3 stage's last layer, in which you identify whether an inner layer parity should be applied or an outer layer parity should be applied, or there's no OLL parity.</p>
+<p>This trick avoids triple parity where you solve the edge parity during L2E, then get OLL parity, and PLL parity during the 3x3x3 stage.</p>
+
+<h2>Yau Method for 7x7x7</h2>
+<p>Yau7 method is identical to Yau5.</p>
+<p>The only point worth mentioning is still the L2E.</p>
+<li>You may solve one of the L2E first, then apply a potential parity algorithm for the last one edge (because there will be no parity during 3x3x3 stage).</li>
+
+<script>
+    render4("yau4-1", "    ,    ,    ,    ;    , ww , ww ,    ;    ,    ,    ,    ;    , yy , yy ,    ;    ,    ,    ,    ");
+    render4("yau4-2", "    ,    ,    ,    ;    ,wwww,wwww, ww ;    ,r   ,r   ,    ;    , yy , yy ,    ;    ,g   ,g   ,    ");
+    render4("yau4-2-eg", "    ,    ,    , r  ;    , www, www, ww ; w  ,g   ,g   ,  r ;    , yy , yy ,    ;  w ,o   ,o   ,    ");
+    render4("yau4-3", "    , bb , bb ,    ;    ,wwww,wwww, ww ;    ,rrr ,rrr ,    ;    , yy , yy ,    ;    ,ggg ,ggg ,    ");
+    render4("yau4-3-eg", "    , rb , rb ,    ;    ,wwww,wwww, ww ;    ,rbr ,rbr ,    ;    , yy , yy ,    ;    ,ggg ,ggg ,    ");
+    render4("yau4-4", "    ,bbb ,bbb ,    ; ww ,wwww,wwww, ww ;    ,rrr ,rrr ,    ;    , yy , yy ,    ;    ,ggg ,ggg ,    ");
+    render4("yau4-4-eg", "    , bb , bb , b  ;    ,wwww,wwww, ww ; w  ,rrr ,rrr ,  b ;    , yy , yy ,    ;  w ,ggg ,ggg ,    ");
+    render4("yau4-4-eg2", "    , bb , bb , b  ;    ,wwww,wwww, ww ; w  ,rrr ,rrrw,    ;    , yy ,byy ,    ;    ,ggg ,ggg ,    ");
+    render4("yau4-5-1", "    , yy , yy , br ;    , rrb, bby, bb ; og ,ogg ,grr , rr ;    , oo , gg , gg ; ww ,wwww,wwww, ww ");
+    render4("yau4-5-3", "    , yy , yy ,    ;    , bbb, bby, bb ;    ,orro,grrg, rr ;    ,bgg ,ygg , gg ; ww ,wwww,wwww, ww ");
+</script>
+
+
+{% endblock content %}

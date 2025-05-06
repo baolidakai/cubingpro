@@ -17,6 +17,7 @@
   <script src="{% static 'js/vendor/jquery.ba-replacetext.min.js' %}"></script>
   <script src="{% static 'js/clock.js' %}" type="text/javascript"></script>
   <script src="{% static 'js/pyraminx.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/big_cube.js' %}" type="text/javascript"></script>
   <script src="{% static 'js/skewb.js' %}" type="text/javascript"></script>
   <script src="https://cdn.cubing.net/v0/js/cubing/twisty" type="module"></script>
   <script type="module">
@@ -118,6 +119,13 @@
           </li>
 
           <li>
+            <h3>Big Cube</h3>
+            <ul>
+              <li><a href="/big_cube/yau">Yau method</a></li>
+            </ul>
+          </li>
+
+          <li>
             <h3>FMC</h3>
             <ul>
               <li><a href="/fmc/dr">Domino Reduction</a></li>
@@ -125,9 +133,13 @@
           </li>
 
           <li>
-            <h3>Big Cube Blind</h3>
+            <h3>Blindfolded</h3>
             <ul>
+              <!-- 3BLD -->
               <li><a href="/4bld/u2r2">4BLD with U2 and r2</a></li>
+              <!-- 5BLD -->
+               <!-- Clock BLD -->
+                <!-- Kilominx BLD -->
             </ul>
           </li>
 

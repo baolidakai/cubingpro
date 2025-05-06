@@ -49,6 +49,7 @@ urlpatterns = [
     path("comp_visualization", hello.views.comp_visualization, name="comp_visualization"),
     path("fmc/dr", hello.views.dr, name="dr"),
     path("4bld/u2r2", hello.views.u2r2, name="u2r2"),
+    path("big_cube/yau", hello.views.yau, name="yau"),
     path("solver/", hello.views.solver, name="solver"),
     # Use a secret name so that not every one can easily guess.
     path("api_secret_name/solver/", hello.views.api_solver, name="api_solver"),
