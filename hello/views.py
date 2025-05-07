@@ -21,7 +21,6 @@ logger.info('Here!')
 
 
 def index(request):
-    logger.debug("X-Forwarded-Proto: %s", request.META.get('HTTP_X_FORWARDED_PROTO'))
     return render(request, "index.html")
 
 
@@ -284,6 +283,7 @@ def clear_chat(request):
 
 @csrf_exempt
 def send_message(request):
+    logger.debug(request)
     if request.method == 'POST':
         try:
             body = json.loads(request.body)
