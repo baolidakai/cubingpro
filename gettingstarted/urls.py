@@ -61,5 +61,6 @@ urlpatterns = [
     # Fun project
     path('fetch_message/', hello.views.fetch_messages, name='fetch_messages'),
     path('send_message/', hello.views.send_message, name='send_message'),
+    path('clear_chat/', hello.views.clear_chat, name='clear_chat'),
 ]
 

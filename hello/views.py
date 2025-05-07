@@ -268,6 +268,21 @@ def fetch_messages(request):
 
 
 @csrf_exempt
+def clear_chat(request):
+    if request.method == 'POST':
+        try:
+            messages_deleted, _ = Message.objects.all().delete()
+            if messages_deleted > 0:
+                        return JsonResponse({'status': 'success', 'message': f'{messages_deleted} messages deleted.'}, status=200)
+            else:
+                return JsonResponse({'status': 'failure', 'message': 'No messages to delete.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+
+
+@csrf_exempt
 def send_message(request):
     if request.method == 'POST':
         try:
