@@ -62,6 +62,7 @@ def solve_3x3x3(user_input_json_string):
     moves = solution.split()
     summary = int(moves.pop().strip('()f'))
     if summary == 0:
+        SolverFeedback.objects.create(feedback='fine:' + 'solved', solution='')
         return 'Solved!', '', rot
     def clean_up_move(move):
         return move[0] + {
