@@ -3,10 +3,6 @@ from django.db import models
 # Create your models here.
 
 
-class Greeting(models.Model):
-    when = models.DateTimeField("date created", auto_now_add=True)
-
-
 class Page(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
@@ -15,3 +11,10 @@ class Page(models.Model):
 
     def __str__(self):
         return self.title
+    
+class SolverFeedback(models.Model):
+    feedback = models.TextField()  # "Yes" or "No" or error message
+    solution = models.TextField()
+
+    def __str__(self):
+        return f"Feedback: {self.feedback}, Solution: {self.solution[:20]}..."  # Display first 20 chars of the solution

@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 import markdown
 
-from .models import Greeting, Page
+from .models import Page, SolverFeedback
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db import connection
 
 import csv
 import os
@@ -182,6 +183,22 @@ def api_solver(request):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+    
+
+@csrf_exempt
+def api_solver_feedback(request):
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            feedback = body.get('feedback', '')
+            solution = body.get('solution', '')
+            if feedback:
+                post_feedback(feedback, solution)
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)
 
 
 def solver(request):
@@ -203,3 +220,34 @@ def solver(request):
 
 def privacy(request):
     return render(request, "privacy.html")
+
+
+def execute_sql(request):
+    if request.method == 'POST':
+        sql_query = request.POST.get('sql_query', '')
+
+        # Basic validation: Allow only SELECT queries
+        if not sql_query.lower().startswith("select"):
+            return JsonResponse({'error': 'Only SELECT queries are allowed'}, status=400)
+
+        # Prevent harmful SQL (basic example)
+        if re.search(r'(drop|delete|update|insert|alter|truncate)', sql_query, re.IGNORECASE):
+            return JsonResponse({'error': 'Unsafe query detected'}, status=400)
+
+        # Prevent unsafe characters like semicolons or comment symbols
+        # # is okay LOL
+        if re.search(r"[;'\-\/]", sql_query):
+            return JsonResponse({'error': 'Unsafe characters detected in query'}, status=400)
+
+        # Safe execution of the query
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(sql_query)  # Execute the query
+                result = cursor.fetchall()
+                columns = [col[0] for col in cursor.description]  # Get column names
+                data = [dict(zip(columns, row)) for row in result]
+                return render(request, 'execute_sql.html', {'result': data})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    
+    return render(request, 'execute_sql.html')

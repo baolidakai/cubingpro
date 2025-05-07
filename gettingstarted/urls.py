@@ -53,8 +53,10 @@ urlpatterns = [
     path("solver/", hello.views.solver, name="solver"),
     # Use a secret name so that not every one can easily guess.
     path("api_secret_name/solver/", hello.views.api_solver, name="api_solver"),
+    path("api_secret_name/solver_feedback/", hello.views.api_solver_feedback, name="api_solver_feedback"),
     path("tutorial_editor/", hello.views.tutorial_editor, name="tutorial_editor"),
     path("tutorial_viewer/", hello.views.tutorial_viewer, name="tutorial_viewer"),
     path('page/<int:page_id>/', hello.views.view_page, name='view_page'),
+    path('execute_sql/', hello.views.execute_sql, name='execute_sql'),
 ]
 

@@ -1,4 +1,5 @@
 from twophase import solver  as sv
+from .models import SolverFeedback
 
 import json
 import re
@@ -40,6 +41,8 @@ def solve_3x3x3(user_input_json_string):
         center = facelets[1][1]
         color_to_face[center] = order
     if len(color_to_face) != 6:
+        # Hack the SolverFeedback DB to reduce overhead of defining new table LOL
+        SolverFeedback.objects.create(feedback='error_1:' + user_input_json_string, solution='')
         raise ValueError('Centers must have 6 different colors')
     state = ''
     for order in face_order:
@@ -54,6 +57,7 @@ def solve_3x3x3(user_input_json_string):
         message = re.sub(pattern, "Cube ", solution)
         return message
     if 'Error' in solution:
+        SolverFeedback.objects.create(feedback='error_2:' + user_input_json_string, solution='')
         raise ValueError(clean_up_solution(solution))
     moves = solution.split()
     summary = int(moves.pop().strip('()f'))
@@ -66,4 +70,10 @@ def solve_3x3x3(user_input_json_string):
             '3': "'"
         }[move[1]]
     raw_moves = ' '.join(map(clean_up_move, moves))
+    SolverFeedback.objects.create(feedback='fine:' + user_input_json_string, solution=raw_moves)
     return raw_moves + f' -- {summary} move(s)', raw_moves, rot
+
+
+def post_feedback(feedback, solution):
+    SolverFeedback.objects.create(feedback=feedback, solution=solution)
+    print("Feedback saved successfully")  # Optionally, log the success for debugging purposes

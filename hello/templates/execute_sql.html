@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execute SQL Query</title>
+</head>
+<body>
+    <h1>Execute SQL Query</h1>
+    <p>Stick with SELECT only, do not add semicolon or other unsafe characters.</p>
+    <p>SELECT feedback, COUNT(1) FROM hello_solverfeedback GROUP BY feedback</p>
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="sql_query" rows="6" cols="50">SELECT * FROM hello_solverfeedback</textarea><br><br>
+        <button type="submit">Execute Query</button>
+    </form>
+
+    {% if result %}
+        <h2>Query Results:</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for column in result.0 %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in result %}
+                    <tr>
+                        {% for column in row.values %}
+                            <td>{{ column }}</td>
+                        {% endfor %}
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No results found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
