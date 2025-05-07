@@ -58,5 +58,8 @@ urlpatterns = [
     path("tutorial_viewer/", hello.views.tutorial_viewer, name="tutorial_viewer"),
     path('page/<int:page_id>/', hello.views.view_page, name='view_page'),
     path('execute_sql/', hello.views.execute_sql, name='execute_sql'),
+    # Fun project
+    path('fetch_message/', hello.views.fetch_messages, name='fetch_messages'),
+    path('send_message/', hello.views.send_message, name='send_message'),
 ]
 

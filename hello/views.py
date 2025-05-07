@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 import markdown
 
-from .models import Page, SolverFeedback
+from .models import Page, Message
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -252,3 +252,38 @@ def execute_sql(request):
             return JsonResponse({'error': str(e)}, status=400)
     
     return render(request, 'execute_sql.html')
+
+
+# For my personal messaging app
+@csrf_exempt
+def fetch_messages(request):
+    messages = Message.objects.all().order_by('timestamp')  # Fetch messages ordered by timestamp
+    message_list = [{
+        'user_id': msg.user_id,
+        'message_content': msg.message_content,
+        'timestamp': msg.timestamp.isoformat()  # Convert timestamp to string for JSON response
+    } for msg in messages]
+    
+    return JsonResponse({'messages': message_list})
+
+
+@csrf_exempt
+def send_message(request):
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            user_id = body.get('user_id')
+            message_content = body.get('message_content')
+
+            if user_id is None or message_content is None:
+                return JsonResponse({'error': 'user_id and message_content are required'}, status=400)
+
+            # Save the message to the database
+            message = Message.objects.create(user_id=user_id, message_content=message_content)
+
+            return JsonResponse({'message': 'Message sent successfully', 'message_id': message.id}, status=201)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)

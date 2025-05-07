@@ -18,3 +18,12 @@ class SolverFeedback(models.Model):
 
     def __str__(self):
         return f"Feedback: {self.feedback}, Solution: {self.solution[:20]}..."  # Display first 20 chars of the solution
+
+
+class Message(models.Model):
+    user_id = models.IntegerField()  # Assuming user ID is an integer
+    message_content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)  # Automatically set the timestamp when the message is created
+
+    def __str__(self):
+        return f"Message from User {self.user_id} at {self.timestamp}"
