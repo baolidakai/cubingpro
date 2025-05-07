@@ -222,6 +222,7 @@ def privacy(request):
     return render(request, "privacy.html")
 
 
+@csrf_exempt
 def execute_sql(request):
     if request.method == 'POST':
         sql_query = request.POST.get('sql_query', '')
