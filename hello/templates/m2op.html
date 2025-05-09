@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>3x3x3 BLD with M2 and Old Pochmann</h1>
+
+<h2>Introduction</h2>
+<p>
+    We decompose solving a 3x3x3 blindfolded into the following steps:
+</p>
+<ol>
+    <li>Memorize the corners</li>
+    <li>Memorize the edges</li>
+    <li>Solve the edges</li>
+    <li>Solve the corners</li>
+</ol>
+<br>
+<p>
+    There are two major blindfold methods, we introduce M2/OP here. The alternative is 3-style.<br>
+    Both methods share the same memorization (except for buffer piece difference), but differs in execution.<br>
+    M2/OP is relatively easier to learn. 3-style is conceptually easy but harder to ensure correctness and keep track
+    of the setup/reverse moves.
+</p>
+
+<h2>Edge</h2>
+<p><u>We made the tutorial interactive, where you may specify your letter scheme for edge/corner.</u></p>
+
+<table style="border-collapse: collapse;">
+    <tr>
+        <td></td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Up</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="UB" maxlength="3" value="C"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="UL" maxlength="3" value="B"></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="UR" maxlength="3" value="D"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="UF" maxlength="3" value="A"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Left</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="LU" maxlength="3" value="M"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="LB" maxlength="3" value="P"></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="LF" maxlength="3" value="N"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="LD" maxlength="3" value="O"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Front</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="FU" maxlength="3" value="I"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="FL" maxlength="3" value="L"></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="FR" maxlength="3" value="J"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="FD" maxlength="3" value="K"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Right</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="RU" maxlength="3" value="W"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="RF" maxlength="3" value="Z"></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="RB" maxlength="3" value="X"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="RD" maxlength="3" value="Y"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Back</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="BU" maxlength="3" value="Q"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="BR" maxlength="3" value="T"></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="BL" maxlength="3" value="R"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="BD" maxlength="3" value="S"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="width: 50px; height: 50px; border: 1px solid black; padding: 0;">
+            <h3>Down</h3>
+            <form>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="DF" maxlength="3" value="E"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input style="width: 50px;" type="text" id="DL" maxlength="3" value="F"></td>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="DR" maxlength="3" value="H"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input style="width: 50px;" type="text" id="DB" maxlength="3" value="G"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<h4>Memo</h4>
+<p>
+    You start from the buffer center (Ubl), and construct cycles. Append small cycles when you need to.
+</p>
+<p>
+    We group center memo into pairs of letters.
+</p>
+<p>The last group could be a single group, called edge parity.</p>
+
+<h4>Execution</h4>
+<p>
+    For each pair letter_1 and letter_2, we execute algorithm for letter_1, add M2, reverse; then algorithm for
+    letter_2, add M2, reverse.
+</p>
+<p>
+    In case the last memo is a single letter, we execute the parity algorithm D' L2 D M2 D' L2 D.
+</p>
+<p>Most setup and reverse are intuitive, so we omit most of those, and only shows a few (marked without special).</p>
+<p>Note that if you see </p>
+
+<h4>Algorithms</h4>
+<div>
+    <label>
+        <input type="checkbox" id="toggleDiv" onclick="toggleVisibility()"> Hide Edge Algorithms
+    </label>
+</div>
+<div id="toggleContent">
+    <div id="generatedList"></div>
+</div>
+
+<script>
+    function toggleVisibility() {
+        const contentDiv = document.getElementById('toggleContent');
+        const checkbox = document.getElementById('toggleDiv');
+        contentDiv.style.display = checkbox.checked ? 'none' : 'block';
+    }
+</script>
+
+<h2>Corner</h2>
+
+<h4>Memo</h4>
+<p>Memo is similar to corner.</p>
+<p>
+    Start with the buffer piece ULB.
+</p>
+<p>
+    We group wing memo into pairs of letters.
+</p>
+<p>The last group could be a single group, called corner parity.</p>
+
+<h4>Execution</h4>
+<p>
+    For each pair letter_1 and letter_2, we execute algorithm for letter_1, add M2, reverse; then algorithm for
+    letter_2, add M2, reverse. If you see a special algorithm, just apply the algorithm and the M2 slice will be included in that special algorithm.
+</p>
+<p>
+    Since during edge solution, we already handled parity at the last, just execute the algorithm for that final letter,
+    and the cube will be solved.
+</p>
+
+<p>
+    There is only one algorithm for OP method.
+</p>
+<p>Always setup your corner to RFL piece, apply the corner swap algorithm and reverse the setup.</p>
+<p>The corner swap algorithm is:</p>
+<p>
+    R U' R' U' R U R' F' R U R' U' R' F R
+</p>
+
+<script>
+    // Global dictionary to store the key-value pairs
+    const letterSchema = {};
+    const hardcodedMap = {
+        "UF": "(special) U2 M' U2 M' (use DB if appears as the second letter)",
+        "DB": "(special) M U2 M U2 (use UF if appears as the second letter)",
+        "UB": "(speical) M2",
+        "BU": "(special) B' R B U R2 U' M2 U R2 U' B' R' B",
+        "FU": "(special) D M' U R2 U' M U R2 U' D' M2 (use BD if appears as the second letter)",
+        "BD": "(special) M2' D U R2 U' M' U R2 U' M D' (use FU if appears as the second letter)",
+        "UR": "R U R' U'",
+        "UL": "L' U' L U",
+        "LU": "B L' B'"
+    };
+
+    // Function to update the displayed HTML dynamically
+    function UpdateHTML() {
+        let entries = [];
+        for (const [key, value] of Object.entries(hardcodedMap)) {
+            const userValue = document.getElementById(key).value || key;
+            entries.push({ userValue, value });
+        }
+        entries.sort((a, b) => a.userValue.localeCompare(b.userValue));
+        let updatedCode = "";
+        for (const { userValue, value } of entries) {
+            updatedCode += `<li>${userValue}: ${value}</li>\n`;
+        }
+        document.getElementById("generatedList").innerHTML = `<ul>${updatedCode}</ul>`;
+    }
+
+    // Add an event listener to call UpdateHTML whenever Update is triggered
+    function Update(key) {
+        const inputElement = document.getElementById(key);
+        if (inputElement) {
+            letterSchema[key] = inputElement.value;
+        }
+        UpdateHTML(); // Update the displayed HTML
+    }
+
+    // Initialize the displayed HTML on page load
+    window.onload = function () {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+            letterSchema[input.id] = input.value || "";
+        });
+        UpdateHTML(); // Populate the initial HTML
+    };
+
+    const idsToSync = [...new Set(Array.from(document.querySelectorAll('input[type="text"]')).map(input => input.id))]
+        .filter(id => /^[A-Z]{2}/.test(id));
+    idsToSync.forEach(id => {
+        const input = document.getElementById(`${id}`);
+        input.addEventListener('input', (e) => {
+            Update(e.target.id);
+        });
+    });
+</script>
+
+{% endblock content %}

@@ -71,6 +71,10 @@ def comp_visualization(request):
     return render(request, "comp_visualization.html")
 
 
+def m2op(request):
+    return render(request, "m2op.html")
+
+
 def u2r2(request):
     return render(request, "u2r2.html")
 
