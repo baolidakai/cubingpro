@@ -62,5 +62,6 @@ urlpatterns = [
     path('fetch_message/', hello.views.fetch_messages, name='fetch_messages'),
     path('send_message/', hello.views.send_message, name='send_message'),
     path('clear_chat/', hello.views.clear_chat, name='clear_chat'),
+    path('send_message_to_llm_agent/', hello.views.send_message_to_llm_agent, name='send_message_to_llm_agent'),
 ]
 

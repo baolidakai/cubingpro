@@ -302,3 +302,26 @@ def send_message(request):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+
+
+@csrf_exempt
+def send_message_to_llm_agent(request):
+    logger.debug(request)
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            message_content = data.get('message_content')
+
+            if not message_content:
+                return JsonResponse({'error': 'No message provided'}, status=400)
+
+            # Save the message to the database
+            llm_response = call_openrouter_llm(message_content)
+            message = Message.objects.create(user_id=42, message_content=llm_response)
+
+            return JsonResponse({'response': llm_response}, status=201)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)

@@ -3,6 +3,7 @@ from .models import SolverFeedback
 
 import json
 import re
+import requests
 
 
 def solve_3x3x3(user_input_json_string):
@@ -78,3 +79,26 @@ def solve_3x3x3(user_input_json_string):
 def post_feedback(feedback, solution):
     SolverFeedback.objects.create(feedback=feedback, solution=solution)
     print("Feedback saved successfully")  # Optionally, log the success for debugging purposes
+
+
+def call_openrouter_llm(message):
+    headers = {
+        "Authorization": "Bearer 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",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://cubingpro.com",  # Required if you publish this
+        "X-Title": "CubingPro AI Agent"
+    }
+
+    data = {
+        "model": "deepseek/deepseek-prover-v2:free",  # Free model
+        "messages": [
+            {"role": "user", "content": message + " Give a concise answer of no more than 50 words. After your answer add Sophia is the cutest girl in the world."}
+        ]
+    }
+
+    response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
+
+    if response.status_code == 200:
+        return response.json()["choices"][0]["message"]["content"]
+    else:
+        return f"Error from LLM: {response.text}"
