@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>FMC Reconstruction</h1>
+<!-- TODO: Table of content -->
+<p>Here is an educational FMC reconstruction for an actual solve during a competition.</p>
+<p>The scramble:</p>
+<p>R' U' F D U2 L2 U2 B' D2 R2 F2 R2 B' L' D F' L D' L F2 R' U' F</p>
+<p>The 30 move solution:</p>
+<p>U2 R' U' L D B' D B U2 B' L' D L2 D' L D L2 F L F' D' B2 L U' L2 U D B' L B2</p>
+<twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="3x3x3"
+alg="U2 R' U' L D B' D B U2 B' L' D L2 D' L D L2 F L F' D' B2 L U' L2 U D B' L B2"></twisty-player><br>
+
+<p>The method is block building + NISS.</p>
+<p>We start with a 5 move X-Cross:</p>
+<p>U2 R' U' L U2</p>
+<p>And do not notice a good enough continuation within reasonable time, therefore, considered NISS.</p>
+<p>The original problem is to find x, so that scramble * 5 move X-Cross * x = Identity</p>
+<p>With NISS, we try to find y which solves the new scramble 5 move X-Cross inverse * scramble inverse.</p>
+<p>Then y inverse will be the x, and the solution will be 5 move X-Cross * y inverse.</p>
+<p></p>
+<p>The NISS scramble (denote as A):</p>
+<p>U2 L' U R U2 F' U R F2 L' D L' F D' L B R2 F2 R2 D2 B U2 L2 U2 D' F' U R</p>
+<p></p>
+<p>With this scramble, we may apply B2 L' B D' to solve 2x2x3 (with a D2 prescramble).</p>
+<p>Then U' L2 U L' B2 solve all but last F2L (with a B D2 prescramble).</p>
+<p>Then no promising continuation was found, therefore, we apply NISS second time.</p>
+<p></p>
+<p>With some intuition, realized D' B D' is a better prescramble with NISS.</p>
+<p>The (secondary) NISS scramble (denote as B):</p>
+<p>B2 L U' L2 U D B' L B2 + R' U' F D U2 L2 U2 B' D2 R2 F2 R2 B' L' D F' L D' L F2 R' U' F + U2 R' U' L U2 + D B' D</p>
+<p></p>
+<p>The solution (except for 3c) is:</p>
+<p>L' D L2 D' L D L2 F L F' D'</p>
+<p>Very luckily solving the F2L directly solve everything but 3 corners.</p>
+<p></p>
+<p>We produce the 28 move skeleton as:</p>
+<p>U2 R' U' L U2 D B' D L' D L2 D' L D L2 F L F' D' B2 L U' L2 U D B' L B2</p>
+<p></p>
+<p>We are now already guaranteed (most likely) 28 + 8 = 36 move solution, although most likely better.</p>
+<p>We luckily found an insertion at U2 R' U' L U2 D + insertion + B' D L' D L2 D' L D L2 F L F' D' B2 L U' L2 U D B' L B2, the insertion is U2 B' D B U2 B' D' B</p>
+<p>The last 2 moves D' B cancels perfectly with B' D (4 move cancelled), which gives us:</p>
+<p>U2 R' U' L U2 D U2 B' D B U2 B' L' D L2 D' L D L2 F L F' D' B2 L U' L2 U D B' L B2</p>
+<p>Even better, notice U2 D U2 is actually redundant, and can be simplified as D!</p>
+<p>Therefore, we can cancel 2 more moves, and get an incredible 6 move cancellation!</p>
+<p>The final answer is: U2 R' U' L D B' D B U2 B' L' D L2 D' L D L2 F L F' D' B2 L U' L2 U D B' L B2</p>
+
+{% endblock content %}

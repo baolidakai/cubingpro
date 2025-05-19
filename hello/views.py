@@ -131,6 +131,10 @@ def pyraminx_v_first_alg(request):
     return render(request, "v_first_alg.html", {'table_data': table_data})
 
 
+def fmc_recon(request):
+    return render(request, "fmc_recon.html", {})
+
+
 def skewb_sarah_beginner(request):
     table_data = read_csv_data('hello/algorithms/skewb_sarah_beginner.csv', ',')
     return render(request, "sarah_beginner.html", {'table_data': table_data})
