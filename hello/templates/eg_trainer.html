@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>EG Trainer</h1>
+
+<div id="trainer-section">
+    <h2>Current Case: <span id="current-case-name"></span></h2>
+    <div id="case-visualization" style="text-align: center; margin-bottom: 10px;">
+    </div>
+    <div style="text-align: center; margin-bottom: 10px;">
+        <button id="reveal-alg-btn">Reveal Algorithm</button>
+    </div>
+    <div id="algorithm-details" style="text-align: center; margin-bottom: 20px; display: none;">
+        <p><strong>Algorithm:</strong> <span id="current-alg"></span></p>
+    </div>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button id="correct-btn">Correct</button>
+        <button id="incorrect-btn">Incorrect</button>
+    </div>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button id="next-case-btn">Next Case</button>
+        <button id="reset-stats-btn">Reset Stats</button>
+    </div>
+</div>
+
+<hr>
+
+<div>
+    <h2>Case Statistics</h2>
+    <button id="show-ranked-cases-btn">Show Cases Ranked by Success (Worst First)</button>
+    <div id="ranked-cases-container" style="margin-top: 10px;">
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ALGORITHMS_DATA = JSON.parse('{{ table_data|escapejs }}');
+        const caseVisualizationDiv = document.getElementById('case-visualization');
+        const currentCaseNameSpan = document.getElementById('current-case-name');
+        const revealAlgBtn = document.getElementById('reveal-alg-btn');
+        const algorithmDetailsDiv = document.getElementById('algorithm-details');
+        const currentAlgSpan = document.getElementById('current-alg');
+        const correctBtn = document.getElementById('correct-btn');
+        const incorrectBtn = document.getElementById('incorrect-btn');
+        const nextCaseBtn = document.getElementById('next-case-btn');
+        const resetStatsBtn = document.getElementById('reset-stats-btn');
+        const showRankedCasesBtn = document.getElementById('show-ranked-cases-btn');
+        const rankedCasesContainer = document.getElementById('ranked-cases-container');
+
+        let currentCase = null;
+        let stats = {}; // Store as { caseName: { pos: 0, neg: 0 } }
+
+        // --- LocalStorage ---
+        const STATS_STORAGE_KEY = 'egTrainerStats_CLL';
+
+        function loadStats() {
+            const storedStats = localStorage.getItem(STATS_STORAGE_KEY);
+            if (storedStats) {
+                stats = JSON.parse(storedStats);
+                // Ensure all cases from ALGORITHMS_DATA are in stats
+                ALGORITHMS_DATA.forEach(alg => {
+                    if (!stats[alg.Case]) {
+                        stats[alg.Case] = { pos: 0, neg: 0 };
+                    }
+                });
+            } else {
+                ALGORITHMS_DATA.forEach(alg => {
+                    stats[alg.Case] = { pos: 0, neg: 0 };
+                });
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem(STATS_STORAGE_KEY, JSON.stringify(stats));
+        }
+
+        function resetAllStats() {
+            if (confirm("Are you sure you want to reset all your statistics? This cannot be undone.")) {
+                ALGORITHMS_DATA.forEach(alg => {
+                    stats[alg.Case] = { pos: 0, neg: 0 };
+                });
+                saveStats();
+                alert("Statistics have been reset.");
+                selectAndDisplayNewCase(); // Refresh display
+                if (rankedCasesContainer.innerHTML !== '') { // If ranked list is visible, refresh it
+                    displayRankedCases();
+                }
+            }
+        }
+
+        // --- Twisty Player ---
+        function displayTwistyPlayer(parentElement, algSetup) {
+            parentElement.innerHTML = ''; // Clear previous player
+            const player = document.createElement('twisty-player');
+            player.setAttribute('style', 'width: 256px; height: 192px; min-width: 256px; min-height: 192px;'); // Added min-width/height
+            player.setAttribute('experimental-setup-anchor', 'end');
+            player.setAttribute('puzzle', '2x2x2');
+            player.setAttribute('background', 'none');
+            player.setAttribute('control-panel', 'none');
+            player.setAttribute('alg', `${algSetup} y z2`); // Assuming y z2 is for consistent orientation
+            parentElement.appendChild(player);
+        }
+
+        // --- Case Selection ---
+        function selectAndDisplayNewCase() {
+            if (ALGORITHMS_DATA.length === 0) {
+                currentCaseNameSpan.textContent = "No algorithms loaded.";
+                return;
+            }
+
+            // Weighted sampling
+            let weightedCases = [];
+            let totalWeight = 0;
+
+            ALGORITHMS_DATA.forEach(alg => {
+                const caseStat = stats[alg.Case] || { pos: 0, neg: 0 };
+                // Weight: higher for more errors or newer cases. (neg_count + 1) ensures unseen cases have a chance.
+                // Add a small factor to pos_count to slightly reduce weight of very successful algs if neg_count is also low.
+                const weight = (caseStat.neg + 1) / (caseStat.pos * 0.5 + caseStat.neg + 2); // User can tune this
+                weightedCases.push({ caseData: alg, weight: weight });
+                totalWeight += weight;
+            });
+
+            // Normalize weights (optional, but good for understanding probabilities)
+            // weightedCases.forEach(wc => wc.normalized_weight = wc.weight / totalWeight);
+
+            let randomNum = Math.random() * totalWeight;
+            let selectedAlg = null;
+
+            for (let i = 0; i < weightedCases.length; i++) {
+                randomNum -= weightedCases[i].weight;
+                if (randomNum <= 0) {
+                    selectedAlg = weightedCases[i].caseData;
+                    break;
+                }
+            }
+
+            // Fallback to first case if something went wrong (should not happen with positive weights)
+            if (!selectedAlg && ALGORITHMS_DATA.length > 0) {
+                selectedAlg = ALGORITHMS_DATA[0];
+            }
+
+            currentCase = selectedAlg;
+
+            currentCaseNameSpan.innerHTML = `${currentCase.Case}<br><br><span style="font-size: 0.8em; color: #666;">${currentCase.scramble}</span>`;
+            displayTwistyPlayer(caseVisualizationDiv, currentCase.viz);
+            algorithmDetailsDiv.style.display = 'none';
+            revealAlgBtn.disabled = false;
+            correctBtn.disabled = true; // Disabled until algorithm is revealed
+            incorrectBtn.disabled = true;
+        }
+
+        // --- Event Handlers ---
+        revealAlgBtn.addEventListener('click', () => {
+            if (!currentCase) return;
+            currentAlgSpan.textContent = currentCase.alg;
+            algorithmDetailsDiv.style.display = 'block';
+            revealAlgBtn.disabled = true;
+            correctBtn.disabled = false;
+            incorrectBtn.disabled = false;
+        });
+
+        function handleAttempt(isCorrect) {
+            if (!currentCase) return;
+            const caseStat = stats[currentCase.Case];
+            if (isCorrect) {
+                caseStat.pos++;
+            } else {
+                caseStat.neg++;
+            }
+            saveStats();
+            // Optionally, automatically go to the next case
+            // selectAndDisplayNewCase();
+            // Or wait for user to click "Next Case"
+            correctBtn.disabled = true;
+            incorrectBtn.disabled = true;
+            revealAlgBtn.disabled = false; // Allow re-revealing or for next case
+            // You might want to grey out the visualization or give some feedback
+        }
+
+        correctBtn.addEventListener('click', () => handleAttempt(true));
+        incorrectBtn.addEventListener('click', () => handleAttempt(false));
+        nextCaseBtn.addEventListener('click', selectAndDisplayNewCase);
+        resetStatsBtn.addEventListener('click', resetAllStats);
+
+        // --- Ranked Cases ---
+        showRankedCasesBtn.addEventListener('click', displayRankedCases);
+
+        function displayRankedCases() {
+            rankedCasesContainer.innerHTML = ''; // Clear previous list
+
+            const casesWithStats = ALGORITHMS_DATA.map(alg => {
+                const caseStat = stats[alg.Case] || { pos: 0, neg: 0 };
+                const totalAttempts = caseStat.pos + caseStat.neg;
+                let successRate = 0; // Default for not attempted, or if only neg attempts
+                if (totalAttempts > 0) {
+                    successRate = (caseStat.pos / totalAttempts) * 100;
+                }
+                return { ...alg, ...caseStat, totalAttempts, successRate };
+            });
+
+            // Filter for "touched" failure cases:
+            // A case is a "failure case" if it has been attempted and has at least one negative count.
+            // So, item.neg > 0 implies it's touched and a failure.
+            const ranked = casesWithStats
+                .filter(item => item.neg > 0) // Only show cases with at least one incorrect attempt
+                .sort((a, b) => {
+                    // Sort by success rate ascending (worst first)
+                    if (a.successRate !== b.successRate) {
+                        return a.successRate - b.successRate;
+                    }
+                    // If success rates are equal, sort by most negative attempts (more errors first)
+                    if (a.neg !== b.neg) {
+                        return b.neg - a.neg;
+                    }
+                    // Then by fewer positive attempts (more "problematic" cases might have few successes despite errors)
+                    if (a.pos !== b.pos) {
+                        return a.pos - b.pos;
+                    }
+                    return a.Case.localeCompare(b.Case); // Alphabetical as a final tie-breaker
+                });
+
+            if (ranked.length === 0) {
+                rankedCasesContainer.textContent = "No failure cases to display (no incorrect attempts recorded yet).";
+                return;
+            }
+
+            const ul = document.createElement('ul');
+            ul.style.listStyleType = 'none';
+            ul.style.padding = '0';
+
+            ranked.forEach(item => {
+                const li = document.createElement('li');
+                li.style.marginBottom = '15px';
+                li.style.padding = '10px';
+                li.style.border = '1px solid #eee';
+
+                const name = document.createElement('strong');
+                name.textContent = `${item.Case}`;
+                li.appendChild(name);
+
+                const statsText = document.createElement('p');
+                statsText.style.margin = '5px 0';
+                statsText.textContent = `Success: ${item.successRate.toFixed(1)}% (${item.pos} correct, ${item.neg} incorrect, ${item.totalAttempts} total)`;
+                li.appendChild(statsText);
+
+                const algText = document.createElement('p');
+                algText.style.margin = '5px 0';
+                algText.style.fontSize = '0.9em';
+                algText.textContent = `Alg: ${item.alg}`;
+                li.appendChild(algText);
+
+                const vizButton = document.createElement('button');
+                vizButton.textContent = 'Show Visualization';
+                vizButton.style.marginRight = '10px';
+                vizButton.style.fontSize = '0.9em';
+
+                const vizContainer = document.createElement('div');
+                vizContainer.style.marginTop = '5px';
+                vizContainer.style.display = 'none'; // Initially hidden
+
+                vizButton.onclick = () => {
+                    if (vizContainer.style.display === 'none') {
+                        displayTwistyPlayer(vizContainer, item.viz);
+                        vizContainer.style.display = 'block';
+                        vizButton.textContent = 'Hide Visualization';
+                    } else {
+                        vizContainer.innerHTML = '';
+                        vizContainer.style.display = 'none';
+                        vizButton.textContent = 'Show Visualization';
+                    }
+                };
+
+                li.appendChild(vizButton);
+                li.appendChild(vizContainer);
+                ul.appendChild(li);
+            });
+            rankedCasesContainer.appendChild(ul);
+        }
+
+        // --- Initialization ---
+        loadStats();
+        selectAndDisplayNewCase();
+    });
+</script>
+
+<style>
+    /* Optional: Some basic styling for the trainer */
+    #trainer-section button,
+    #show-ranked-cases-btn {
+        padding: 8px 15px;
+        margin: 5px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f0f0f0;
+    }
+
+    #trainer-section button:hover,
+    #show-ranked-cases-btn:hover {
+        background-color: #e0e0e0;
+    }
+
+    #trainer-section button:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    #ranked-cases-container ul {
+        padding-left: 0;
+    }
+
+    #ranked-cases-container li {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
+{% endblock content %}

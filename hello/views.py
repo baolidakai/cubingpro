@@ -39,6 +39,19 @@ def preprocess(alg):
     return ' '.join(moves)
 
 
+def pocket_inverse(alg):
+    pattern = r"[RLUDFB][2']?"
+    moves = re.findall(pattern, alg)
+    moves.reverse()
+    def inv(m):
+        if m.endswith('2'):
+            return m
+        if m.endswith("'"):
+            return m[:-1]
+        return m + "'"
+    return ' '.join([inv(m) for m in moves])
+
+
 def pyraminx_inverse(alg):
     pattern = r"[RLUDFB][2']?"
     moves = re.findall(pattern, alg)
@@ -62,9 +75,27 @@ def read_csv_data(filepath, delimiter):
             # Example: convert values and calculate something if needed
             for method in ['CLL', 'EG1', 'EG2']:
                 row[f'{method}_viz'] = preprocess(row.get(f'{method}_alg', ''))
+                row[f'{method}_inv'] = pocket_inverse(row.get(f'{method}_alg', ''))
             data.append(row)
 
     return data
+
+
+"""
+Dead code, used for generating data for EG trainer.
+"""
+def process_for_eg_trainer(data):
+    fout = open('hello/algorithms/eg_trainer.csv', 'a')
+    fout.writelines(['Case,alg,viz,inv,scramble\n'])
+    out = []
+    for row in data:
+        logger.info('Here!')
+        for method in ['CLL', 'EG1', 'EG2']:
+            fout.writelines([method + ' ' + row['Case'] + ',' + row[f'{method}_alg'] + ','
+                             + row[f'{method}_viz'] + ',' + row[f'{method}_inv']
+                             + ',' + get_shortest_solution_for_scramble(row[f'{method}_inv'])
+                             + '\n'])
+    return []
 
 
 def comp_visualization(request):
@@ -82,6 +113,17 @@ def u2r2(request):
 def eg_alg(request):
     table_data = read_csv_data('hello/algorithms/eg.csv', ',')
     return render(request, "eg_alg.html", {'table_data': table_data})
+
+
+def eg_trainer(request):
+    # Following code are one-time for generating the eg_trainer CSV only.
+    """
+    table_data = read_csv_data('hello/algorithms/eg.csv', ',')
+    table_data = process_for_eg_trainer(table_data)
+    return render(request, "eg_trainer.html", {'table_data': json.dumps(table_data)})
+    """
+    table_data = read_csv_data('hello/algorithms/eg_trainer.csv', ',')
+    return render(request, "eg_trainer.html", {'table_data': json.dumps(table_data)})
 
 
 def clock_7simul_flip_intro(request):

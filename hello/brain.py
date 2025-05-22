@@ -102,3 +102,320 @@ def call_openrouter_llm(message):
         return response.json()["choices"][0]["message"]["content"]
     else:
         return f"Error from LLM: {response.text}"
+
+
+"""
+https://github.com/Grishound/rubik-cube-solver/blob/main/rubik.py
+"""
+# rubik.py
+# Author: Ronald L. Rivest
+# Modified: Michael Lieberman
+#
+# Routines to work with Rubik's 2x2x2 cube
+
+"""
+We'll call the six sides, as usual:
+   Front Back   Up Down   Left Right
+or F, B, U, D, L, R.
+
+Permutations:
+
+We'll number the cubie positions starting
+at 0, front to back, up to down, left to right.
+We give an alphabetic name to the cubies as well,
+by listing the faces it contains, starting with
+F or B, in clockwise order (looking in from outside).
+   0th cubie = FLU
+   1st cubie = FUR
+   2nd cubie = FDL
+   3rd cubie = FRD
+   4th cubie = BUL
+   5th cubie = BRU
+   6th cubie = BLD
+   7th cubie = BDR
+Each cubie has three faces, so we have 24 face
+positions.  We'll label them as 0 to 23, but also
+with a 3-letter name that specifies the name
+of the cubie it is on, cyclically rotated to
+put the name of the face first (so cubie FLU
+has faces flu, luf, and ufl, on sides F, L,
+and U, respectively). We'll use lower case
+here for clarity.  Here are the face names,
+written as variables for later convenience.
+We also save each number in a second variable,
+where the positions are replaced by the colors that
+would be there if the cube were solved and had its
+orange-yellow-blue cubie in position 7, with yellow
+facing down.
+"""
+# flu refers to the front face (because f is first) of the cubie that
+# has a front face, a left face, and an upper face.
+# yob refers to the colors yellow, orange, blue that are on the
+# respective faces if the cube is in the solved position.
+rgw = flu = 0 # (0-th cubie; front face)
+gwr = luf = 1 # (0-th cubie; left face)
+wrg = ufl = 2 # (0-th cubie; up face)
+
+rwb = fur = 3 # (1-st cubie; front face)
+wbr = urf = 4 # (1-st cubie; up face)
+brw = rfu = 5 # (1-st cubie; right face)
+
+ryg = fdl = 6 # (2-nd cubie; front face)
+ygr = dlf = 7 # (2-nd cubie; down face)
+gry = lfd = 8 # (2-nd cubie; left face)
+
+rby = frd = 9 #  (3-rd cubie; front face)
+byr = rdf = 10 # (3-rd cubie; right face)
+yrb = dfr = 11 # (3-rd cubie; down face)
+
+owg = bul = 12 # (4-th cubie; back face)
+wgo = ulb = 13 # (4-th cubie; up face)
+gow = lbu = 14 # (4-th cubie; left face)
+
+obw = bru = 15 # (5-th cubie; back face)
+bwo = rub = 16 # (5-th cubie; right face)
+wob = ubr = 17 # (5-th cubie; up face)
+
+ogy = bld = 18 # (6-th cubie; back face)
+gyo = ldb = 19 # (6-th cubie; left face)
+yog = dbl = 20 # (6-th cubie; down face)
+
+oyb = bdr = 21 # (7-th cubie; back face)
+ybo = drb = 22 # (7-th cubie; down face)
+boy = rbd = 23 # (7-th cubie; right face)
+
+"""
+A permutation p on 0,1,...,n-1 is represented as
+a list of length n-1.  p[i] = j means of course
+that p maps i to j.
+
+When operating on a list c (e.g. a list of length
+24 of colors), then  p * c
+is the rearranged list of colors:
+   (p * c)[i] = c[p[i]]    for all i
+Thus, p[i] is the location of where the color of
+position i will come from; p[i] = j means that
+the color at position j moves to position i.
+"""
+
+####################################################
+### Permutation operations
+####################################################
+
+def perm_apply(perm, position):
+    """
+    Apply permutation perm to a list position (e.g. of faces).
+    Face in position p[i] moves to position i.
+    """
+    return tuple([position[i] for i in perm])
+
+def perm_twice(p):
+    """
+    Return p * p.
+    """
+    return perm_apply(p, p)
+
+def perm_inverse(p):
+    """
+    Return the inverse of permutation p.
+    """
+    n = len(p)
+    q = [0]*n
+    for i in range(n):
+        q[p[i]] = i
+    return tuple(q)
+
+def perm_to_string(p):
+    """
+    Convert p to string, slightly more compact
+    than list printing.
+    """
+    s = "("
+    for x in p: s = s + "%2d "%x
+    s += ")"
+    return s
+
+###################################################
+### Make standard permutations of faces
+###################################################
+# Identity: equal to (0, 1, 2, ..., 23).
+I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr,     bul, ulb, lbu, bru, rub, ubr, bld, ldb, dbl, bdr, drb, rbd)
+
+"""
+When any of the following Rubik's cube permutations are applied, the
+three faces on a cubie naturally stay together:
+{0,1,2}, {3,4,5}, ..., {21,22,23}.
+"""
+
+# Front face rotated clockwise.
+F = (fdl, dlf, lfd, flu, luf, ufl, frd, rdf, dfr, fur, urf, rfu, 
+     bul, ulb, lbu, bru, rub, ubr, bld, ldb, dbl, bdr, drb, rbd)
+# Front face rotated counter-clockwise.
+Fi = perm_inverse(F)
+F2 = perm_twice(F)
+
+# Back face rotated clockwise.
+B = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr,     bru, rub, ubr, bdr, drb, rbd, bul, ulb, lbu, bld, ldb, dbl)
+Bi = perm_inverse(B)
+B2 = perm_twice(B)
+
+# Left face rotated clockwise.
+L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr,
+     dbl, bld, ldb, bru, rub, ubr, dlf, lfd, fdl, bdr, drb, rbd)
+# Left face rotated counter-clockwise.
+Li = perm_inverse(L)
+L2 = perm_twice(L)
+
+R = (flu, luf, ufl, dfr, frd, rdf, fdl, dlf, lfd, drb, rbd, bdr,     bul, ulb, lbu, urf, rfu, fur, bld, ldb, dbl, ubr, bru, rub)
+Ri = perm_inverse(R)
+R2 = perm_twice(R)
+
+# Upper face rotated clockwise.
+U = (rfu, fur, urf, rub, ubr, bru, fdl, dlf, lfd, frd, rdf, dfr,
+     luf, ufl, flu, lbu, bul, ulb, bld, ldb, dbl, bdr, drb, rbd)
+# Upper face rotated counter-clockwise.
+Ui = perm_inverse(U)
+U2 = perm_twice(U)
+
+D = (flu, luf, ufl, fur, urf, rfu, ldb, dbl, bld, lfd, fdl, dlf,     bul, ulb, lbu, bru, rub, ubr, rbd, bdr, drb, rdf, dfr, frd)
+Di = perm_inverse(D)
+D2 = perm_twice(D)
+
+# All 6 possible moves (assuming that the lower-bottom-right cubie
+# stays fixed).
+quarter_twists = (F, Fi, L, Li, U, Ui, F2, L2, U2, B, Bi, B2, R, Ri, R2, D, Di, D2)
+
+quarter_twists_names = {}
+quarter_twists_names[F] = 'F'
+quarter_twists_names[Fi] = 'F\''
+quarter_twists_names[L] = 'L'
+quarter_twists_names[Li] = 'L\''
+quarter_twists_names[U] = 'U'
+quarter_twists_names[Ui] = 'U\''
+quarter_twists_names[F2] = 'F2'
+quarter_twists_names[L2] = 'L2'
+quarter_twists_names[U2] = 'U2'
+quarter_twists_names[B] = 'B'
+quarter_twists_names[Bi] = 'B\''
+quarter_twists_names[B2] = 'B2'
+quarter_twists_names[R] = 'R'
+quarter_twists_names[Ri] = 'R\''
+quarter_twists_names[R2] = 'R2'
+quarter_twists_names[D] = 'D'
+quarter_twists_names[Di] = 'D\''
+quarter_twists_names[D2] = 'D2'
+
+parent_f = {}
+parent_b = {}
+def f_BFS(start, parent_f, parent_b):
+    if type(start) != list:
+        frontier = [start]
+    else:
+        frontier = start
+    next1 = []
+    for u in frontier:
+        for move in quarter_twists:
+            v = perm_apply(move, u)
+            if v not in parent_f:
+                parent_f[v] = u
+                next1.append(v)
+            if v in parent_b:
+                return (1, v)
+    frontier = next1
+    return (0, frontier)
+
+def b_BFS(end, parent_f, parent_b):
+    if type(end) != list:
+        frontier = [end]
+    else:
+        frontier = end
+    next1 = []
+    for u in frontier:
+        for move in quarter_twists:
+            v = perm_apply(move, u)
+            if v not in parent_b:
+                parent_b[v] = u
+                next1.append(v)
+            if v in parent_f:
+                return (1, v)
+    frontier = next1
+    return (0, frontier)
+
+def shortest_path(start, end):
+    """
+    Using 2-way BFS, finds the shortest path from start_position to
+    end_position. Returns a list of moves. 
+    Assumes the quarter_twists move set.
+    """
+    flag = 0
+    count = 0
+    parent_f[start] = None
+    parent_b[end] = None
+    answer = []
+    f_value = start
+    b_value = end
+    if f_value == b_value:
+        return answer
+
+    while flag == 0 and count < 15:
+        f_bit, f_value = f_BFS(f_value, parent_f, parent_b)
+        count += 1
+        if f_bit == 1:
+            check = 'f'
+            flag = 1
+        if flag == 0:
+            b_bit, b_value = b_BFS(b_value, parent_f, parent_b)
+            count += 1
+            if b_bit == 1:
+                check = 'b'
+                flag = 1
+
+    if count >= 15:
+        return None
+
+    if check == 'f':
+        value = f_value
+        save = f_value
+    else:
+        value = b_value
+        save = b_value
+    while parent_f[value] is not None:
+        answer.append(value)
+        value = parent_f[value]
+
+    answer = answer[::-1]
+
+    value = save
+    while parent_b[value] is not None:
+        value = parent_b[value]
+        answer.append(value) 
+
+    parent_b.clear()
+    parent_f.clear()
+
+    prev = start
+    fin = []
+    for x in answer:
+        for move in quarter_twists_names:
+            if perm_apply(move, prev) == x:
+                fin.append(quarter_twists_names[move])
+                break
+        prev = x
+    return fin
+
+
+def get_shortest_solution_for_scramble(scramble):
+    start = I
+    # Represent the orientation of the cube via a vector.
+    # Each move (e.g. F) will be translated into the new orientation and a basic move w.r.t. fixed corner LBR.
+    end = I
+    for x in scramble.split():
+        curr = None
+        for move in quarter_twists_names:
+            if quarter_twists_names[move] == x:
+                curr = move
+                break
+        assert curr
+        end = perm_apply(curr, end)
+    return ' '.join(shortest_path(start, end))
+
