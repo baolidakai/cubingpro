@@ -123,7 +123,7 @@ def eg_trainer(request):
     return render(request, "eg_trainer.html", {'table_data': json.dumps(table_data)})
     """
     table_data = read_csv_data('hello/algorithms/eg_trainer.csv', ',')
-    return render(request, "eg_trainer.html", {'table_data': json.dumps(table_data)})
+    return render(request, "eg_trainer.html", {'table_data_json': json.dumps(table_data)})
 
 
 def clock_7simul_flip_intro(request):
