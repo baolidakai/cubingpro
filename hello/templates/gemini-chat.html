@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h2>与 Gemini 聊天</h2>
+    </div>
+    <div class="initial-prompt-display">
+    </div>
+    <div class="chat-messages" id="chatMessages">
+        {{ gemini_reply }}
+        </div>
+    <div class="chat-input">
+        <form method="POST">
+            {% csrf_token %}
+        <textarea name="message" rows="6" cols="50"></textarea><br><br>
+        <button type="submit" id="sendButton">发送</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const chatMessagesDiv = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
+    const initialPromptText = document.getElementById('initial-prompt-text').textContent;
+
+    // Store conversation history.
+    // The initial prompt sets the context and acts as the first "user" message for the AI.
+    // Or, if you prefer, you can send it as a system instruction if the model/API supports it.
+    // For this setup, we'll treat it as the first part of the conversation content.
+    let conversationHistory = {};
+
+    function displayMessage(message, sender, isError = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender);
+        if (isError && sender === 'model') {
+            messageDiv.classList.add('model-error');
+        }
+        // Basic sanitization to prevent HTML injection from AI response
+        // For robust sanitization, consider a library.
+        const textNode = document.createTextNode(message);
+        messageDiv.appendChild(textNode);
+
+        chatMessagesDiv.appendChild(messageDiv);
+        chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight; // Auto-scroll
+    }
+
+    async function sendMessageToBackend() {
+    }
+
+    sendButton.addEventListener('click', sendMessageToBackend);
+    userInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessageToBackend();
+        }
+    });
+
+    // Initialize conversation with the prompt
+    if (initialPromptText) {
+        // Display the initial prompt context as a system/setup message (optional display)
+        // And add it as the first user message in the history for Gemini
+        // You could optionally make an initial call here to get Gemini's first response to the prompt
+        // For example, to display an initial greeting from the AI based on the prompt.
+        // For this example, we'll wait for the user's first typed message.
+        // Or, let's send the initial prompt and get a greeting:
+
+        async function getInitialGreeting() {
+        }
+        getInitialGreeting(); // Call this function to get the AI's first response to the prompt.
+    }
+</script>
+
+
+{% endblock content %}

@@ -66,5 +66,6 @@ urlpatterns = [
     path('clear_chat/', hello.views.clear_chat, name='clear_chat'),
     path('send_message_to_llm_agent/', hello.views.send_message_to_llm_agent, name='send_message_to_llm_agent'),
     path('fmc/recon', hello.views.fmc_recon, name='fmc_recon'),
+    path('gemini-chat/', hello.views.chat_api, name='chat_api'),
 ]
 

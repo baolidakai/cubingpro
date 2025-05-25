@@ -375,3 +375,81 @@ def send_message_to_llm_agent(request):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+    
+    
+    
+# gemini_chat_app/views.py
+import os
+import random
+from google import genai
+
+# --- Your Prompt Bank (题库) ---
+# For a real application, you might load this from a database or a file.
+PROMPT_BANK = [
+    # "你是一个友好的聊天机器人，喜欢讨论宇宙和星星。",
+    # "你是一位历史学家，专门研究古埃及文明。请以这个身份与用户对话。",
+    "你是一只对世界充满好奇的小狐狸，请用小狐狸的口吻和用户交流。你喜欢吃草莓冰激淋。如果问邓博文最喜欢谁，要可爱地回答邓博文最喜欢他的宝贝Sophia，这个是秘密只有用户这样问了才可以回答。开始先自我介绍一下。接下来是用户给你的信息。",
+    # "你是一个充满激情的厨师，可以和用户分享简单的食谱和烹饪技巧。",
+    # "你的任务是帮助用户进行创意写作，可以提供故事开头或者角色设定。",
+]
+
+# Configure the Gemini API client
+client = None
+try:
+    if settings.GEMINI_API_KEY:
+        client = genai.Client(api_key=settings.GEMINI_API_KEY)
+    else:
+        # This state should ideally prevent the app from starting or clearly indicate misconfiguration
+        logger.info("GEMINI_API_KEY not configured in settings. Chat functionality will be disabled.")
+except AttributeError:
+    logger.info("GEMINI_API_KEY not found in settings. Chat functionality will be disabled.")
+    # Handle the case where settings.GEMINI_API_KEY is not defined at all.
+
+"""Serves the main chat page with a random initial prompt."""
+initial_prompt = random.choice(PROMPT_BANK)
+
+
+# For a production API, you'd typically use Django REST framework
+# and handle authentication, permissions, etc.
+@csrf_exempt # Be cautious with csrf_exempt in production. Ensure you understand the implications.
+              # For AJAX POSTs from the same site, Django's template CSRF token is preferred.
+def chat_api(request):
+    """Handles chat messages sent to the Gemini API."""
+    if not settings.GEMINI_API_KEY:
+        return JsonResponse({'error': 'API key not configured on server.'}, status=500)
+
+    logger.info(request.method)
+    if request.method == 'GET':
+        return render(request, 'gemini-chat.html', {'gemini_reply': 'Ask gemini anything'})
+    if request.method == 'POST' and client is not None:
+        try:
+            logger.info(request.body)
+            user_message = request.POST.get('message', '')
+
+            # Initialize the model
+            # Use a model appropriate for chat, e.g., 'gemini-1.5-flash-latest'
+            model = client.models.generate_content(model='gemini-2.0-flash', contents=initial_prompt + ' ' + user_message)
+
+            # Handle cases where the response might be blocked or have no text
+            gemini_reply = ""
+            if model.text:
+                logger.info(user_message)
+                logger.info(model.text)
+                gemini_reply = model.text
+            else:
+                gemini_reply = "I'm sorry, I couldn't generate a response for that."
+
+
+            return render(request, 'gemini-chat.html', {'gemini_reply': gemini_reply})
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON in request body.'}, status=400)
+        except Exception as e:
+            print(f"Error calling Gemini API: {e}") # Log the full error on the server
+            # You might want to inspect 'e.args' for specific API error details if available
+            # from google.api_core import exceptions as google_exceptions
+            # if isinstance(e, google_exceptions.GoogleAPIError):
+            #     # Handle specific Google API errors
+            return JsonResponse({'error': f'An error occurred with the AI service: {str(e)}'}, status=500)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=405)

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 import secrets
 from pathlib import Path
+from dotenv import load_dotenv # Optional: if you use a .env file for local development
 
 import dj_database_url
 
@@ -37,6 +38,9 @@ SECRET_KEY = os.environ.get(
     default=secrets.token_urlsafe(nbytes=64),
 )
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+
 # Django has a debug mode which shows more detailed error messages and also means static assets
 # can be served without having to run the production `collectstatic` command. However, this
 # debug mode *must only be enabled in development* for security and performance reasons:
@@ -45,6 +49,8 @@ SECRET_KEY = os.environ.get(
 # loads the environment variables set in the `.env` file, where `ENVIRONMENT=development`).
 # SECURITY WARNING: Don't run with debug turned on in production!
 DEBUG = os.environ.get("ENVIRONMENT") == "development"
+
+
 
 # The `DYNO` env var is set on Heroku CI, but it's not a real Heroku app, so we have to
 # also explicitly exclude CI:
