@@ -30,6 +30,10 @@ urlpatterns = [
         'path': 'ads.txt',
         'document_root': os.path.join(settings.BASE_DIR, 'hello/static'),
     }),
+    re_path(r'twitter.png', serve, {
+        'path': 'twitter.png',
+        'document_root': os.path.join(settings.BASE_DIR, 'hello/static'),
+    }),
     re_path(r'app-ads.txt', serve, {
         'path': 'app-ads.txt',
         'document_root': os.path.join(settings.BASE_DIR, 'hello/static'),
