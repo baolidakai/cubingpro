@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1>FMC Reconstruction</h1>
+<h1>FMC Reconstruction 1</h1>
 <!-- TODO: Table of content -->
 <p>Here is an educational FMC reconstruction for an actual solve during a competition.</p>
 <p>The scramble:</p>
@@ -46,5 +46,25 @@ alg="U2 R' U' L D B' D B U2 B' L' D L2 D' L D L2 F L F' D' B2 L U' L2 U D B' L B
 <p>Even better, notice U2 D U2 is actually redundant, and can be simplified as D!</p>
 <p>Therefore, we can cancel 2 more moves, and get an incredible 6 move cancellation!</p>
 <p>The final answer is: U2 R' U' L D B' D B U2 B' L' D L2 D' L D L2 F L F' D' B2 L U' L2 U D B' L B2</p>
+
+<h1>FMC Reconstruction 2</h1>
+<p>Here is another FMC reconstruction for a normal practice.</p>
+<p>Scramble: R' U' F L D F2 D2 B U' F B2 R' L' D2 B2 R F2 B2 D2 R' D2 L B' U2 R' U' F</p>
+<p>The 29 move solution: F' U2 F2 L' U R D' R F' R' F B R U' B U B D B L B' L' D' R' B R B R' B'</p>
+<twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="3x3x3"
+alg="F' U2 F2 L' U R D' R F' R' F B R U' B U B D B L B' L' D' R' B R B R' B'"></twisty-player><br>
+<p>First we build blocks as:</p>
+<ol>
+    <li>F' U2 F2 L' U for 2x2x2 block</li>
+    <li>R D' R F' R' F for 2x2x3 block</li>
+    <li>B R U' B U for F2L except last slot</li>
+</ol>
+<p>Then we explored different strategies, but decided it's not a good enough case. So we applied NISS:</p>
+<p>NISS scramble: U' B' U R' B' F' R F R' D R' U' L F2 U' R U2 B L' D2 R D2 B2 F2 R' B2 D2 L R B2 F' U B' D2 F2 D' L' F' U R</p>
+<p>With the NISS scramble, we can do the last F2L with B R B' R' B' R</p>
+<p>And the OLL is a 6-mover. We notice the bar and decided to apply via the mirror algorithm that preserves the bar:</p>
+<p>D L B L' B' D'</p>
+<p>And we end up with a PLL skip!! B' finishes the solve.</p>
+<p>Now we simply clean up the solution as the original block + inverse of the solution after NISS.</p>
 
 {% endblock content %}

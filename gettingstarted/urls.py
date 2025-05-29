@@ -47,6 +47,7 @@ urlpatterns = [
     path("pyraminx/v_first_alg", hello.views.pyraminx_v_first_alg, name="v_first_alg"),
     path("skewb/sarah_beginner", hello.views.skewb_sarah_beginner, name="sarah_beginner"),
     path("skewb/sarah_intermediate", hello.views.skewb_sarah_intermediate, name="sarah_intermediate"),
+    path("skewb/sarah_advanced", hello.views.skewb_sarah_advanced, name="sarah_advanced"),
     path("comp_visualization", hello.views.comp_visualization, name="comp_visualization"),
     path("fmc/dr", hello.views.dr, name="dr"),
     path("3bld/m2op", hello.views.m2op, name="m2op"),
