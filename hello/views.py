@@ -106,6 +106,10 @@ def m2op(request):
     return render(request, "m2op.html")
 
 
+def orozco(request):
+    return render(request, "orozco.html")
+
+
 def u2r2(request):
     return render(request, "u2r2.html")
 

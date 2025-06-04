@@ -55,6 +55,7 @@ urlpatterns = [
     path("comp_visualization", hello.views.comp_visualization, name="comp_visualization"),
     path("fmc/dr", hello.views.dr, name="dr"),
     path("3bld/m2op", hello.views.m2op, name="m2op"),
+    path("3bld/orozco", hello.views.orozco, name="orozco"),
     path("4bld/u2r2", hello.views.u2r2, name="u2r2"),
     path("big_cube/yau", hello.views.yau, name="yau"),
     path("solver/", hello.views.solver, name="solver"),

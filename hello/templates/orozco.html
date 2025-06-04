@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>3x3x3 BLD corner with Orozco</h1>
+
+<h2>Introduction</h2>
+<p>
+    We decompose solving a 3x3x3 blindfolded into the following steps:
+</p>
+<ol>
+    <li>Memorize the corners</li>
+    <li>Memorize the edges</li>
+    <li>Solve the edges</li>
+    <li>Solve the corners</li>
+</ol>
+<br>
+<p>
+    For edges, you may use M2 or 3-style.
+</p>
+<p>
+    For corners, we introduce the Orozco method.
+</p>
+<p>
+    If corner has parity, memorize edges by swapping UF and UR. Eventually setup to Y-perm to solve.
+</p>
+
+<h2>Method</h2>
+<p>The method works as simply the following:</p>
+<p>In 3-style, when we memorize XY pair, we execute by swapping buffer to X to Y.</p>
+<p>In Orozco, the buffer piece is still UFR, we introduce helper piece fixed as UBR.</p>
+<p>For XY pair, we execute buffer to X to helper, then execute buffer to helper to Y.</p>
+<p>The cases with buffer and helper is easier to learn compared to full 3-style algorithm.</p>
+<p>For D-layer pieces oriented not at bottom, it's intuitive commutator.</p>
+<p>For D-layer pieces oriented at the bottom, setup to DFR, and apply R2 D' R2 D R2 as the commutator setup and reverse move.</p>
+<p>For U-layer pieces oriented not at top, apply R2 and then becomes intuitive, make sure not to mess up the order of helper/buffer.</p>
+<p>For U-layer pieces oriented at top, apply standard A-perm.</p>
+<p>For helper piece itself oriented not at top, if it shows in first letter, apply corner twist algorithm. If it shows in second letter, apply corner twist algorithm for the other case.</p>
+<p>For helper piece itself oriented at top, do nothing.</p>
+
+{% endblock content %}
