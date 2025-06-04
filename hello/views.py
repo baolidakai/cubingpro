@@ -110,6 +110,10 @@ def orozco(request):
     return render(request, "orozco.html")
 
 
+def geoguesser(request):
+    return render(request, "geoguesser.html")
+
+
 def u2r2(request):
     return render(request, "u2r2.html")
 
