@@ -67,4 +67,24 @@ alg="F' U2 F2 L' U R D' R F' R' F B R U' B U B D B L B' L' D' R' B R B R' B'"></
 <p>And we end up with a PLL skip!! B' finishes the solve.</p>
 <p>Now we simply clean up the solution as the original block + inverse of the solution after NISS.</p>
 
+<h1>FMC Reconstruction 3</h1>
+<p>Here is an educational FMC reconstruction for an actual solve during a competition.</p>
+<p>The scramble:</p>
+<p>R' U' F L' U2 L B R2 F2 B U' F' U' L' D2 L B2 L B2 L2 D2 R' U' F</p>
+<p>The 27 move solution:</p>
+<p>F' D L' F' L B' L' F L B' F2 D R' B' R B U2 F B U' B' R2 U R U' R U</p>
+<twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="3x3x3"
+alg="F' D L' F' L B' L' F L B' F2 D R' B' R B U2 F B U' B' R2 U R U' R U"></twisty-player><br>
+
+<p>The method is block building.</p>
+<p>F' D B2 D for 2x2x2.</p>
+<p>D' F2 D for pseudo 2x2x3.</p>
+<p>R' B' R B U2 F for F2L except one.</p>
+<p>B U' B' U for F2L.</p>
+<p>Here one option is to do the regular OLL of 9 moves, which gives a 3 corner, this will be a standard skeleton that produce multiple 30 moves solution.</p>
+<p>But the other option we chose is to use a sune here:</p>
+<p>U' R2 U R U' R U which also produce a 3 corner with a 20 move skeleton.</p>
+<p>The remaining is a standard insertion after F' D, of L' F' L B' L' F L B which cancels one move.</p>
+
+
 {% endblock content %}
