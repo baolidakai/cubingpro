@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>3x3x3 BLD memo</h1>
+
+<h2>Letter Pair Memo with Chinese Word</h2>
+<p>One strategy is to make up Chinese words while memorizing, but that takes a lot of mental effort and often suffers from challenging cases.</p>
+<p>That strategy is potentially okay for MBLD or 4+ BLD, but not suitable for 3BLD.</p>
+<p>The better strategy is to map each letter pair to a Chinese noun word. Then memorize these nouns by imaginging pictures.</p>
+<table>
+    <thead>
+        <tr>
+            <th>Letter Pair</th>
+            <th>Memo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in table_data %}
+        <tr>
+            <td>{{ row.pair }}</td>
+            <td>
+                {{ row.memo }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Trainer</h2>
+<button id="show-pairs">Show Letter Pairs</button>
+<button id="done" style="display: none;">Test my memo</button>
+<div id="pairs-container" style="margin-top: 10px;"></div>
+<div id="input-container" style="margin-top: 10px; display: none;">
+    <textarea id="user-input" rows="5" cols="50" placeholder="Enter the letter pairs here..."></textarea>
+    <br>
+    <button id="confirm">Confirm</button>
+</div>
+<div id="result-container" style="margin-top: 10px; display: none;"></div>
+<button id="retry" style="display: none; margin-top: 10px;">Retry</button>
+
+<script>
+    const tableData = JSON.parse('{{ table_data_json|safe }}');
+    const pairsContainer = document.getElementById('pairs-container');
+    const inputContainer = document.getElementById('input-container');
+    const resultContainer = document.getElementById('result-container');
+    const showPairsButton = document.getElementById('show-pairs');
+    const doneButton = document.getElementById('done');
+    const confirmButton = document.getElementById('confirm');
+    const retryButton = document.getElementById('retry');
+    const userInput = document.getElementById('user-input');
+
+    let selectedPairs = [];
+
+    function getRandomGroups() {
+        const groupCount = Math.random() < 0.3333 ? 4 : (Math.random() < 0.5 ? 5 : 6);
+        const shuffled = tableData.sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, groupCount);
+    }
+
+    function resetTrainer() {
+        pairsContainer.innerHTML = '';
+        resultContainer.innerHTML = '';
+        resultContainer.style.display = 'none';
+        inputContainer.style.display = 'none';
+        showPairsButton.style.display = 'inline-block';
+        retryButton.style.display = 'none';
+        userInput.value = '';
+    }
+
+    showPairsButton.addEventListener('click', () => {
+        selectedPairs = getRandomGroups();
+        pairsContainer.innerHTML = selectedPairs.map(row => `<div>${row.pair.toUpperCase()}</div>`).join('');
+        pairsContainer.style.display = 'block';
+        showPairsButton.style.display = 'none';
+        doneButton.style.display = 'inline-block';
+    });
+
+    doneButton.addEventListener('click', () => {
+        pairsContainer.style.display = 'none';
+        inputContainer.style.display = 'block';
+        doneButton.style.display = 'none';
+    });
+
+    confirmButton.addEventListener('click', () => {
+        const userAnswers = userInput.value.trim().split(/\s+/).map(answer => answer.toUpperCase());
+        const results = selectedPairs.map((row, index) => {
+            const userAnswer = userAnswers[index] || '';
+            const isCorrect = userAnswer === row.pair.toUpperCase();
+            return `<div>
+                        <strong>Original:</strong> ${row.pair.toUpperCase()} 
+                        <strong>Your Answer:</strong> ${userAnswer} 
+                        <strong>Result:</strong> ${isCorrect ? '✅' : '❌'}
+                        <br>
+                        <strong>Memo:</strong> ${row.memo}
+                    </div>`;
+        }).join('');
+        resultContainer.innerHTML = results;
+        resultContainer.style.display = 'block';
+        inputContainer.style.display = 'none';
+        retryButton.style.display = 'inline-block';
+    });
+
+    retryButton.addEventListener('click', () => {
+        resetTrainer();
+    });
+</script>
+
+<h2>Letter Pair Memo with English Word (WIP)</h2>
+
+<h2>Audio Memo (WIP)</h2>
+
+{% endblock content %}

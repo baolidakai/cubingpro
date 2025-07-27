@@ -54,6 +54,7 @@ urlpatterns = [
     path("skewb/sarah_advanced", hello.views.skewb_sarah_advanced, name="sarah_advanced"),
     path("comp_visualization", hello.views.comp_visualization, name="comp_visualization"),
     path("fmc/dr", hello.views.dr, name="dr"),
+    path("3bld/memo", hello.views.memo, name="memo"),
     path("3bld/m2op", hello.views.m2op, name="m2op"),
     path("3bld/orozco", hello.views.orozco, name="orozco"),
     path("4bld/u2r2", hello.views.u2r2, name="u2r2"),
@@ -73,6 +74,8 @@ urlpatterns = [
     path('clear_chat/', hello.views.clear_chat, name='clear_chat'),
     path('send_message_to_llm_agent/', hello.views.send_message_to_llm_agent, name='send_message_to_llm_agent'),
     path('fmc/recon', hello.views.fmc_recon, name='fmc_recon'),
+    path('sq1/cube_shape/', hello.views.cube_shape, name='cube_shape'),
+    path('sq1/eo/', hello.views.sq1_eo, name='sq1_eo'),
     path('gemini-chat/', hello.views.chat_api, name='chat_api'),
 ]
 

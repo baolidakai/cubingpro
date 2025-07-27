@@ -106,8 +106,21 @@ def m2op(request):
     return render(request, "m2op.html")
 
 
+def memo(request):
+    table_data = read_csv_data('hello/algorithms/bld_chinese_word.csv', ',')
+    return render(request, "memo.html", {'table_data': table_data, 'table_data_json': json.dumps(table_data)})
+
+
 def orozco(request):
     return render(request, "orozco.html")
+
+
+def cube_shape(request):
+    return render(request, "cube_shape.html")
+
+
+def sq1_eo(request):
+    return render(request, "sq1_eo.html")
 
 
 def geoguesser(request):
