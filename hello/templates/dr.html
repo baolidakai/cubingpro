@@ -19,11 +19,11 @@
     <p>Below are the stages in a vanilla FMC solution, we will find a holistic solution which minimizes the total move
         count:<br>
         - Step 1 (Edge Orientation): Apply moves so all edges are oriented, so the cube can be solved with only <u,
-            d,="" l,="" r,="" f2,="" b2="">.<br>
+            d, l, r, f2, b2>.<br>
             - Step 2 (Domino Reduction): Apply moves so all corners are oriented, and all E-edges are on the E-layer, so
-            the cube can be solved with only <u, d,="" l2,="" r2,="" f2,="" b2="">. If step 1 already oriented all
+            the cube can be solved with only <u, d, l2, r2, f2, b2>. If step 1 already oriented all
                 corners or step 1 already put all E-edges on E-layer, this step is called partial domino reduction.<br>
-                - Step 3 (Finish): Solve the cube.</u,>
+                - Step 3 (Finish): Solve the cube.
         </u,>
     </p>
     <p>In this tutorial, we will focus on the vanilla method. You may refer to the document at the beginning of this
@@ -33,11 +33,11 @@
         F might lead to a better case for next 2 stages, compared to R' F'.<br>
         If feasible, try to find a sequence that solves a "good" EO, with most corners oriented and some E-edges already
         in the E-layer.<br>
-        Also, make sure to check all cube orientations: you may aim F/B EO <u, d,="" l,="" r,="" f2,="" b2=""> or L/R EO
-            <u, d,="" l2,="" r2,="" f,="" b=""> or U/D EO <u2, d2,="" l,="" r,="" f,="" b="">. For each EO, you may make
+        Also, make sure to check all cube orientations: you may aim F/B EO &lt;u, d, l, r, f2, b2&gt; or L/R EO
+            <u, d, l2, r2, f, b> or U/D EO &lt;u2, d2, l, r, f, b&gt;. For each EO, you may make
                     a z rotation for the DR.<br>
-                    For example, F/B EO can be reduced to <u, d,="" l2,="" r2,="" f2,="" b2=""> without a z rotation,
-                        but you may also make a z rotation, and reduce to <u2, d2,="" l,="" r,="" f2,="" b2="">.</u2,>
+                    For example, F/B EO can be reduced to &lt;u, d, l2, r2, f2, b2&gt; without a z rotation,
+                        but you may also make a z rotation, and reduce to &lt;u2, d2, l, r, f2, b2&gt;.
                     </u,>
                 </u2,>
             </u,>
@@ -49,8 +49,8 @@
     </p>
     <p>Notice this cube is already in F/B EO. Currently, there are only two corners oriented (UBR and DLB), and two
         E-edges in E-layer (FR and BR).<br>
-        However, you may make a z rotation, the cube is still in EO. But if you target <u2, d2,="" l,="" r,="" f2,=""
-            b2=""> domino reduction, there are four corners oriented and three E-edges in E-layer. This is more likely
+        However, you may make a z rotation, the cube is still in EO. But if you target &lt;u2, d2, l, r, f2,
+            b2&gt; domino reduction, there are four corners oriented and three E-edges in E-layer. This is more likely
             to lead to a shorter solution in step 2.</u2,>
     </p>
     <p>Therefore, the strategy in step 1 is to try all 6 different EO.</p>
@@ -85,10 +85,31 @@
             many moves.</li>
         <li>Method 2: Solve corners while try to influence more edges. Then use edge insertions.</li>
         <li>Method 3: Build blocks intuitively.</li>
-        <li>Method 4: This can be used rarely, but reduce into Half Turn Reduction (HTR) <u2, d2,="" f2,="" b2,=""
-                l2,="" r2="">, and then it's very easy to solve.</u2,>
+        <li>Method 4: This can be used rarely, but reduce into Half Turn Reduction (HTR) &lt;u2, d2, f2, b2,
+                l2, r2&gt;, and then it's very easy to solve.
         </li>
     </ul>
+    <h3>(WIP) HTR</h3>
+    <p>HTR refers to half turn reduction, meaning reduce the cube into a state solvable with only half turns.</p>
+    <p>Once DR is reached, the number of quarter turns (not counting half turns) required is at most 5.</p>
+    <p>If 0 or 8 corners are misoriented, the case is called 0c. If 2 or 6 corners are misoriented, the case is called 2c. If 4 corners are misoriented, the case is called 4c.</p>
+    <p>Misoriented corner means corner that cannot be placed with only half turns.</p>
+    <p>We can categorize all DR cases into 14 categories quarter turn count towards HTR state.</p>
+    <h4>0 corners</h4>
+    <p>Categories: 0c0, 0c3, 0c4 are the three categories.</p>
+    <p>If it's not HRT, do blind tracing to count parity to distinguish 0c3 and 0c4.</p>
+    <h4>2 corners</h4>
+    <p>Categories: 2c3, 2c4, 2c5</p>
+    <p>2c4 is distinguishable by blind tracing.</p>
+    <p>To differentiate 2c3 and 2c5, swapping the two misoriented corners (mentally) would bring to fake HTR for 2c3; and bring to real HTR for 2c5.</p>
+    <h4>4 corners</h4>
+    <p>4a: four misoriented corners can be put on 1 side with only half turn; 4b: four misoriented corners cannot be put on 1 side with only half turn.</p>
+    <p>Categories: 4a1, 4a2, 4a3, 4a4, 4b2, 4b3, 4b4, 4b5</p>
+    <p>For 4b case, can use blind parity trace to differentiate 4b2/4b4 and 4b3/4b5.</p>
+    <p>4b3/4a3 and 4b4/4a4 are inverse of each other, so if you can identify if your case is one of these by checking the pattern of the inverse scramble.</p>
+    <p>(TODO): How to identify the inverse case quickly? One temporary solution is to use NISS to get the inverse scramble.</p>
+    <h4>How to Solve HTR</h4>
+    <p>To solve 0c0, </p>
 </div>
 
 {% endblock content %}

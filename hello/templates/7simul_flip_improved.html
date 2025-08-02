@@ -235,6 +235,52 @@
     </tbody>
 </table>
 
+<h2>Skip Cases</h2>
+<p>One key property of the 7 simul flip method, is that except for the 7-th move M13 and M14 in 14 numbers memo, which is not recommended to be memorized for speed solving anyway.</p>
+<p>The clock can be held in any of the 4 directions (North, East, South, West), without affecting the memo.</p>
+<p>Also notice that there are two memos C - U and U - L.</p>
+<p>At the beginning of inspection, you may quickly identify if there is an edge clock identical to center (on either face) or an edge clock identical to an diagonally adjacent edge clock.</p>
+<p>If this is the case, quickly set them up in either C/U position or U/L position. And hold the clock from that angle to start inspection.</p>
+<p>This will guarantee either C - U = 0 or U - L = 0, without too much calculation involved.</p>
+<p>You may choose to setup these positions into c - u, u - l, R - D, r - d. But C/U and U/L position are quite easy to master, and has good value compared to c - u or u - l because first few moves can be easily simultaneously executed if you get prepared for these few moves during inspection. For moves after flip, it's very hard to execute simultaneously due to the flip movement.</p>
+
+<p>We also calculated the probability of such a skip:</p>
+<p>The problem is: There are X1, X2, X3, X4, X5, Y1, Y2, Y3, Y4, Y5. They are independently uniform distribution of {0, 1, 2, ..., 11}. Calculate the probability that at least one of the following is true: X1=X2, X1=X3, X1=X4, X1=X5, X2=X3, X3=X4, X4=X5, X5=X2, Y1=Y2, ... (replace all X to Y and repeat).</p>
+<p>Denote the probability of any of X1=X2, X1=X3, X1=X4, X1=X5, X2=X3, X3=X4, X4=X5, X5=X2 as p. The answer will be $$2p - p^2$$ since X and Y are independent set.</p>
+<p>The probability p can be calculated with the following Python3 program:</p>
+<pre>
+    from itertools import product
+
+    # Define the range of values for X1, X2, X3, X4, X5
+    values = range(12)
+    
+    # Initialize a counter for valid combinations
+    valid_combinations = 0
+    
+    # Total number of combinations
+    total_combinations = 12 ** 5
+    
+    # Iterate through all possible combinations of X1, X2, X3, X4, X5
+    for combination in product(values, repeat=5):
+        X1, X2, X3, X4, X5 = combination
+        # Check if at least one condition is satisfied
+        if (X1 == X2 or X1 == X3 or X1 == X4 or X1 == X5 or
+            X2 == X3 or X3 == X4 or X4 == X5 or X5 == X2):
+            valid_combinations += 1
+    
+    # Calculate the ratio
+    ratio = valid_combinations / total_combinations
+    
+    # Print the results
+    print(f"Number of valid combinations: {valid_combinations}")
+    print(f"Total number of combinations: {total_combinations}")
+    print(f"Ratio: {ratio}")
+</pre>
+<p>The resulting p is 0.5172646604938271</p>
+<p>Therefore 2p - p^2 = 0.7669</p>
+<p>In practice, the chance of getting this skip is more than 3/4.</p>
+
+
 <h2>Further Reading</h2>
 <p>There are some discussion on <a href="https://www.speedsolving.com/threads/clock-blind.93140/">Clock BLD</a> and the author introduced an approach similar to the one introduced here although without theoretical derivation.</p>
 <p><a href="https://www.youtube.com/watch?v=X84OW0Znqg4">This YouTube video</a> explains how to do clock BLD with 7 simul Tommy's version.</p>
