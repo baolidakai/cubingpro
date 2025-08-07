@@ -77,7 +77,11 @@ def apply_move(state, move):
     return ''.join(new_state)
 
 
-def check_3x3x3_solved_from_scramble_string(scramble_string):
+def get_cube_string_from_scramble_string(scramble_string):
+    """
+    Converts a scramble string into a cube state string.
+    The scramble string is expected to contain moves like 'U', 'R', 'F', 'D', 'L', 'B' with optional '2' or "'" for double or counter-clockwise turns.
+    """
     moves = re.findall(r'[RLUDFB][2\']?', scramble_string)
     state = original_state()
     for move in moves:
@@ -88,18 +92,14 @@ def check_3x3x3_solved_from_scramble_string(scramble_string):
             cnt = 3
         for _ in range(cnt):
             state = apply_move(state, move[:1])
-    if state == original_state():
+    return state
+
+
+def check_3x3x3_solved_from_scramble_string(scramble_string):
+    if get_cube_string_from_scramble_string(scramble_string) == original_state():
         return 'Solved!'
     else:
         return 'Unsolved!'
-    # solution = sv.solve(state, 0, 0.5)
-    # print(solution)
-    # moves = solution.split()
-    # summary = int(moves.pop().strip('()f'))
-    # if summary == 0:
-    #     return 'Solved!'
-    # else:
-    #     return 'Unsolved!'
 
 
 def solve_3x3x3(user_input_json_string):

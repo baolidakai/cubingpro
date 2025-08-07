@@ -109,6 +109,7 @@ def load_scrambles():
     with open(csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
+            row['viz'] = get_cube_string_from_scramble_string(row['scramble'])
             scrambles.append(row)
     return scrambles
 

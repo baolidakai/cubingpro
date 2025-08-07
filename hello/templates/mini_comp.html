@@ -5,17 +5,27 @@
 
 <div id="competition" style="margin-top: 40px; margin-bottom: 40px;">
     <div>
-        <button onclick="startEvent()" style="font-size: 2rem; padding: 20px 40px; margin-bottom: 20px;">Start FMC</button>
+        <button onclick="startEvent()" style="font-size: 2rem; padding: 20px 40px; margin-bottom: 20px;">Start
+            FMC</button>
         <p><strong>Scramble:</strong> <span id="scrambleDisplay">-</span></p>
+        <table>
+            <tbody id="grid-table-body">
+                <!-- Rows will be dynamically created -->
+            </tbody>
+        </table>
         <p id="timer">Time: 0s</p>
 
-        <p><strong>For FMC, use standard annotation U, R, U', R', F, ..., y and y' etc. are not yet supported for Auto Judge.</strong></p>
-        <p>We recommend writing down your solution on a piece of paper to avoid website glitch and losing your solution.</p>
+        <p><strong>For FMC, use standard annotation U, R, U', R', F, ..., y and y' etc. are not yet supported for Auto
+                Judge.</strong></p>
+        <p>We recommend writing down your solution on a piece of paper to avoid website glitch and losing your solution.
+        </p>
         <p>For FMC, please aim to submit your solution within 15 minutes.</p>
         <form onsubmit="submitForm(event)">
             <textarea id="userName" placeholder="Enter your name" required></textarea><br>
-            <textarea id="solutionInput" placeholder="Enter your solution" required style="height: 120px;"></textarea><br>
-            <textarea id="commentInput" placeholder="Enter your comment (optional)" style="height: 120px;"></textarea><br>
+            <textarea id="solutionInput" placeholder="Enter your solution" required
+                style="height: 120px;"></textarea><br>
+            <textarea id="commentInput" placeholder="Enter your comment (optional)"
+                style="height: 120px;"></textarea><br>
             <button type="submit">Submit Solution</button>
         </form>
     </div>
@@ -60,6 +70,71 @@
         const fmcEvent = scrambles.find(e => e.event_name === "FMC");
         currentScramble = fmcEvent;
         document.getElementById('scrambleDisplay').innerText = fmcEvent.scramble;
+        const gridTableBody = document.getElementById('grid-table-body');
+        const tableRows = [];
+        for (let i = 0; i < 3; i++) {
+            const tr = document.createElement('tr');
+            const cells = [];
+            for (let j = 0; j < 4; j++) {
+                const td = document.createElement('td');
+                tr.appendChild(td);
+                cells.push(td);
+            }
+            gridTableBody.appendChild(tr);
+            tableRows.push(cells);
+        }
+
+        const gridIds = ['U', 'F', 'L', 'R', 'B', 'D'];
+        const row = [0, 1, 1, 1, 1, 2];
+        const col = [1, 1, 0, 2, 3, 1];
+        const colorDict = {
+            U: 'white',
+            R: 'red',
+            F: 'green',
+            D: 'yellow',
+            L: 'orange',
+            B: 'blue'
+        };
+        const index = {
+            U: [[0,1,2],[3,4,5],[6,7,8]],
+            R: [[9,10,11],[12,13,14],[15,16,17]],
+            F: [[18,19,20],[21,22,23],[24,25,26]],
+            D: [[27,28,29],[30,31,32],[33,34,35]],
+            L: [[36,37,38],[39,40,41],[42,43,44]],
+            B: [[45,46,47],[48,49,50],[51,52,53]]
+        };
+
+        gridIds.forEach((gridId, i) => {
+            const gridBlock = document.createElement('div');
+            gridBlock.className = 'grid-block';
+
+            const label = document.createElement('div');
+            label.style.textAlign = 'center';
+            label.textContent = `${gridId.toUpperCase()} face`;
+            gridBlock.appendChild(label);
+
+            const grid = document.createElement('div');
+            grid.className = 'grid';
+            grid.dataset.gridId = gridId;
+            gridBlock.appendChild(grid);
+
+            // Create 9 boxes
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    const box = document.createElement('div');
+                    box.className = 'box';
+                    box.dataset.row = row;
+                    box.dataset.col = col;
+                    box.dataset.gridId = gridId;
+                    box.style.backgroundColor = colorDict[fmcEvent.viz[index[gridId][row][col]]];
+                    grid.appendChild(box);
+                }
+            }
+            const r = row[i];
+            const c = col[i];
+            tableRows[r][c].appendChild(gridBlock);
+        });
+
 
         timer = 0;
         clearInterval(interval);
