@@ -27,3 +27,15 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message from User {self.user_id} at {self.timestamp}"
+
+
+class EventSubmission(models.Model):
+    event_id = models.CharField(max_length=100)
+    event_name = models.CharField(max_length=100)
+    scramble = models.TextField()
+    user_solution = models.TextField()
+    username = models.CharField(max_length=100)
+    comment = models.TextField(blank=True, null=True)  # Optional comment field
+    time_spent = models.IntegerField()  # time in seconds
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    judge = models.TextField()

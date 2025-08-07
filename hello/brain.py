@@ -6,6 +6,102 @@ import re
 import requests
 
 
+def original_state():
+    """
+    Returns the original state of the cube as a string.
+    The cube is represented as a string of 54 characters, each character representing a facelet.
+    The order is U, R, F, D, L, B.
+    """
+    return 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB'
+
+
+def apply_move(state, move):
+    mapping = 'U1,U2,U3,U4,U5,U6,U7,U8,U9,R1,R2,R3,R4,R5,R6,R7,R8,R9,F1,F2,F3,F4,F5,F6,F7,F8,F9,D1,D2,D3,D4,D5,D6,D7,D8,D9,L1,L2,L3,L4,L5,L6,L7,L8,L9,B1,B2,B3,B4,B5,B6,B7,B8,B9'.split(',')
+    inverse_mapping = {v: k for k, v in enumerate(mapping)}
+    if move == 'U':
+        cycles = [
+            'U1,U3,U9,U7',
+            'U2,U6,U8,U4',
+            'F1,L1,B1,R1',
+            'F2,L2,B2,R2',
+            'F3,L3,B3,R3'
+        ]
+    elif move == 'F':
+        cycles = [
+            'F1,F3,F9,F7',
+            'F2,F6,F8,F4',
+            'U7,R1,D3,L9',
+            'U8,R4,D2,L6',
+            'U9,R7,D1,L3'
+        ]
+    elif move == 'R':
+        cycles = [
+            'R1,R3,R9,R7',
+            'R2,R6,R8,R4',
+            'U3,B7,D3,F3',
+            'U6,B4,D6,F6',
+            'U9,B1,D9,F9'
+        ]
+    elif move == 'D':
+        cycles = [
+            'D1,D3,D9,D7',
+            'D2,D6,D8,D4',
+            'F7,R7,B7,L7',
+            'F8,R8,B8,L8',
+            'F9,R9,B9,L9'
+        ]
+    elif move == 'L':
+        cycles = [
+            'L1,L3,L9,L7',
+            'L2,L6,L8,L4',
+            'U1,F1,D1,B9',
+            'U4,F4,D4,B6',
+            'U7,F7,D7,B3'
+        ]
+    elif move == 'B':
+        cycles = [
+            'B1,B3,B9,B7',
+            'B2,B6,B8,B4',
+            'U1,L7,D9,R3',
+            'U2,L4,D8,R6',
+            'U3,L1,D7,R9'
+        ]
+    else:
+        raise ValueError(f"Invalid move: {move}")
+    new_state = list(state)
+    for cycle in cycles:
+        cycle_indices = [inverse_mapping[facelet] for facelet in cycle.split(',')]
+        for i in range(len(cycle_indices)):
+            src, dst = cycle_indices[i], cycle_indices[(i + 1) % len(cycle_indices)]
+            new_state[dst] = state[src]            
+    return ''.join(new_state)
+
+
+def check_3x3x3_solved_from_scramble_string(scramble_string):
+    moves = re.findall(r'[RLUDFB][2\']?', scramble_string)
+    state = original_state()
+    for move in moves:
+        cnt = 1
+        if move.endswith('2'):
+            cnt = 2
+        elif move.endswith("'"):
+            cnt = 3
+        for _ in range(cnt):
+            state = apply_move(state, move[:1])
+    if state == original_state():
+        return 'Solved!'
+    else:
+        return 'Unsolved!'
+    # solution = sv.solve(state, 0, 0.5)
+    # print(solution)
+    # moves = solution.split()
+    # summary = int(moves.pop().strip('()f'))
+    # if summary == 0:
+    #     return 'Solved!'
+    # else:
+    #     return 'Unsolved!'
+
+
 def solve_3x3x3(user_input_json_string):
     matrix_dict = json.loads(user_input_json_string)
     assert set(matrix_dict.keys()) == set(['U', 'F', 'L', 'R', 'B', 'D'])

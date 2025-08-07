@@ -43,3 +43,14 @@ $ heroku open
 For more information about using Python on Heroku, see these Dev Center articles:
 
 - [Python on Heroku](https://devcenter.heroku.com/categories/python)
+
+
+## My instructions
+
+python3 -m venv venv 
+source venv/bin/activate
+pip install -r requirements.txt
+heroku local
+
+ python manage.py makemigrations
+ python manage.py migrate

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 import markdown
 
-from .models import Page, Message
+from .models import Page, Message, EventSubmission
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -100,6 +100,77 @@ def process_for_eg_trainer(data):
 
 def comp_visualization(request):
     return render(request, "comp_visualization.html")
+
+
+def load_scrambles():
+    # Load scrambles from CSV file
+    scrambles = []
+    csv_path = os.path.join(settings.BASE_DIR, 'hello/algorithms/mini_comp_scrambles.csv')
+    with open(csv_path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            scrambles.append(row)
+    return scrambles
+
+
+def mini_comp(request):
+    scrambles = load_scrambles()
+    return render(request, "mini_comp.html", {'scrambles_json': json.dumps(scrambles)})
+
+
+def get_judge(user_solution, scramble, event_name):
+    """
+    This function judges the user's solution based on the event and scramble.
+    It returns a string indicating whether the solution is correct or not.
+    """
+    def get_solution_length(solution):
+        # Count the number of moves in the solution
+        return len(re.findall(r'[RLUDFB][2\']?', solution))
+    def check_solution_correctness(user_solution, scramble):
+        moves = re.findall(r'[RLUDFB][2\']?', user_solution)
+        sc = scramble + ' ' + ' '.join(moves)
+        return check_3x3x3_solved_from_scramble_string(sc).startswith('Solved')
+    if event_name == 'FMC':
+        # For FMC, we can use a simple check against the scramble
+        return '%d' % (get_solution_length(user_solution)) + (' Correct' if check_solution_correctness(user_solution, scramble) else ' DNF')
+    else:
+        # For other events, we can implement more complex judging logic
+        return 'Judging not implemented for this event'
+
+
+@csrf_exempt
+def submit_solution(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        EventSubmission.objects.create(
+            event_id=data['event_id'],
+            event_name=data['event_name'],
+            scramble=data['scramble'],
+            user_solution=data['solution'],
+            time_spent=data['time_spent'],
+            username=data['username'],
+            judge=get_judge(data['solution'], data['scramble'], data['event_name'])
+        )
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)
+
+
+@csrf_exempt
+def get_results(request):
+    submissions = EventSubmission.objects.all().order_by('-submitted_at')
+    results = [
+        {
+            'event_name': s.event_name,
+            'event_id': s.event_id,
+            'scramble': s.scramble,
+            'solution': s.user_solution,
+            'judge': s.judge,
+            'time_spent': s.time_spent,
+            'submitted_at': s.submitted_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'username': s.username
+        } for s in submissions
+    ]
+    return JsonResponse({'results': results})
 
 
 def m2op(request):

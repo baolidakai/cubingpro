@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div id="competition" style="margin-top: 40px; margin-bottom: 40px;">
+    <div>
+        <button onclick="startEvent()" style="font-size: 2rem; padding: 20px 40px; margin-bottom: 20px;">Start FMC</button>
+        <p><strong>Scramble:</strong> <span id="scrambleDisplay">-</span></p>
+        <p id="timer">Time: 0s</p>
+
+        <p><strong>For FMC, use standard annotation U, R, U', R', F, ..., y and y' etc. are not yet supported for Auto Judge.</strong></p>
+        <form onsubmit="submitForm(event)">
+            <textarea id="userName" placeholder="Enter your name" required></textarea><br>
+            <textarea id="solutionInput" placeholder="Enter your solution" required style="height: 120px;"></textarea><br>
+            <textarea id="commentInput" placeholder="Enter your comment (optional)" style="height: 120px;"></textarea><br>
+            <button type="submit">Submit Solution</button>
+        </form>
+    </div>
+</div>
+
+<!-- Results Tab -->
+<div id="results">
+    <h2>All Results</h2>
+    <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Event Type</th>
+                <th>Event Name</th>
+                <th>Username</th>
+                <th>Scramble</th>
+                <th>Solution</th>
+                <th>Auto Judge</th>
+                <th>Comment</th>
+                <th>Time Spent</th>
+                <th>Submitted At</th>
+            </tr>
+        </thead>
+        <tbody id="resultsTableBody"></tbody>
+    </table>
+</div>
+
+<script>
+    let timer = 0;
+    let interval = null;
+    let currentScramble = null;
+    let scrambles = {{ scrambles_json| safe }};
+
+    function startEvent() {
+        // Just pick the first FMC scramble (you can randomize if needed)
+        const fmcEvent = scrambles.find(e => e.event_name === "FMC");
+        currentScramble = fmcEvent;
+        document.getElementById('scrambleDisplay').innerText = fmcEvent.scramble;
+
+        timer = 0;
+        clearInterval(interval);
+        interval = setInterval(() => {
+            timer++;
+            document.getElementById('timer').innerText = `Time: ${timer}s`;
+        }, 1000);
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+        if (!currentScramble) return alert("Start the event first!");
+
+        const solution = document.getElementById('solutionInput').value;
+        const comment = document.getElementById('commentInput').value;
+        const username = document.getElementById('userName').value;
+
+        fetch('/mini_comp_submit/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCSRFToken() },
+            body: JSON.stringify({
+                event_id: currentScramble.event_id,
+                event_name: currentScramble.event_name,
+                scramble: currentScramble.scramble,
+                solution: solution,
+                comment: comment,
+                time_spent: timer,
+                username: username
+            })
+        }).then(res => res.json()).then(data => {
+            if (data.status === 'success') {
+                alert('Submitted!');
+                document.getElementById('solutionInput').value = '';
+                document.getElementById('userName').value = '';
+                clearInterval(interval);
+                timer = 0;
+                document.getElementById('timer').innerText = 'Time: 0s';
+                document.getElementById('scrambleDisplay').innerText = '-';
+                currentScramble = null;
+                fetchResults();
+            }
+        });
+    }
+
+    function formatTime(seconds) {
+        const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+        const secs = String(seconds % 60).padStart(2, '0');
+        return `${hrs}:${mins}:${secs}`;
+    }
+
+    function fetchResults() {
+        fetch('/mini_comp_results/')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('resultsTableBody');
+                tbody.innerHTML = '';
+                data.results.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+              <td>${row.event_name}</td>
+              <td>${row.event_id}</td>
+              <td>${row.username}</td>
+              <td>${row.scramble}</td>
+              <td>${row.solution}</td>
+              <td>${row.judge}</td>
+              <td>${row.comment === undefined ? '' : row.comment}</td>
+              <td>${formatTime(row.time_spent)}</td>
+              <td>${row.submitted_at}</td>
+            `;
+                    tbody.appendChild(tr);
+                });
+            });
+    }
+
+    function getCSRFToken() {
+        const name = 'csrftoken';
+        const cookieValue = document.cookie.split('; ').find(row => row.startsWith(name + '='));
+        return cookieValue ? decodeURIComponent(cookieValue.split('=')[1]) : '';
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchResults();
+    });
+</script>
+
+{% endblock content %}
