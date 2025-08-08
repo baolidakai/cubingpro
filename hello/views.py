@@ -166,6 +166,7 @@ def get_results(request):
             'event_id': s.event_id,
             'scramble': s.scramble,
             'solution': s.user_solution,
+            'comment': s.comment,
             'judge': s.judge,
             'time_spent': s.time_spent,
             'submitted_at': s.submitted_at.strftime('%Y-%m-%d %H:%M:%S'),

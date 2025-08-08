@@ -203,7 +203,7 @@
               <td>${row.scramble}</td>
               <td>${row.solution.replace(/\n/g, '<br>')}</td>
               <td>${row.judge}</td>
-              <td>${row.comment === undefined ? '' : row.comment}</td>
+              <td>${row.comment === null ? '' : row.comment}</td>
               <td>${formatTime(row.time_spent)}</td>
               <td>${row.submitted_at}</td>
             `;
