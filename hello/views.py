@@ -147,6 +147,7 @@ def submit_solution(request):
             event_id=data['event_id'],
             event_name=data['event_name'],
             scramble=data['scramble'],
+            comment=data['comment'],
             user_solution=data['solution'],
             time_spent=data['time_spent'],
             username=data['username'],

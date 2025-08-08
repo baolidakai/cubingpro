@@ -20,12 +20,13 @@
         <p>We recommend writing down your solution on a piece of paper to avoid website glitch and losing your solution.
         </p>
         <p>For FMC, please aim to submit your solution within 15 minutes.</p>
+        <p>It's fine to press enter in the textbox, it won't submit the solution unless you click.</p>
         <form onsubmit="submitForm(event)">
             <textarea id="userName" placeholder="Enter your name" required></textarea><br>
             <textarea id="solutionInput" placeholder="Enter your solution" required
-                style="height: 120px;"></textarea><br>
+                style="height: 120px; width: 300px;"></textarea><br>
             <textarea id="commentInput" placeholder="Enter your comment (optional)"
-                style="height: 120px;"></textarea><br>
+                style="height: 120px; width: 300px;"></textarea><br>
             <button type="submit">Submit Solution</button>
         </form>
     </div>
@@ -173,6 +174,7 @@
                 timer = 0;
                 document.getElementById('timer').innerText = 'Time: 0s';
                 document.getElementById('scrambleDisplay').innerText = '-';
+                document.getElementById('commentInput').value = '';
                 currentScramble = null;
                 fetchResults();
             }
