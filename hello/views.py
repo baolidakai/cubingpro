@@ -116,6 +116,7 @@ def load_scrambles():
 
 def mini_comp(request):
     scrambles = load_scrambles()
+    scrambles.reverse()
     return render(request, "mini_comp.html", {'scrambles_json': json.dumps(scrambles)})
 
 
