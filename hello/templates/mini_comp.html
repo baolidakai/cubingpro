@@ -5,8 +5,10 @@
 
 <div id="competition" style="margin-top: 40px; margin-bottom: 40px;">
     <div>
-        <button onclick="startEvent()" style="font-size: 2rem; padding: 20px 40px; margin-bottom: 20px;">Start
+        <button onclick="startEvent(0)" style="font-size: 2rem; padding: 20px 40px; margin-bottom: 20px;">Start
             FMC</button>
+        <button onclick="startEvent(1)" style="font-size: 2rem; padding: 20px 40px; margin-bottom: 20px;">Start
+            Old FMC</button>
         <p><strong>Scramble:</strong> <span id="scrambleDisplay">-</span></p>
         <table>
             <tbody id="grid-table-body">
@@ -66,9 +68,9 @@
         return `${hrs}h ${mins}m ${secs}s`;
     }
 
-    function startEvent() {
+    function startEvent(idx) {
         // Just pick the first FMC scramble (you can randomize if needed)
-        const fmcEvent = scrambles.find(e => e.event_name === "FMC");
+        const fmcEvent = scrambles[idx];
         currentScramble = fmcEvent;
         document.getElementById('scrambleDisplay').innerText = fmcEvent.scramble;
         const gridTableBody = document.getElementById('grid-table-body');
