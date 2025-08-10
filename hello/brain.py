@@ -4,6 +4,7 @@ from .models import SolverFeedback
 import json
 import re
 import requests
+import random
 
 
 def original_state():
@@ -100,6 +101,94 @@ def check_3x3x3_solved_from_scramble_string(scramble_string):
         return 'Solved!'
     else:
         return 'Unsolved!'
+
+
+def generate_3_cycle_scramble_helper(buffer='UF'):
+    state = original_state()
+    mapping = 'U1,U2,U3,U4,U5,U6,U7,U8,U9,R1,R2,R3,R4,R5,R6,R7,R8,R9,F1,F2,F3,F4,F5,F6,F7,F8,F9,D1,D2,D3,D4,D5,D6,D7,D8,D9,L1,L2,L3,L4,L5,L6,L7,L8,L9,B1,B2,B3,B4,B5,B6,B7,B8,B9'.split(',')
+    inverse_mapping = {v: k for k, v in enumerate(mapping)}
+    if buffer in ['UF', 'DF']:
+        indices = [inverse_mapping[f] for f in set([
+            'U2','U4','U6','U8',
+            'R2','R4','R6','R8',
+            'F2','F4','F6','F8',
+            'D2','D4','D6','D8',
+            'L2','L4','L6','L8',
+            'B2','B4','B6','B8'
+        ]) - (set(['U8', 'F2']) if buffer == 'UF' else set(['D2', 'F8']))]
+        i1, i2 = random.sample(indices, 2)
+        i0 = inverse_mapping['U8'] if buffer == 'UF' else inverse_mapping['D2']
+        old_cp = {
+            'U2':'B2','U4':'L2','U6':'R2','U8':'F2',
+            'F4':'L6','L4':'B6','F6':'R4','R6':'B4',
+            'D2':'F8','D4':'L8','D8':'B8','D6':'R8',
+        }
+        cp = {
+            inverse_mapping[x]: inverse_mapping[y] for x, y in old_cp.items()
+        } | {
+            inverse_mapping[y]: inverse_mapping[x] for x, y in old_cp.items()
+        }
+        j0 = cp[i0]
+        j1 = cp[i1]
+        j2 = cp[i2]
+        state = list(state)
+        state[i0], state[i1] = state[i1], state[i0]
+        state[j0], state[j1] = state[j1], state[j0]
+        state[i0], state[i2] = state[i2], state[i0]
+        state[j0], state[j2] = state[j2], state[j0]
+        state = ''.join(state)
+        solution = sv.solve(state, 0, 0.1)
+    else:
+        assert buffer in ['UFR', 'UBL']
+        old_cp = [
+            ['U9','R1','F3'],
+            ['U7','F1','L3'],
+            ['U1','L1','B3'],
+            ['U3','B1','R3'],
+            ['D3','F9','R7'],
+            ['D1','L9','F7'],
+            ['D7','B9','L7'],
+            ['D9','R9','B7'],
+        ]
+        indices = [inverse_mapping[f] for f in set(sum(old_cp, [])) - (set(['U9','F3','R1']) if buffer == 'UFR' else set(['U1', 'L1', 'B3']))]
+        i1, i2 = random.sample(indices, 2)
+        i0 = inverse_mapping['U9'] if buffer == 'UFR' else inverse_mapping['U1']
+        def get_nxt(i):
+            # Find j0: mapping[i0] is e.g. F9, find which triplet in old_cp contains it, then pick the next element in that triplet
+            facelet = mapping[i]
+            for triplet in old_cp:
+                if facelet in triplet:
+                    idx = triplet.index(facelet)
+                    next_idx = (idx + 1) % 3
+                    return inverse_mapping[triplet[next_idx]]
+            raise ValueError(f"Facelet {facelet} not found in any triplet of old_cp")
+        j0,j1,j2=get_nxt(i0),get_nxt(i1),get_nxt(i2)
+        k0,k1,k2=get_nxt(j0),get_nxt(j1),get_nxt(j2)        
+        state = list(state)
+        state[i0], state[i1] = state[i1], state[i0]
+        state[j0], state[j1] = state[j1], state[j0]
+        state[k0], state[k1] = state[k1], state[k0]
+        state[i0], state[i2] = state[i2], state[i0]
+        state[j0], state[j2] = state[j2], state[j0]
+        state[k0], state[k2] = state[k2], state[k0]
+        state = ''.join(state)
+        solution = sv.solve(state, 0, 0.1)
+    solution = solution.strip()
+    if solution.endswith(')'):
+        solution = solution[:solution.rfind('(')].strip()
+    # Convert moves like U3 to U', U2 stays U2, U1 to U, etc.
+    def convert_move(move):
+        face = move[0]
+        if len(move) == 1 or move[1] == '1':
+            return face
+        elif move[1] == '2':
+            return face + '2'
+        elif move[1] == '3':
+            return face + "'"
+        else:
+            raise ValueError(f"Unknown move: {move}")
+    solution = ' '.join([convert_move(m) for m in solution.split()])
+    return solution
 
 
 def solve_3x3x3(user_input_json_string):

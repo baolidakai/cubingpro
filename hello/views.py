@@ -206,6 +206,15 @@ def u2r2(request):
     return render(request, "u2r2.html")
 
 
+def exec_trainer(request):
+    return render(request, "exec_trainer.html")
+
+
+def generate_3_cycle_scramble(request):
+    scramble = generate_3_cycle_scramble_helper(request.GET.get('buffer', 'UF'))
+    return JsonResponse({'scramble': scramble})
+
+
 def eg_alg(request):
     table_data = read_csv_data('hello/algorithms/eg.csv', ',')
     return render(request, "eg_alg.html", {'table_data': table_data})
