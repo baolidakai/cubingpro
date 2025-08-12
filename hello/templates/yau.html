@@ -104,6 +104,41 @@
     <li>Solve the L2E which is similar as redux. You may start with solving one edge, and optionally (if parity occurs) send the parity edge to the top layer then apply OLL parity algorithm for the last edge.</li>
 </ol>
 
+<h3>Yau L2E</h3>
+<p>flip: R U R' F R' F' R</p>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <td>
+            <canvas id="yau5-case1" width="300" height="250"></canvas>
+            <p>Uw' + flip</p>
+        </td>
+        <td>
+            <canvas id="yau5-case1" width="300" height="250"></canvas>
+            <p>Uw' + flip</p>
+        </td>
+        <td>Standard L2E algorithm for 4x4/5x5</td>
+        <td><canvas id="yau5-case1" width="80" height="80"></canvas></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Uw R' U' R U' R' U2 R Uw'</td>
+        <td>Mirrored case</td>
+        <td><!-- Add canvas or image if available --></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Uw' R U' R' Uw R' U R</td>
+        <td>Alternative L2E</td>
+        <td><!-- Add canvas or image if available --></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Uw R U R' Uw' R U' R'</td>
+        <td>Alternative mirrored</td>
+        <td><!-- Add canvas or image if available --></td>
+    </tr>
+</table>
+
 <h4>Step 6: Solve the 3x3 stage and edge parity</h4>
 <p>There will be no parity for Yau5 due to the nature of 5x5x5 cube, and parity was guaranteed to be solved during edge pairing (step 5).</p>
 
@@ -112,14 +147,15 @@
 <h2>Yau Method for 6x6x6</h2>
 <p>Yau6 is almost identical to Yau5.</p>
 <p>The only point worth mentioning is the L2E.</p>
-<p>In Yau6, you may first solve one of the edge, and try to influence the solving order through the process so the last (maybe) unsolved edge is a top edge.</p>
+<p>In Yau6, you may first solve one of the edge and deliberately leave the remaining edge unsolved instead of applying a parity algorithm to solve both, and try to influence the solving order through the process so the last (maybe) unsolved edge is a top edge.</p>
 <p>The benefit is that you may leave that unsolved edge remains unsolved until the 3x3x3 stage's last layer, in which you identify whether an inner layer parity should be applied or an outer layer parity should be applied, or there's no OLL parity.</p>
 <p>This trick avoids triple parity where you solve the edge parity during L2E, then get OLL parity, and PLL parity during the 3x3x3 stage.</p>
 
 <h2>Yau Method for 7x7x7</h2>
 <p>Yau7 method is identical to Yau5.</p>
 <p>The only point worth mentioning is still the L2E.</p>
-<li>You may solve one of the L2E first, then apply a potential parity algorithm for the last one edge (because there will be no parity during 3x3x3 stage).</li>
+<p>If the two edge case fits into a standard 5x5x5 L2E case, apply that Yau L2E algorithm.</p>
+<p>Otherwise, only solve one edge, then apply a potential parity algorithm for the last one edge (because there will be no parity during 3x3x3 stage). If the unsolved edge is a top edge, may leave at 3x3x3 last layer stage.</li>
 <p>One tip to consider for Yau6 and Yau7 is to stick with solving the 4 E-layer edges first, the motivation is to have more options and less reaction time for the first two F2L step, and also simplify the inspection during the L4E stage. It also guarantees the parity edge will be for sure a top layer edge, so you may leave it at the very end of the 3x3x3 stage for both Yau6 and Yau7.</p>
 <p>The drawback however is you might miss very easy top-layer edge cases, so be a little flexible when you observe very easy top-layer edge, and practice more to improve weighing the tradeoffs.</p>
 
@@ -134,6 +170,7 @@
     render4("yau4-4-eg2", "    , bb , bb , b  ;    ,wwww,wwww, ww ; w  ,rrr ,rrrw,    ;    , yy ,byy ,    ;    ,ggg ,ggg ,    ");
     render4("yau4-5-1", "    , yy , yy , br ;    , rrb, bby, bb ; og ,ogg ,grr , rr ;    , oo , gg , gg ; ww ,wwww,wwww, ww ");
     render4("yau4-5-3", "    , yy , yy ,    ;    , bbb, bby, bb ;    ,orro,grrg, rr ;    ,bgg ,ygg , gg ; ww ,wwww,wwww, ww ");
+    render5_l2e("yau5-case1", "     ,rrrrr,yrrrg,yrrry, rrr ;gbb,rgy,www");
 </script>
 
 
