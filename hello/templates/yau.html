@@ -110,23 +110,41 @@
     <tr>
         <td>
             <canvas id="yau5-case1" width="300" height="250"></canvas>
-            <p>Uw' + flip</p>
+            <p>Uw' + flip + Uw</p>
         </td>
         <td>
-            <canvas id="yau5-case1" width="300" height="250"></canvas>
-            <p>Uw' + flip</p>
+            <canvas id="yau5-case2" width="300" height="250"></canvas>
+            <p>3Dw + flip + Uw'</p>
         </td>
-        <td>Standard L2E algorithm for 4x4/5x5</td>
-        <td><canvas id="yau5-case1" width="80" height="80"></canvas></td>
+        <td>
+            <canvas id="yau5-case3" width="300" height="250"></canvas>
+            <p>flip + 3Dw + flip + Uw'</p>
+        </td>
+        <td>
+            <canvas id="yau5-case4" width="300" height="250"></canvas>
+            <p>flip + 3Uw' + flip + 3Uw</p>
+        </td>
     </tr>
     <tr>
-        <td>2</td>
-        <td>Uw R' U' R U' R' U2 R Uw'</td>
-        <td>Mirrored case</td>
-        <td><!-- Add canvas or image if available --></td>
+        <td>
+            <canvas id="yau5-case5" width="300" height="250"></canvas>
+            <p>Uw 3Uw' + flip + 3Uw Uw'</p>
+        </td>
+        <td>
+            <canvas id="yau5-case6" width="300" height="250"></canvas>
+            <p>F x Rw2 B2 U2 Rw2 U2 B2 Rw2 U x'</p>
+        </td>
+        <td>
+            <canvas id="yau5-case7" width="300" height="250"></canvas>
+            <p>Uw' + flip + Uw + 3Dw + flip + Uw'</p>
+        </td>
+        <td></td>
     </tr>
     <tr>
-        <td>3</td>
+        <td>
+            <canvas id="yau5-parity-case1" width="300" height="250"></canvas>
+            <p>L' U' L + regular parity algorithm</p>
+        </td>
         <td>Uw' R U' R' Uw R' U R</td>
         <td>Alternative L2E</td>
         <td><!-- Add canvas or image if available --></td>
@@ -170,7 +188,14 @@
     render4("yau4-4-eg2", "    , bb , bb , b  ;    ,wwww,wwww, ww ; w  ,rrr ,rrrw,    ;    , yy ,byy ,    ;    ,ggg ,ggg ,    ");
     render4("yau4-5-1", "    , yy , yy , br ;    , rrb, bby, bb ; og ,ogg ,grr , rr ;    , oo , gg , gg ; ww ,wwww,wwww, ww ");
     render4("yau4-5-3", "    , yy , yy ,    ;    , bbb, bby, bb ;    ,orro,grrg, rr ;    ,bgg ,ygg , gg ; ww ,wwww,wwww, ww ");
-    render5_l2e("yau5-case1", "     ,rrrrr,yrrrg,yrrry, rrr ;gbb,rgy,www");
+    render5_l2e("yau5-case1", "     ,rrrrr,yrrrg,yrrry, rrr ;gbb,gry,www");
+    render5_l2e("yau5-case2", "     ,yrrry,brrrr,rrrrr, rrr ;byg,bgg,www");
+    render5_l2e("yau5-case3", "     ,brrrr,yrrrr,grrry, rrr ;ybr,ggb,www");
+    render5_l2e("yau5-case4", "     ,grrry,yrrrr,brrrr, rrr ;rby,bgg,www");
+    render5_l2e("yau5-case5", "     ,brrrr,yrrrg,brrrr, rrr ;yby,grg,www");
+    render5_l2e("yau5-case6", "     ,yrrrr,rrrry,yrrrr, rrr ;bgb,gbg,www");
+    render5_l2e("yau5-case7", "     ,brrrg,rrrry,brrrg, rrr ;ygy,rbr,www");
+    render5_l2e("yau5-parity-case1", "     ,brrr ,yrrr ,brrr , rrr ;yby,   ,www");
 </script>
 
 

@@ -81,6 +81,18 @@ def read_csv_data(filepath, delimiter):
     return data
 
 
+def process_for_skewb(data):
+    ans = []
+    for row in data:
+        if not row['color']:
+            # Derive color from the alg
+            alg = row.get('alg', '')
+            color = get_skewb_color_from_alg(alg)
+            row['color'] = color
+        ans.append(row)
+    return ans
+
+
 """
 Dead code, used for generating data for EG trainer.
 """
@@ -298,7 +310,14 @@ def skewb_sarah_intermediate(request):
 
 def skewb_sarah_advanced(request):
     table_data = read_csv_data('hello/algorithms/skewb_sarah_advanced.csv', ',')
-    return render(request, "sarah_advanced.html", {'table_data': table_data})
+    table_data = process_for_skewb(table_data)
+    cases = []
+    for row in table_data:
+        if row['category'] == 'C':
+            case = '-'.join(row['case'].split('-')[:2])
+            if case not in cases:
+                cases.append(case)
+    return render(request, "sarah_advanced.html", {'table_data': table_data, 'cases': cases})
 
 def yau(request):
     return render(request, "yau.html")

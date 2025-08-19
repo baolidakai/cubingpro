@@ -64,4 +64,20 @@
 </h1>
 <p>Tips: click on show notation above to understand the notations.</p>
 
+{% for case in cases %}
+<h2>{{ case }}</h2>
+{% for row in table_data %}
+{% if row.category == 'C' and row.case|slice:":4" == case %}
+<div class="overview">
+    <canvas id="{{ row.case }}" width="300" height="200"></canvas>
+    <p class="details">{{ row.alg }}</p>
+    <p>{{ row.anno }}</p>
+    <script>
+    drawSkewb("{{ row.case }}", "{{ row.color }}");
+    </script>
+</div>
+{% endif %}
+{% endfor %}
+{% endfor %}
+
 {% endblock content %}
