@@ -282,6 +282,10 @@ def fmc_recon(request):
     return render(request, "fmc_recon.html", {})
 
 
+def fmc_theory(request):
+    return render(request, "fmc_theory.html", {})
+
+
 def skewb_sarah_beginner(request):
     table_data = read_csv_data('hello/algorithms/skewb_sarah_beginner.csv', ',')
     return render(request, "sarah_beginner.html", {'table_data': table_data})

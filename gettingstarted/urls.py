@@ -79,6 +79,7 @@ urlpatterns = [
     path('clear_chat/', hello.views.clear_chat, name='clear_chat'),
     path('send_message_to_llm_agent/', hello.views.send_message_to_llm_agent, name='send_message_to_llm_agent'),
     path('fmc/recon', hello.views.fmc_recon, name='fmc_recon'),
+    path('fmc/theory', hello.views.fmc_theory, name='fmc_theory'),
     path('sq1/cube_shape/', hello.views.cube_shape, name='cube_shape'),
     path('sq1/eo/', hello.views.sq1_eo, name='sq1_eo'),
     path('gemini-chat/', hello.views.chat_api, name='chat_api'),
