@@ -1,17 +1,17 @@
-category,case,color,alg,anno
-A,Pi-F,      yrr   gg y oo yybby,y x r' B R r R' B r' B',
-A,Pi-B,     y rr yygg  yoo   bby,y x r R' r B r' R B,
-A,L-U,y y y  rr y gg  yoo   bb ,x B' r R' r' B r R r',
-B,31,yyyygrrrroggggyoooorbbbbb,S S S,
-C,Pi-F-1a,,y2 H y S y' H y H,right bar
-C,Pi-F-1b,,S y' H y S y' S,left bar
-C,Pi-F-3c,,y' S y2 H y' H y' S,right bar + top fill
-C,Pi-F-3d,,y' S y2 H y S y S,left bar + top fill
-C,Pi-F-5c,,H y S S S,top left bar alternative: x' S y2 S z2 x' S
-C,Pi-F-5d,,y2 S y' S S S,top right bar
-C,Pi-F-9a,,S S y' S y2 S,top fill
-C,Pi-F-11a,,H y' S y2 S,right half
-C,Pi-F-11b,,y' S y S y2 S,left half
-C,Pi-F-14b,,y S y' H y H,right alt
-C,Pi-F-14d,,y H y S y' S,left alt
-C,Pi-F-15a,,S S z S S S,only back match
+category,case,color,alg,anno,ns
+A,Pi-F,      yrr   gg y oo yybby,y x r' B R r R' B r' B',,
+A,Pi-B,     y rr yygg  yoo   bby,y x r R' r B r' R B,,
+A,L-U,y y y  rr y gg  yoo   bb ,x B' r R' r' B r R r',,
+B,31,yyyygrrrroggggyoooorbbbbb,S S S,,
+C,Pi-F-1a,,y2 H y S y' H y H,right bar,y2 x r' R r' R' B' r' B' r B
+C,Pi-F-1b,,S y' H y S y' S,left bar,y' x r' B R r R' B r' B'
+C,Pi-F-3c,,y' S y2 H y' H y' S,right bar + top fill,y x R r' R' r R' r' R r z r R r' R'
+C,Pi-F-3d,,y' S y2 H y S y S,left bar + top fill,y x r' R r R' r R r' R' z' R' r' R r
+C,Pi-F-5c,,H y S S S,top left bar alternative: x' S y2 S z2 x' S,y x r' R r' R' r' R r R' z' R r' R r
+C,Pi-F-5d,,y2 S y' S S S,top right bar,y x r' R' r R' r' R r R' B R' B' 
+C,Pi-F-9a,,S S y' S y2 S,top fill,y x B' r' R r R B' R' r' R' r B'
+C,Pi-F-11a,,H y' S y2 S,right half,y x R r' R' r' R r R' z' r' R r
+C,Pi-F-11b,,y' S y S y2 S,left half,y x r' R r R r' R' r z R r' R'
+C,Pi-F-14b,,y S y' H y H,right alt,y x R' B' r' R r B r' R' r R
+C,Pi-F-14d,,y H y S y' S,left alt,x R r R' r R r' R' r R r' R' r'
+C,Pi-F-15a,,S S z S S S,only back match,y x r' R r R r' z' r' R r z r R r'

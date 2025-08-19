@@ -81,6 +81,19 @@ def read_csv_data(filepath, delimiter):
     return data
 
 
+def skewb_inverse(alg):
+    pattern = r"[RLUDFBxyzr][']?"
+    moves = re.findall(pattern, alg)
+    moves.reverse()
+    def inv(m):
+        if m.endswith("'"):
+            return m[:-1]
+        return m + "'"
+    return ' '.join([inv(m) for m in moves])
+
+
+# TODO: Convert the scramble into standard WCA notation, and handle rotation.
+# Maybe implement a Skewb optimal solver directly?
 def process_for_skewb(data):
     ans = []
     for row in data:
@@ -89,6 +102,8 @@ def process_for_skewb(data):
             alg = row.get('alg', '')
             color = get_skewb_color_from_alg(alg)
             row['color'] = color
+        if row['ns']:
+            row['scramble'] = skewb_inverse(row['ns'])
         ans.append(row)
     return ans
 

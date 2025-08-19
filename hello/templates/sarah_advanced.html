@@ -92,7 +92,9 @@
 
 <button onclick="location.reload();">New Random Case</button>
 {% with random_row=table_data_for_trainer|random %}
+<p>NS scramble: {{ random_row.scramble }}</p>
 <canvas id="{{ random_row.case }}-trainer" width="300" height="200"></canvas>
+<img src="{% static 'skewb_notation.png' %}" alt="Image unavailable" style="max-width: 50%; height: auto; float: none !important;">        </p>
 <button onclick="toggleVisibility('anno')">Show/Hide Annotation</button>
 <button onclick="toggleVisibility('alg')">Show/Hide Algorithm</button>
 <p id="anno" style="display:none;">{{ random_row.anno }}</p>
