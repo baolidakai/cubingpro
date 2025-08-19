@@ -10,7 +10,8 @@
     <!-- TODO: Printable version -->
 </h1>
 <p>
-    You are recommended to first read <a href="/skewb/sarah_intermediate">Sarah's intermediate method</a> page, if you are not familiar with intermediate method.<br>
+    You are recommended to first read <a href="/skewb/sarah_intermediate">Sarah's intermediate method</a> page, if you
+    are not familiar with intermediate method.<br>
 </p>
 <p><u>Step 1: Solve the first side.</u></p>
 <canvas id="sarah-step-1" width="300" height="200"></canvas>
@@ -26,7 +27,8 @@
 <h1>
     Sarah's Intermediate Algorithm Enhanced
 </h1>
-<p>The first improvement from Sarah's intermediate is to memorize an optimized algorithm when the original execution was triple Sledge/Hedge.</p>
+<p>The first improvement from Sarah's intermediate is to memorize an optimized algorithm when the original execution was
+    triple Sledge/Hedge.</p>
 <p>There were three cases with triple S/H, which we provide the optimal algorithm in NS notation.</p>
 <p>Tips: click on show notation above to understand the NS notation.</p>
 {% for row in table_data %}
@@ -35,7 +37,7 @@
     <canvas id="{{ row.case }}" width="300" height="200"></canvas>
     <p class="details">{{ row.alg }}</p>
     <script>
-    drawSkewb("{{ row.case }}", "{{ row.color }}");
+        drawSkewb("{{ row.case }}", "{{ row.color }}");
     </script>
 </div>
 {% endif %}
@@ -44,16 +46,18 @@
 <p>The second improvement is to learn the L4C algorithms. (WIP)</p>
 <p>We skip U perm, Z perm, H perm.</p>
 <p>If there are only 3 centers to be swapped, it can be set up to U perm with one set up move, and then reverse.</p>
-<p>It's very straightforward to figure out, but you may experiment whether you want to have a cancellation move at the reverse step.</p>
+<p>It's very straightforward to figure out, but you may experiment whether you want to have a cancellation move at the
+    reverse step.</p>
 <p>All the remaining cases have one side face solved, and top face unsolved.</p>
-<p>They can be setup to the following triple sledge case either with (using NS algorithm notation) L' move S S S L move (cancel one move at the end) or R move S S S R' move (cancen one move at the beginning).</p>
+<p>They can be setup to the following triple sledge case either with (using NS algorithm notation) L' move S S S L move
+    (cancel one move at the end) or R move S S S R' move (cancen one move at the beginning).</p>
 {% for row in table_data %}
 {% if row.category == 'B' %}
 <div class="overview">
     <canvas id="{{ row.case }}" width="300" height="200"></canvas>
     <p class="details">{{ row.alg }}</p>
     <script>
-    drawSkewb("{{ row.case }}", "{{ row.color }}");
+        drawSkewb("{{ row.case }}", "{{ row.color }}");
     </script>
 </div>
 {% endif %}
@@ -73,11 +77,33 @@
     <p class="details">{{ row.alg }}</p>
     <p>{{ row.anno }}</p>
     <script>
-    drawSkewb("{{ row.case }}", "{{ row.color }}");
+        drawSkewb("{{ row.case }}", "{{ row.color }}");
     </script>
 </div>
 {% endif %}
 {% endfor %}
 {% endfor %}
+
+<h1>
+    <a id="trainer"></a>
+    Sarah's Advanced Method Trainer
+    <a href="#trainer" title="Bookmark link to Trainer section">🔗</a>
+</h1>
+
+<button onclick="location.reload();">New Random Case</button>
+{% with random_row=table_data_for_trainer|random %}
+<canvas id="{{ random_row.case }}-trainer" width="300" height="200"></canvas>
+<button onclick="toggleVisibility('anno')">Show/Hide Annotation</button>
+<button onclick="toggleVisibility('alg')">Show/Hide Algorithm</button>
+<p id="anno" style="display:none;">{{ random_row.anno }}</p>
+<p id="alg" class="details" style="display:none;">{{ random_row.alg }}</p>
+<script>
+    function toggleVisibility(id) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+    }
+    drawSkewb("{{ random_row.case }}-trainer", "{{ random_row.color }}");
+</script>
+{% endwith %}
 
 {% endblock content %}

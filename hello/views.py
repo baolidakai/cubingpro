@@ -317,7 +317,8 @@ def skewb_sarah_advanced(request):
             case = '-'.join(row['case'].split('-')[:2])
             if case not in cases:
                 cases.append(case)
-    return render(request, "sarah_advanced.html", {'table_data': table_data, 'cases': cases})
+    table_data_for_trainer = [row for row in table_data if row['category'] == 'C']
+    return render(request, "sarah_advanced.html", {'table_data': table_data, 'table_data_for_trainer': table_data_for_trainer, 'cases': cases})
 
 def yau(request):
     return render(request, "yau.html")
