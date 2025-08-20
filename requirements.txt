@@ -1,6 +1,6 @@
 django>=4.0
 gunicorn>=23,<24
-dj-database-url>=2,<3
+dj-database-url>=2,<4
 whitenoise[brotli]>=6,<7
 RubikTwoPhase
 markdown>=3.0
