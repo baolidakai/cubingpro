@@ -319,7 +319,7 @@ def post_feedback(feedback, solution):
 
 def call_openrouter_llm(message):
     headers = {
-        "Authorization": "Bearer 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",
+        "Authorization": "Bearer sk-or-1",
         "Content-Type": "application/json",
         "HTTP-Referer": "https://cubingpro.com",  # Required if you publish this
         "X-Title": "CubingPro AI Agent",
