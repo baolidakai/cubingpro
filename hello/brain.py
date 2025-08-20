@@ -905,6 +905,7 @@ def get_skewb_color_from_alg(alg):
             [8, 18], [23, 13],
             [9, 19], [24, 14],
         ],
+        # TODO: Add z and x
     }
     for m in converted:
         nxt = curr[:]

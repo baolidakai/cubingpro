@@ -82,18 +82,131 @@ def read_csv_data(filepath, delimiter):
 
 
 def skewb_inverse(alg):
-    pattern = r"[RLUDFBxyzr][']?"
+    pattern = r"[RLUDFBxyzr]['2]?"
     moves = re.findall(pattern, alg)
     moves.reverse()
     def inv(m):
         if m.endswith("'"):
             return m[:-1]
+        if m.endswith('2'):
+            return m
         return m + "'"
     return ' '.join([inv(m) for m in moves])
 
 
-# TODO: Convert the scramble into standard WCA notation, and handle rotation.
-# Maybe implement a Skewb optimal solver directly?
+def convert_ns_to_fcn(alg):
+    corners = [
+        'F1', 'F2', 'F3',
+        'B1', 'B2', 'B3',
+        'L1', 'L2', 'L3',
+        'R1', 'R2', 'R3',
+        'f1', 'f2', 'f3',
+        'b1', 'b2', 'b3',
+        'l1', 'l2', 'l3',
+        'r1', 'r2', 'r3',
+    ]
+    # No need to handle L, F, f, l, b since very rare.
+    # Need to handle R, B, r.
+    raw_mapping = {
+        # 'F': {
+        #     'F1': 'F2', 'F2': 'F3', 'F3': 'F1',
+        #     'L1': 'R2', 'R2': 'f1', 'f1': 'L1',
+        #     'L2': 'R3', 'R3': 'f2', 'f2': 'L2',
+        #     'L3': 'R1', 'R1': 'f3', 'f3': 'L3',
+        # },
+        'R': {
+            'R1': 'R2', 'R2': 'R3', 'R3': 'R1',
+            'F1': 'B3', 'B3': 'r1', 'r1': 'F1',
+            'F2': 'B1', 'B1': 'r2', 'r2': 'F2',
+            'F3': 'B2', 'B2': 'r3', 'r3': 'F3',
+        },
+        'r': {
+            'r1': 'r2', 'r2': 'r3', 'r3': 'r1',
+            'f1': 'R2', 'R2': 'b1', 'b1': 'f1',
+            'f2': 'R3', 'R3': 'b2', 'b2': 'f2',
+            'f3': 'R1', 'R1': 'b3', 'b3': 'f3',
+        },
+        'B': {
+            'L1': 'b3', 'b3': 'R2', 'R2': 'L1',
+            'L2': 'b1', 'b1': 'R3', 'R3': 'L2',
+            'L3': 'b2', 'b2': 'R1', 'R1': 'L3',
+            'B1': 'B2', 'B2': 'B3', 'B3': 'B1',
+        },
+        'x': {
+            'F1': 'R2', 'R2': 'r1', 'r1': 'f2', 'f2': 'F1',
+            'F2': 'R3', 'R3': 'r2', 'r2': 'f3', 'f3': 'F2',
+            'F3': 'R1', 'R1': 'r3', 'r3': 'f1', 'f1': 'F3',
+            'L1': 'B2', 'B2': 'b1', 'b1': 'l2', 'l2': 'L1',
+            'L2': 'B3', 'B3': 'b2', 'b2': 'l3', 'l3': 'L2',
+            'L3': 'B1', 'B1': 'b3', 'b3': 'l1', 'l1': 'L3',
+        },
+        'y': {
+            'F1': 'L1', 'L1': 'B1', 'B1': 'R1', 'R1': 'F1',
+            'F2': 'L2', 'L2': 'B2', 'B2': 'R2', 'R2': 'F2',
+            'F3': 'L3', 'L3': 'B3', 'B3': 'R3', 'R3': 'F3',
+            'f1': 'l1', 'l1': 'b1', 'b1': 'r1', 'r1': 'f1',
+            'f2': 'l2', 'l2': 'b2', 'b2': 'r2', 'r2': 'f2',
+            'f3': 'l3', 'l3': 'b3', 'b3': 'r3', 'r3': 'f3',
+        },
+        'z': {
+            'F1': 'f3', 'f3': 'l1', 'l1': 'L3', 'L3': 'F1',
+            'F2': 'f1', 'f1': 'l2', 'l2': 'L1', 'L1': 'F2',
+            'F3': 'f2', 'f2': 'l3', 'l3': 'L2', 'L2': 'F3',
+            'R1': 'r2', 'r2': 'b1', 'b1': 'B2', 'B2': 'R1',
+            'R2': 'r3', 'r3': 'b2', 'b2': 'B3', 'B3': 'R2',
+            'R3': 'r1', 'r1': 'b3', 'b3': 'B1', 'B1': 'R3',
+        },
+    }
+    mapping = copy.deepcopy(raw_mapping)
+    for move in raw_mapping:
+        mapping[move + "'"] = {v: k for k, v in raw_mapping[move].items()}
+        mapping[move + '2'] = {k: raw_mapping[move][raw_mapping[move][k]] for k in raw_mapping[move]}
+    fcn = 'F1'
+    ans = []
+    for move in alg.split():
+        # Translate the move to FCN notation
+        base_move = move[0]
+        if base_move not in 'xyz':
+            trans = None
+            if base_move == 'R':
+                trans = {
+                    'F1': 'L', 'F2': 'R', 'F3': 'U',
+                    'L1': 'U', 'L2': 'L', 'L3': 'R',
+                    'B1': 'R', 'B2': 'U', 'B3': 'L',
+                    'R1': 'B', 'R2': 'B', 'R3': 'B',
+                    'f1': 'L', 'f2': 'R', 'f3': 'U',
+                    'l1': 'B', 'l2': 'B', 'l3': 'B',
+                    'b1': 'R', 'b2': 'U', 'b3': 'L',
+                    'r1': 'U', 'r2': 'L', 'r3': 'R',
+                }[fcn]
+            elif base_move == 'B':
+                trans = {
+                    'F1': 'U', 'F2': 'R', 'F3': 'L',
+                    'L1': 'R', 'L2': 'U', 'L3': 'L',
+                    'B1': 'B', 'B2': 'B', 'B3': 'B',
+                    'R1': 'L', 'R2': 'R', 'R3': 'U',
+                    'f1': 'B', 'f2': 'B', 'f3': 'B',
+                    'l1': 'R', 'l2': 'U', 'l3': 'L',
+                    'b1': 'U', 'b2': 'L', 'b3': 'R',
+                    'r1': 'L', 'r2': 'R', 'r3': 'U',
+                }[fcn]
+            elif base_move == 'r':
+                trans = {
+                    'F1': 'R', 'F2': 'U', 'F3': 'L',
+                    'L1': 'B', 'L2': 'B', 'L3': 'B',
+                    'B1': 'L', 'B2': 'R', 'B3': 'U',
+                    'R1': 'B', 'R2': 'L', 'R3': 'R',
+                    'f1': 'R', 'f2': 'U', 'f3': 'L',
+                    'l1': 'U', 'l2': 'L', 'l3': 'R',
+                    'b1': 'L', 'b2': 'R', 'b3': 'U',
+                    'r1': 'B', 'r2': 'B', 'r3': 'B',
+                }[fcn]
+            assert trans
+            ans.append(trans + move[1:])
+        fcn = mapping[move].get(fcn, fcn)
+    return ' '.join(ans)
+        
+
 def process_for_skewb(data):
     ans = []
     for row in data:
@@ -103,7 +216,9 @@ def process_for_skewb(data):
             color = get_skewb_color_from_alg(alg)
             row['color'] = color
         if row['ns']:
-            row['scramble'] = skewb_inverse(row['ns'])
+            ns_scramble = skewb_inverse(row['ns'])
+            row['ns_scramble'] = ns_scramble
+            row['scramble'] = convert_ns_to_fcn(ns_scramble)
         ans.append(row)
     return ans
 
@@ -531,6 +646,7 @@ def send_message_to_llm_agent(request):
 import os
 import random
 from google import genai
+import copy
 
 
 # For a production API, you'd typically use Django REST framework

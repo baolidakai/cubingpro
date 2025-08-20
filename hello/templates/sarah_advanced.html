@@ -74,8 +74,11 @@
 {% if row.category == 'C' and row.case|slice:":4" == case %}
 <div class="overview">
     <canvas id="{{ row.case }}" width="300" height="200"></canvas>
+    <p>{{ row.case }}</p>
     <p class="details">{{ row.alg }}</p>
     <p>{{ row.anno }}</p>
+    <p>FCN notation scramble: {{ row.scramble }}</p>
+    <p>NS notation scramble: {{ row.ns_scramble }}</p>
     <script>
         drawSkewb("{{ row.case }}", "{{ row.color }}");
     </script>
@@ -90,21 +93,48 @@
     <a href="#trainer" title="Bookmark link to Trainer section">🔗</a>
 </h1>
 
-<button onclick="location.reload();">New Random Case</button>
+<button onclick="regenerateTrainerCase();">New Random Case</button>
+<script>
+    // Pass trainer data from Django as JSON
+    const trainerRows = {{ table_data_for_trainer|safe }};
+
+    function regenerateTrainerCase() {
+        const randomRow = trainerRows[Math.floor(Math.random() * trainerRows.length)];
+
+        // Update scramble text
+        const scrambleP = document.getElementById('trainer-scramble');
+        scrambleP.textContent = 'FCN notation scramble: ' + randomRow.scramble + '<br>' +
+            'NS notation scramble: ' + randomRow.ns_scramble;
+
+
+        // Update canvas
+        let canvas = document.getElementById('trainer-canvas');
+        drawSkewb("trainer-canvas", randomRow.color);
+
+        // Update annotation and algorithm
+        document.getElementById('anno').innerHTML = randomRow.anno;
+        document.getElementById('alg').innerHTML = randomRow.alg;
+        document.getElementById('anno').style.display = 'none';
+        document.getElementById('alg').style.display = 'none';
+    }
+</script>
 {% with random_row=table_data_for_trainer|random %}
-<p>NS scramble: {{ random_row.scramble }}</p>
-<canvas id="{{ random_row.case }}-trainer" width="300" height="200"></canvas>
-<img src="{% static 'skewb_notation.png' %}" alt="Image unavailable" style="max-width: 50%; height: auto; float: none !important;">        </p>
+<p id="trainer-scramble">FCN notation scramble: {{ random_row.scramble }}<br>NS notation scramble: {{ random_row.ns_scramble }}</p>
+<canvas id="trainer-canvas" width="300" height="200"></canvas>
+<img src="{% static 'skewb_notation.png' %}" alt="Image unavailable"
+    style="max-width: 50%; height: auto; float: none !important;"> </p>
 <button onclick="toggleVisibility('anno')">Show/Hide Annotation</button>
 <button onclick="toggleVisibility('alg')">Show/Hide Algorithm</button>
 <p id="anno" style="display:none;">{{ random_row.anno }}</p>
-<p id="alg" class="details" style="display:none;">{{ random_row.alg }}</p>
+<div id="alg" class="details" style="display:none;">
+    <p>{{ random_row.alg }}</p>
+</div>
 <script>
     function toggleVisibility(id) {
         var el = document.getElementById(id);
         el.style.display = (el.style.display === 'none') ? 'block' : 'none';
     }
-    drawSkewb("{{ random_row.case }}-trainer", "{{ random_row.color }}");
+    drawSkewb("trainer-canvas", "{{ random_row.color }}");
 </script>
 {% endwith %}
 
