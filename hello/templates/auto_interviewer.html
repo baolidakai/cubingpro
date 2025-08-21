@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>Interview Assistant</h1>
+
+<div style="border: 1px solid #ccc; padding: 10px; width: 60%;">
+    {% for msg in chat_history %}
+        <p><strong>{{ msg.role|title }}:</strong> {{ msg.content }}</p>
+    {% endfor %}
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="message" style="width: 60%;">
+    <button type="submit">Send</button>
+    <button type="submit" name="action" value="reset">Start New Chat</button>
+</form>
+
+
+{% endblock content %}

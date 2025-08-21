@@ -40,6 +40,11 @@ SECRET_KEY = os.environ.get(
 
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+if not GEMINI_API_KEY:
+    gemini_key_path = Path.home() / ".GEMINI_API_KEY"
+    if gemini_key_path.exists():
+        with open(gemini_key_path, "r") as f:
+            GEMINI_API_KEY = f.read().strip()
 
 # Django has a debug mode which shows more detailed error messages and also means static assets
 # can be served without having to run the production `collectstatic` command. However, this

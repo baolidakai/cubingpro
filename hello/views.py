@@ -122,9 +122,9 @@ def convert_ns_to_fcn(alg):
         },
         'r': {
             'r1': 'r2', 'r2': 'r3', 'r3': 'r1',
-            'f1': 'R2', 'R2': 'b1', 'b1': 'f1',
-            'f2': 'R3', 'R3': 'b2', 'b2': 'f2',
-            'f3': 'R1', 'R1': 'b3', 'b3': 'f3',
+            'f1': 'R3', 'R3': 'b2', 'b2': 'f1',
+            'f2': 'R1', 'R1': 'b3', 'b3': 'f2',
+            'f3': 'R2', 'R2': 'b1', 'b1': 'f3',
         },
         'B': {
             'L1': 'b3', 'b3': 'R2', 'R2': 'L1',
@@ -181,7 +181,7 @@ def convert_ns_to_fcn(alg):
                 }[fcn]
             elif base_move == 'B':
                 trans = {
-                    'F1': 'U', 'F2': 'R', 'F3': 'L',
+                    'F1': 'U', 'F2': 'L', 'F3': 'R',
                     'L1': 'R', 'L2': 'U', 'L3': 'L',
                     'B1': 'B', 'B2': 'B', 'B3': 'B',
                     'R1': 'L', 'R2': 'R', 'R3': 'U',
@@ -195,7 +195,7 @@ def convert_ns_to_fcn(alg):
                     'F1': 'R', 'F2': 'U', 'F3': 'L',
                     'L1': 'B', 'L2': 'B', 'L3': 'B',
                     'B1': 'L', 'B2': 'R', 'B3': 'U',
-                    'R1': 'B', 'R2': 'L', 'R3': 'R',
+                    'R1': 'U', 'R2': 'L', 'R3': 'R',
                     'f1': 'R', 'f2': 'U', 'f3': 'L',
                     'l1': 'U', 'l2': 'L', 'l3': 'R',
                     'b1': 'L', 'b2': 'R', 'b3': 'U',
@@ -658,10 +658,9 @@ def chat_api(request):
     if not settings.GEMINI_API_KEY:
         return JsonResponse({'error': 'API key not configured on server.'}, status=500)
 
-    logger.info(request.method)
     if request.method == 'GET':
         return render(request, 'gemini-chat.html', {'gemini_reply': 'Ask gemini anything'})
-    if request.method == 'POST' and client is not None:
+    if request.method == 'POST':
         # --- Your Prompt Bank (题库) ---
         # For a real application, you might load this from a database or a file.
         PROMPT_BANK = [
@@ -713,3 +712,43 @@ def chat_api(request):
             return JsonResponse({'error': f'An error occurred with the AI service: {str(e)}'}, status=500)
     else:
         return JsonResponse({'error': 'Only POST requests are allowed.'}, status=405)
+
+
+from google.genai.types import Content, Part
+
+
+@csrf_exempt
+def chat_view(request):
+    if request.POST.get("action") == "reset":
+        request.session['chat_history'] = []
+        return render(request, 'auto_interviewer.html', {"chat_history": []})
+
+    user_message = request.POST.get('message', '')
+    chat_history = request.session.get('chat_history', [])
+
+    if not user_message:
+        return render(request, 'auto_interviewer.html', {"chat_history": chat_history})
+
+    chat_history.append({"role": "user", "content": user_message})
+
+    # Prepare Gemini-compatible content
+    gemini_contents = [
+        Content(role=msg["role"], parts=[Part.from_text(text=msg["content"])])
+        for msg in chat_history
+    ]
+
+    # Call Gemini
+    client = genai.Client(api_key=settings.GEMINI_API_KEY)
+    try:
+        response = client.models.generate_content(
+            model='gemini-2.0-flash',
+            contents=gemini_contents,
+        )
+        model_reply = response.text
+    except Exception as e:
+        model_reply = "Something went wrong."
+
+    chat_history.append({"role": "model", "content": model_reply})
+    request.session['chat_history'] = chat_history
+
+    return render(request, 'auto_interviewer.html', {"chat_history": chat_history})
