@@ -205,7 +205,15 @@ def convert_ns_to_fcn(alg):
             ans.append(trans + move[1:])
         fcn = mapping[move].get(fcn, fcn)
     return ' '.join(ans)
-        
+
+
+def process_for_skewb_intermediate(data):
+    ans = []
+    for row in data:
+        row['alg'] = row['alg'].replace('or', '\n')
+        ans.append(row)
+    return ans
+
 
 def process_for_skewb(data):
     ans = []
@@ -435,6 +443,7 @@ def skewb_sarah_beginner(request):
 
 def skewb_sarah_intermediate(request):
     table_data = read_csv_data('hello/algorithms/skewb_sarah_intermediate.csv', ',')
+    table_data = process_for_skewb_intermediate(table_data)
     return render(request, "sarah_intermediate.html", {'table_data': table_data})
 
 

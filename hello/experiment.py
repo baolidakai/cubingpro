@@ -1,3 +1,165 @@
+# Brute force search for short skewb algorithms to solve intermediate cases.
+def get_skewb_color_from_alg(alg):
+    moves = alg.strip().split()
+    moves = moves[::-1]
+
+    def convert(move):
+        if move == "H":
+            return "S"
+        elif move == "S":
+            return "H"
+        elif move == "y2":
+            return "y2"
+        elif move == "y'":
+            return "y"
+        elif move == "y":
+            return "y'"
+        elif move == "x":
+            return "x'"
+        elif move == "x'":
+            return "x"
+        elif move == "x2":
+            return "x2"
+        elif move == "z":
+            return "z'"
+        elif move == "z'":  
+            return "z"
+        elif move == "z2":
+            return "z2"
+        else:
+            return move
+
+    converted = [convert(m) for m in moves]
+    curr = ["y"] * 5 + ["r"] * 5 + ["g"] * 5 + ["o"] * 5 + ["b"] * 5 + ["w"] * 5
+    move_dict = {
+        "H": [
+            [0, 21, 5],
+            [1, 16, 20],
+            [2, 15, 11],
+            [3, 10, 6],
+            [4, 14],
+            [9, 19],
+        ],
+        "S": [
+            [0, 5, 21],
+            [1, 20, 16],
+            [2, 11, 15],
+            [3, 6, 10],
+            [4, 14],
+            [9, 19],
+        ],
+        "y": [
+            [0, 1, 2, 3],
+            [5, 20, 15, 10],
+            [6, 21, 16, 11],
+            [7, 22, 17, 12],
+            [8, 23, 18, 13],
+            [9, 24, 19, 14],
+        ],
+        "y'": [
+            [0, 3, 2, 1],
+            [5, 10, 15, 20],
+            [6, 11, 16, 21],
+            [7, 12, 17, 22],
+            [8, 13, 18, 23],
+            [9, 14, 19, 24],
+        ],
+        "y2": [
+            [0, 2], [1, 3],
+            [5, 15], [20, 10],
+            [6, 16], [21, 11],
+            [7, 17], [22, 12],
+            [8, 18], [23, 13],
+            [9, 19], [24, 14],
+        ],
+        "x": [
+            [0, 22, 25, 10],
+            [1, 23, 26, 11],
+            [2, 20, 27, 12],
+            [3, 21, 28, 13],
+            [4, 24, 29, 14],
+            [5, 8, 7, 6],
+            [15, 16, 17, 18],
+        ],
+        "x'": [
+            [0, 10, 25, 22],
+            [1, 11, 26, 23],
+            [2, 12, 27, 20],
+            [3, 13, 28, 21],
+            [4, 14, 29, 24],
+            [5, 6, 7, 8],
+            [15, 18, 17, 16],
+        ],
+        "x2": [
+            [0, 25], [10, 22],
+            [1, 26], [11, 23],
+            [2, 27], [12, 20],
+            [3, 28], [13, 21],
+            [4, 29], [14, 24],
+            [5, 7], [6, 8],
+            [15, 17], [16, 18],
+        ],
+        "z": [
+            [0, 16, 27, 8],
+            [1, 17, 28, 5],
+            [2, 18, 25, 6],
+            [3, 15, 26, 7],
+            [4, 19, 29, 9],
+            [10, 11, 12, 13],
+            [20, 23, 22, 21],
+        ],
+        "z'": [
+            [0, 8, 27, 16],
+            [1, 5, 28, 17],
+            [2, 6, 25, 18],
+            [3, 7, 26, 15],
+            [4, 9, 29, 19],
+            [10, 13, 12, 11],
+            [20, 21, 22, 23],
+        ],
+        "z2": [
+            [0, 27], [16, 8],
+            [1, 28], [17, 5],
+            [2, 25], [18, 6],
+            [3, 26], [15, 7],
+            [4, 29], [19, 9],
+            [10, 12], [11, 13],
+            [20, 22], [21, 23],
+        ],
+    }
+    for m in converted:
+        nxt = curr[:]
+        for cyc in move_dict.get(m, []):
+            for i in range(len(cyc)):
+                src = cyc[i]
+                dst = cyc[(i + 1) % len(cyc)]
+                nxt[dst] = curr[src]
+        curr = nxt[:]
+    return "".join(curr)
+
+from itertools import product
+from collections import defaultdict
+
+mapping = defaultdict(list)
+def translate(color):
+    return ''.join(['y' if c == 'y' else ' ' for c in color])
+for move_count in range(1, 4):
+    moves = ['S', 'H']
+    y_mods = ['', 'y', "y'", 'y2']
+
+    # Generate all sequences of length move_count
+    for seq in product(moves, repeat=move_count):
+        for mods in product(y_mods, repeat=move_count):
+            alg = ' '.join(f"{mod} {m}".strip() for m, mod in zip(seq, mods))
+            color = get_skewb_color_from_alg(alg)
+            if all([color[i] == 'y' for i in [5, 10, 11, 16]]) or all([color[i] == 'y' for i in [0, 2, 10, 16]]):
+                mapping[translate(color)].append(alg)
+for key in mapping:
+    min_count = min(alg.count('S') + alg.count('H') for alg in mapping[key])
+    shortest = [alg for alg in mapping[key] if alg.count('S') + alg.count('H') == min_count]
+    print(f"{key}: {shortest}")
+
+"""
 # Computes the probability of having a 6 mover 3e for fewest moves
 from collections import defaultdict, deque
 
@@ -98,7 +260,6 @@ for num_moves in range(1, 30):
             cnt += 1
     print(f"Probability of having a 8 mover 3e with setup for {num_moves} moves: {cnt / tot:.4f}")
 
-"""
 from itertools import product
 from collections import deque, defaultdict
 

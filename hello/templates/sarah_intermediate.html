@@ -37,7 +37,7 @@
 {% for row in table_data %}
 <div class="overview">
     <canvas id="{{ row.case }}" width="300" height="200"></canvas>
-    <p class="details">{{ row.alg }}</p>
+    <p class="details">{{ row.alg|linebreaksbr }}</p>
     <script>
     drawSkewb("{{ row.case }}", "{{ row.color }}");
     </script>

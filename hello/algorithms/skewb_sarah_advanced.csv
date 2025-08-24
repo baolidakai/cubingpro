@@ -9,9 +9,21 @@ C,Pi-F-3c,,y' S y2 H y' H y' S,right bar + top fill,y x R r' R' r R' r' R r z r 
 C,Pi-F-3d,,y' S y2 H y S y S,left bar + top fill,y x r' R r R' r R r' R' z' R' r' R r
 C,Pi-F-5c,,H y S S S,top left bar alternative: x' S y2 S z2 x' S,y x r' R r' R' r' R r R' z' R r' R r
 C,Pi-F-5d,,y2 S y' S S S,top right bar,y x r' R' r R' r' R r R' B R' B' 
-C,Pi-F-9a,,S S y' S y2 S,top fill,y x B' r' R r R B' R' r' R' r B'
+C,Pi-F-9a,,S S y S y2 S,top fill,y x B' r' R r R B' R' r' R' r B'
 C,Pi-F-11a,,H y' S y2 S,right half,y x R r' R' r' R r R' z' r' R r
 C,Pi-F-11b,,y' S y S y2 S,left half,y x r' R r R r' R' r z R r' R'
 C,Pi-F-14b,,y S y' H y H,right alt,y x R' B' r' R r B r' R' r R
 C,Pi-F-14d,,y H y S y' S,left alt,x R r R' r R r' R' r R r' R' r'
-C,Pi-F-15a,,S S z S S S,only back match,y x r' R r R r' z' r' R r z r R r'
+C,Pi-F-15a,,S S y' S S S,only back match,y x r' R r R r' z' r' R r z r R r'
+C,Pi-B-1c,,S y S y' S y H,right half,y x R r' R r R' B R' B' r' R' r R
+C,Pi-B-1d,,y2 H y' H y H y' S,left half,x' R r' R' r' B R' r B
+C,Pi-B-3a,,y S y2 H y' S y' S,right alt,x r R r B R r' R B
+C,Pi-B-3b,,y S y2 H y H y S,left alt,y' x B' R' B' r' R' B R' r'
+C,Pi-B-5a,,y2 S y S S S,left bar,y x r' R z' r' R r z r R r' R
+C,Pi-B-5b,,H y' S S S,right bar,y x R r' B R' B' R' r' R r'
+C,Pi-B-9b,,S S y' S y2 S,nothing,y x B' r' R r z B R B' r'
+C,Pi-B-11c,,y2 S y' S y2 S,top left bar,y x r R' r B r' R B
+C,Pi-B-11d,,H y S y2 S,top right bar,y x R' r R' z' r' B R' r'
+C,Pi-B-14a,,y' S y' S y H,right bar top half,x R' r' R' r R r' R' r R r' R r
+C,Pi-B-14c,,y' H y H y' S,left bar top half,y2 x r R r R' r' R' r R r R' r' R r
+C,Pi-B-15b,,S S y S S S,top half,y' x r R' r' z' r' R' r z r R' r' R' r

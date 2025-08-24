@@ -1,11 +1,11 @@
 case,color,alg
 Pi-L,       rr y ggyyyoo  ybb ,S
 Pi-R,     yyrr  yggy  oo y bb ,H
-Pi-U,    yyyrr  ygg   oo y bb ,S S
-Pi-F,      yrr   gg y oo yybby,S y S y' H
-Pi-B,     y rr yygg  yoo   bby,S y' S y H
-L-L, y y y rry ygg   oo   bb ,S y S
-L-F,y y   yrry  gg   oo y bb ,S y H
-L-U,y y y  rr y gg  yoo   bb ,S y S y H
-L-R, y y y rr  ygg   ooy  bb ,S y' H
-L-B,y y   yrr   gg   ooyy bb ,S y S
+Pi-U,    yyyrr  ygg   oo y bb ,S S or y2 H H
+Pi-F,      yrr   gg y oo yybby,S y S y' H or y S y S y2 S or y' H y' S y2 S
+Pi-B,     y rr yygg  yoo   bby,S y' S y H or y' S y' S y2 S or y H y S y2 S
+L-L, y y y rry ygg   oo   bb ,S y S or y2 H y' S
+L-F,y y   yrry  gg   oo y bb ,S y H or y2 H y' H
+L-U,y y y  rr y gg  yoo   bb ,S y S y H or y' S y' S y' H or y H y S y S or y2 H y' S y' S
+L-R, y y y rr  ygg   ooy  bb ,S y' H or y2 H y H
+L-B,y y   yrr   gg   ooyy bb ,S y' S or y2 H y S
