@@ -1,0 +1,69 @@
+2x2x2:
+  - TODO: First face solver
+  - One look exercise with solution move prompt, and after choosing the right OLL pattern,
+    select the right orientation, and then the right case
+  - Example WR solves (commented out: { "title": "Example WR solves", "url": "/2x2x2/solves" })
+
+Clock:
+  - Tommy's 7 Simul (commented out: { "title": "Tommy's 7 Simul", "url": "/clock/7simul_intro" })
+  - Tommy's 7 Simul Tool
+  - Example clock solves
+
+Pyraminx:
+  - Tips on Tips (commented out: { "title": "Tips on Tips", "url": "/pyraminx/tips" })
+  - Example WR solves
+  - TODO: Pyraminx solve helper, maybe leverage https://www.reddit.com/r/Cubers/comments/1bschec/js_library_for_scramble_generation/
+  - Pyraminx one look helper
+
+Skewb:
+  - NS for Sarah's intermediate
+  - EG2 for Sarah's intermediate
+  - First Layer (copy from Renzha's + two diagonally solved + some example solves) (commented out)
+  - Can use the following website first: https://annikastein.github.io/SkewbPage/SkewbSkills/skskweb.html
+  - WR solve examples
+  - First face solver, allow user input scramble
+
+Blindfold:
+  - 5BLD
+  - Clock BLD
+  - Kilominx BLD
+
+Square-1 (sq1):
+  - CP (commented out: { "title": "CP", "url": "/sq1/cp" })
+  - EP (commented out: { "title": "EP", "url": "/sq1/ep" })
+  - CS
+  - POCP
+  - CSP
+  - OBL
+  - PBL
+  - Transient to PBL
+
+Misc:
+  - TODO: Common library for LLM
+  - TODO: Robo Coach
+  - TODO: Geoguesser trainer with LLM?
+
+Additional commented categories for future content:
+  - 3x3:
+    - PLL recognition trainer with keyboards
+    - COLL trainer
+    - PLL trainer
+    - OLL trainer
+    - Roux
+  - Cubing Theory:
+    - God's number
+    - Why cannot appear certain cases
+  - Cubing Computation:
+    - 2-way BFS for 2x2 and Pyraminx
+  - Cubing Reconstruction:
+    - (empty)
+  - Megaminx:
+    - OCLL (url: /megaminx/ocll)
+  - 3BLD:
+    - 4 steps
+    - M2R2
+    - 3 cycle
+  - Hetagon:
+    - (empty)
+  - Kilominx:
+    - (empty)

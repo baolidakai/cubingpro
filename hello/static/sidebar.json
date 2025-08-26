@@ -1,0 +1,207 @@
+[
+  {
+    "category": "3x3x3 Rubik's Cube",
+    "category_logo": "3x3x3.png",
+    "items": [
+      {
+        "title": "Rubik's Cube Solver",
+        "url": "/solver",
+        "logo": "solver.png"
+      },
+      {
+        "title": "3x3x3 blindfolded memo",
+        "url": "/3bld/memo",
+        "logo": "3bld.png"
+      },
+      {
+        "title": "3x3x3 blindfolded exec trainer",
+        "url": "/3bld/exec_trainer",
+        "logo": "3bld.png"
+      },
+      {
+        "title": "3x3x3 blindfolded with M2 and OP",
+        "url": "/3bld/m2op",
+        "logo": "3bld.png"
+      },
+      {
+        "title": "3x3x3 blindfolded with Orozco",
+        "url": "/3bld/orozco",
+        "logo": "3bld.png"
+      },
+      {
+        "title": "FMC Domino Reduction",
+        "url": "/fmc/dr",
+        "logo": "fmc.jpg"
+      },
+      {
+        "title": "FMC Recon",
+        "url": "/fmc/recon",
+        "logo": "fmc.jpg"
+      },
+      {
+        "title": "FMC Theory",
+        "url": "/fmc/theory",
+        "logo": "fmc.jpg"
+      }
+    ]
+  },
+  {
+    "category": "2x2x2",
+    "category_logo": "2x2x2.png",
+    "items": [
+      {
+        "title": "EG method",
+        "url": "/2x2x2/eg_intro",
+        "logo": "eg.png"
+      },
+      {
+        "title": "EG algorithms",
+        "url": "/2x2x2/eg_alg",
+        "logo": "eg.png"
+      },
+      {
+        "title": "EG trainer",
+        "url": "/2x2x2/eg_trainer",
+        "logo": "eg.png"
+      }
+    ]
+  },
+  {
+    "category": "Big Cube",
+    "category_logo": "4x4x4.jpg",
+    "items": [
+      {
+        "title": "Yau method",
+        "url": "/big_cube/yau",
+        "logo": "yau.png"
+      },
+      {
+        "title": "4x4x4 blindfolded with U2 and r2",
+        "url": "/4bld/u2r2",
+        "logo": "4bld.jpg"
+      }
+    ]
+  },
+  {
+    "category": "Clock",
+    "category_logo": "clock.png",
+    "items": [
+      {
+        "title": "7 Simul Flip",
+        "url": "/clock/7simul_flip_intro",
+        "logo": "7simul.png"
+      },
+      {
+        "title": "7sf+ and speed BLD",
+        "url": "/clock/7simul_flip_improved",
+        "logo": "7simul.png"
+      },
+      {
+        "title": "Math Theory",
+        "url": "/clock/7simul_flip_theory",
+        "logo": "7simul.png"
+      },
+      {
+        "title": "7 Simul Flip Tool",
+        "url": "/clock/7simul_flip_tool",
+        "logo": "7simul.png"
+      }
+    ]
+  },
+  {
+    "category": "Pyraminx",
+    "category_logo": "pyraminx.png",
+    "items": [
+      {
+        "title": "Corner First method",
+        "url": "/pyraminx/corner_first_intro",
+        "logo": "corner_first.png"
+      },
+      {
+        "title": "Corner First algorithms",
+        "url": "/pyraminx/corner_first_alg",
+        "logo": "corner_first.png"
+      },
+      {
+        "title": "V-first algorithms",
+        "url": "/pyraminx/v_first_alg",
+        "logo": "v_first.png"
+      }
+    ]
+  },
+  {
+    "category": "Skewb",
+    "category_logo": "skewb.png",
+    "items": [
+      {
+        "title": "Sarah's Beginner",
+        "url": "/skewb/sarah_beginner",
+        "logo": "sarah.png"
+      },
+      {
+        "title": "Sarah's Intermediate",
+        "url": "/skewb/sarah_intermediate",
+        "logo": "sarah.png"
+      },
+      {
+        "title": "Sarah's Advanced with Trainer",
+        "url": "/skewb/sarah_advanced",
+        "logo": "sarah.png"
+      }
+    ]
+  },
+  {
+    "category": "Square-1",
+    "category_logo": "sq1.jpg",
+    "items": [
+      {
+        "title": "Cube Shape (WIP)",
+        "url": "/sq1/cube_shape",
+        "logo": "cubeshape.jpg"
+      },
+      {
+        "title": "EO",
+        "url": "/sq1/eo",
+        "logo": "eo.png"
+      }
+    ]
+  },
+  {
+    "category": "Competition Tools",
+    "category_logo": "wca.png",
+    "items": [
+      {
+        "title": "WCA visualization",
+        "url": "/comp_visualization",
+        "logo": "wca_viz.png"
+      },
+      {
+        "title": "Mini Competition",
+        "url": "/mini_comp",
+        "logo": "mini_comp.jpg"
+      }
+    ]
+  },
+  {
+    "category": "Misc",
+    "category_logo": "misc.png",
+    "items": [
+      {
+        "title": "GeoGuesser Tips",
+        "url": "/game/geoguesser"
+      },
+      {
+        "title": "Robo Interview Coach",
+        "url": "/auto_interviewer"
+      },
+      {
+        "title": "View Tutorials",
+        "url": "/tutorial_viewer"
+      },
+      {
+        "title": "Write Tutorial",
+        "url": "/tutorial_editor"
+      }
+    ]
+  }
+]

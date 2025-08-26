@@ -57,16 +57,77 @@ p {
 }
 
 #container {
+  margin-left: 0 !important;
   margin: 3em;
   height: auto !important;
   height: 97%;
 }
 
-#sidebar {
-  float: left;
-  margin-right: 3em;
-  position: absolute;
-  width: 230px;
+.sidebar-menu {
+  display: none;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  padding: 2em;
+  justify-content: flex-start;
+  background: #fff;
+  width: 100%;
+  outline: none !important;
+}
+
+.sidebar-menu.active {
+  display: flex;
+  width: 100% !important;
+}
+
+.category-card,
+.item-card {
+  width: 180px;
+  height: 220px !important;
+  cursor: pointer;
+  text-align: center;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  padding: 1em;
+  transition: transform 0.2s ease;
+  background: #fafafa;
+  object-fit: contain;
+}
+
+.category-card:hover,
+.item-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+  margin-bottom: 0.5em;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.back-button {
+  padding: 0.5em 1em;
+  margin-bottom: 1.5em;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+}
+
+.copyright {
+  margin-top: 2em;
+  font-size: 0.85rem;
+  color: #888;
+  width: 100%;
+  text-align: center;
 }
 
 @media screen {
@@ -194,7 +255,6 @@ a.button:hover {
 #content {
   padding: 1.5em;
   position: absolute;
-  left: 260px;
   margin-right: 3em;
   min-width: 450px;
 }
@@ -724,91 +784,58 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
   /* Red background for the Reset button */
 }
 
-/* 
-.chat-container {
-  width: 90%;
-  max-width: 600px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+.cube-options-container {
   display: flex;
-  flex-direction: column;
-  height: 80vh;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2em;
 }
 
-.chat-header {
-  background-color: #5c6bc0;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.chat-messages {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
-  border-bottom: 1px solid #eee;
-}
-
-.message {
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 7px;
-  line-height: 1.4;
-}
-
-.message.user {
-  background-color: #e3f2fd;
-  margin-left: auto;
-  max-width: 70%;
-  text-align: right;
-}
-
-.message.model {
-  background-color: #f1f0f0;
-  margin-right: auto;
-  max-width: 70%;
-}
-
-.message.model-error {
-  background-color: #ffcdd2;
-  color: #c62828;
-}
-
-.chat-input {
-  display: flex;
-  padding: 15px;
-  border-top: 1px solid #ddd;
-  background-color: #f9f9f9;
-}
-
-.chat-input input[type="text"] {
-  flex-grow: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.chat-input button {
-  padding: 10px 15px;
-  background-color: #5c6bc0;
-  color: white;
+.cube-option {
+  background: none;
   border: none;
-  border-radius: 4px;
+  padding: 0;
   cursor: pointer;
+  text-align: center;
+  display: inline-block;
 }
 
-.chat-input button:hover {
-  background-color: #3f51b5;
+.cube-option img {
+  width: 160px;
+  height: 160px;
 }
 
-.initial-prompt-display {
-  padding: 10px 20px;
-  background-color: #efe;
-  border-bottom: 1px dashed #ccc;
-  font-style: italic;
-  font-size: 0.9em;
-} */
+.cube-option span {
+  display: block;
+  margin-top: 0.5em;
+  font-size: 1.5em;
+  color: inherit;
+  font-family: inherit;
+}
+
+/* Optional: container responsiveness */
+#quiz-question>div {
+  display: flex;
+  gap: 2em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Make the scrollbar wide and very visible */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 8px;
+  border: 3px solid #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}

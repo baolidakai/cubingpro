@@ -28,17 +28,135 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const STATIC_BASE = "{% static '' %}";
+    fetch("{% static 'sidebar.json' %}")
+      .then(response => response.json())
+      .then(menuData => {
+        function buildMenu(menuContainer, menuData) {
+          // State
+          let inCategoryView = false;
+
+          function renderCategories(data) {
+            menuContainer.innerHTML = ''; // Clear previous
+
+            data.forEach(entry => {
+              const card = document.createElement('div');
+              card.className = 'category-card';
+
+              const img = document.createElement('img');
+              img.src = `{% static '${entry.category_logo}' %}`;
+              img.alt = entry.category;
+              img.className = 'card-image';
+
+              const title = document.createElement('div');
+              title.className = 'card-title';
+              title.textContent = entry.category;
+
+              card.appendChild(img);
+              card.appendChild(title);
+
+              card.addEventListener('click', () => {
+                renderItems(entry.category, entry.items);
+              });
+
+              menuContainer.appendChild(card);
+            });
+
+            inCategoryView = false;
+          }
+
+          function renderItems(category, items) {
+            menuContainer.innerHTML = '';
+
+            // Back button
+            const backButton = document.createElement('button');
+            backButton.textContent = '← Back';
+            backButton.className = 'back-button';
+            backButton.onclick = () => renderCategories(menuData);
+            menuContainer.appendChild(backButton);
+
+            items.forEach(item => {
+              const card = document.createElement('div');
+              card.className = 'item-card';
+
+              const img = document.createElement('img');
+              img.src = `${STATIC_BASE}${item.logo}`;
+              img.alt = item.title;
+              img.className = 'card-image';
+
+              const title = document.createElement('div');
+              title.className = 'card-title';
+              title.textContent = item.title;
+
+              card.appendChild(img);
+              card.appendChild(title);
+
+              card.addEventListener('click', () => {
+                window.location.href = item.url;
+              });
+
+              menuContainer.appendChild(card);
+            });
+
+            inCategoryView = true;
+          }
+
+          // Initial render
+          renderCategories(menuData);
+
+          // Add copyright
+          const copyright = document.createElement('div');
+          copyright.className = 'copyright';
+          copyright.textContent = '© 2025 Bowen Deng';
+          menuContainer.appendChild(copyright);
+        }
+
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const indexPage = document.getElementById('index-page');
+
+        if (sidebarMenu) {
+          buildMenu(sidebarMenu, menuData);
+        }
+        if (indexPage) {
+          buildMenu(indexPage, menuData);
+        }
+      })
+      .catch(err => console.error('Failed to load menu:', err));
+  </script>
 </head>
 
-<body style="">
-
+<body>
+  <button id="nav-toggle"
+    style="position: fixed; top: 10px; left: 10px; z-index: 1000; font-size: 1.5em; padding: 16px 32px;">Navigate</button>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const navToggle = document.getElementById('nav-toggle');
+      const sidebar = document.getElementById('sidebar-menu');
+      navToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        if (sidebar.classList.contains('active')) {
+          sidebar.style.minHeight = '800px';
+        } else {
+          sidebar.style.minHeight = '';
+        }
+      });
+      sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          sidebar.classList.remove('active');
+        });
+      });
+    });
+  </script>
   <div id="container">
     <div id="header">
       <h1 class="title" style="position: fixed; top: 0; left: 50%; margin: 0; padding: 10px;">
-        <div style="position: absolute; top: 50px; left: 50%; transform: translateX(-80%); font-size: 15px; color: #e91e63; pointer-events: none;">
+        <div
+          style="position: absolute; top: 50px; left: 50%; transform: translateX(-80%); font-size: 15px; color: #e91e63; pointer-events: none;">
           &lt;- Can I get a forehead pat?
         </div>
-        <button onclick="rainStars(this)" style="border: none; background: none; padding: 0; display: inline-block; line-height: 0; cursor: grab;">
+        <button onclick="rainStars(this)"
+          style="border: none; background: none; padding: 0; display: inline-block; line-height: 0; cursor: grab;">
           <img src="{% static 'fox_with_cube.png' %}" alt="" width="85" style="display: block;">
         </button>
         <a href="/">Cubing for Professionals</a>
@@ -50,227 +168,24 @@
 
     <div id="sidebar">
       <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/tutorial_viewer">View Tutorials</a></li>
-          <li><a href="/tutorial_editor">Write Tutorial</a></li>
-
-          <li>
-            <h3>Cube Solver</h3>
-            <ul>
-              <li><a href="/solver">Rubik's Cube Solver</a></li>
-              <li><a href="/mini_comp">Mini Competition</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <h3>Competition Tools</h3>
-            <ul>
-              <li><a href="/comp_visualization">WCA visualization</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <h3>2x2x2</h3>
-            <ul>
-              <li><a href="/2x2x2/eg_intro">EG method</a></li>
-              <li><a href="/2x2x2/eg_alg">EG algorithms</a></li>
-              <li><a href="/2x2x2/eg_trainer">EG trainer</a></li>
-              <!-- TODO: First face solver -->
-              <!-- One look exercise with solution move prompt, and after choosing the right OLL pattern, select the right
-                orientation, and then the right case -->
-              <!-- <li><a href="/2x2x2/solves">Example WR solves</a></li> -->
-            </ul>
-          </li>
-
-          <li>
-            <h3>Clock</h3>
-            <ul>
-              <!-- <li><a href="/clock/7simul_intro">Tommy's 7 Simul</a></li> -->
-              <!-- Tommy's 7 Simul Tool -->
-              <li><a href="/clock/7simul_flip_intro">7 Simul Flip</a></li>
-              <li><a href="/clock/7simul_flip_improved">7sf+ and speed BLD</a></li>
-              <li><a href="/clock/7simul_flip_theory">Math Theory</a></li>
-              <li><a href="/clock/7simul_flip_tool">7 Simul Flip Tool</a></li>
-              <!-- Example clock solves -->
-            </ul>
-          </li>
-
-          <li>
-            <h3>Pyraminx</h3>
-            <ul>
-              <li><a href="/pyraminx/corner_first_intro">Corner First method</a></li>
-              <li><a href="/pyraminx/corner_first_alg">Corner First algorithms</a></li>
-              <li><a href="/pyraminx/v_first_alg">V-first algorithms</a></li>
-              <!-- <li><a href="/pyraminx/tips">Tips on Tips</a></li> -->
-              <!-- Example WR solves -->
-              <!-- TODO: Pyraminx solve helper, maybe leverage https://www.reddit.com/r/Cubers/comments/1bschec/js_library_for_scramble_generation/ -->
-              <!-- Pyraminx one look helper -->
-            </ul>
-          </li>
-
-          <li>
-            <h3>Skewb</h3>
-            <ul>
-              <li><a href="/skewb/sarah_beginner">Sarah's Beginner</a></li>
-              <li><a href="/skewb/sarah_intermediate">Sarah's Intermediate</a></li>
-              <li><a href="/skewb/sarah_advanced">Sarah's Advanced with Trainer</a></li>
-              <!-- NS for Sarah's intermediate -->
-              <!-- EG2 for Sarah's intermediate -->
-              <!-- <li><a href="/skewb/sarah_intermediate">First Layer (copy from Renzha's + two diagonally solved + some example solves)</a></li> -->
-               <!-- Can use the following website first -->
-               <!-- https://annikastein.github.io/SkewbPage/SkewbSkills/skskweb.html -->
-              <!-- WR solve examples -->
-              <!-- First face solver, allow user input scramble -->
-            </ul>
-          </li>
-
-          <li>
-            <h3>Big Cube</h3>
-            <ul>
-              <li><a href="/big_cube/yau">Yau method</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <h3>FMC</h3>
-            <ul>
-              <li><a href="/fmc/dr">Domino Reduction</a></li>
-              <li><a href="/fmc/recon">Recon</a></li>
-              <li><a href="/fmc/theory">Theory</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <h3>Blindfolded</h3>
-            <ul>
-              <li><a href="/3bld/memo">3BLD memo</a></li>
-              <li><a href="/3bld/exec_trainer">3BLD exec trainer</a></li>
-              <li><a href="/3bld/m2op">3BLD with M2 and OP</a></li>
-              <li><a href="/3bld/orozco">3BLD with Orozco</a></li>
-              <li><a href="/4bld/u2r2">4BLD with U2 and r2</a></li>
-              <!-- 5BLD -->
-               <!-- Clock BLD -->
-                <!-- Kilominx BLD -->
-            </ul>
-          </li>
-
-          <li>
-            <h3>Square-1</h3>
-            <ul>
-              <li><a href="/sq1/cube_shape">Cube Shape (WIP)</a></li>
-              <li><a href="/sq1/eo">EO</a></li>
-              <!--<li><a href="/sq1/cp">CP</a></li>
-              <li><a href="/sq1/ep">EP</a></li>
-              CS
-              POCP
-              CSP
-              OBL
-              PBL
-              Transient to PBL -->
-            </ul>
-          </li>
-
-          <li>
-            <h3>Misc</h3>
-            <ul>
-              <li><a href="/game/geoguesser">GeoGuesser Tips</a></li>
-              <li><a href="/auto_interviewer">Robo Interview Coach</a></li>
-              <!-- TODO: Common library for LLM -->
-              <!-- TODO: Robo Coach -->
-               <!-- TODO: Geoguesser trainer with LLM? -->
-            </ul>
-          </li>
-
-          <!--
-          
-                                <li>
-              <h3>3x3</h3>
-              <ul>
-                PLL recognition trainer with keyboards
-                COLL trainer
-                PLL trainer
-                OLL trainer
-                Roux
-              </ul>
-            </li>
-
-            <li>
-              <h3>Cubing Theory</h3>
-              <ul>
-                God's number
-                Why cannot appear certain cases
-              </ul>
-            </li>
-
-                        <li>
-              <h3>Cubing Computation</h3>
-              <ul>
-                2-way BFS for 2x2 and Pyraminx
-              </ul>
-            </li>
-
-                        <li>
-              <h3>Cubing Reconstruction</h3>
-              <ul>
-              </ul>
-            </li>
-          
-
-            <li>
-              <h3>Megaminx</h3>
-              <ul>
-                <li><a href="/megaminx/ocll">OCLL</a></li>
-              </ul>
-            </li>
-
-
-
-                        <li>
-              <h3>3BLD</h3>
-              <ul>
-                4 steps
-                M2R2
-                3 cycle
-              </ul>
-            </li>
-
-            <li>
-              <h3>Hetagon</h3>
-              <ul>
-              </ul>
-            </li>
-
-            <li>
-              <h3>Kilominx</h3>
-              <ul>
-              </ul>
-            </li>
- -->
-
-          <li class="smaller copyright">© 2025 Bowen Deng</li>
-        </ul>
-
-    </div>
-    </nav>
-  </div>
-
-  <div id="content" class="home">
-    <div id="home">
-
-      <h1 class="watermark">cubingpro.com</h1>
-
-      {% if request.path != '/' %}
-      <a href="/" class="button">Back to Home</a>
-      {% endif %}
-
-      <div id="star-container"></div>
-
-      {% block content %}{% endblock content %}
-
+        <div id="sidebar-menu" class="sidebar-menu">
+        </div>
+      </nav>
+      </nav>
     </div>
 
-  </div>
+    <div id="content" class="home">
+      <div id="home">
+
+        <h1 class="watermark">cubingpro.com</h1>
+
+        <div id="star-container"></div>
+
+        {% block content %}{% endblock content %}
+
+      </div>
+
+    </div>
   </div> <!-- /container -->
 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1397403119979850"
