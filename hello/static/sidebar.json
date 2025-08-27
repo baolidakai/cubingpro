@@ -188,19 +188,23 @@
     "items": [
       {
         "title": "GeoGuesser Tips",
-        "url": "/game/geoguesser"
+        "url": "/game/geoguesser",
+        "logo": "misc.png"
       },
       {
         "title": "Robo Interview Coach",
-        "url": "/auto_interviewer"
+        "url": "/auto_interviewer",
+        "logo": "misc.png"
       },
       {
         "title": "View Tutorials",
-        "url": "/tutorial_viewer"
+        "url": "/tutorial_viewer",
+        "logo": "misc.png"
       },
       {
         "title": "Write Tutorial",
-        "url": "/tutorial_editor"
+        "url": "/tutorial_editor",
+        "logo": "misc.png"
       }
     ]
   }

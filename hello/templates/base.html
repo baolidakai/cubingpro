@@ -45,7 +45,9 @@
               card.className = 'category-card';
 
               const img = document.createElement('img');
-              img.src = `{% static '${entry.category_logo}' %}`;
+              if (entry.category_logo !== '') {
+                img.src = `{% static '${entry.category_logo}' %}`;
+              }
               img.alt = entry.category;
               img.className = 'card-image';
 
