@@ -45,7 +45,7 @@
               card.className = 'category-card';
 
               const img = document.createElement('img');
-              if (entry.category_logo !== '') {
+              if (entry.category_logo && entry.category_logo.trim() !== '') {
                 img.src = `${STATIC_BASE}${entry.category_logo}`;
               }
               img.alt = entry.category;
@@ -83,7 +83,7 @@
               card.className = 'item-card';
 
               const img = document.createElement('img');
-              if (item.logo) {
+              if (item.logo && item.logo.trim() !== '') {
                 img.src = `${STATIC_BASE}${item.logo}`;
               }
               img.alt = item.title;
