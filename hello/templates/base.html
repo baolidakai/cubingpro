@@ -46,7 +46,7 @@
 
               const img = document.createElement('img');
               if (entry.category_logo !== '') {
-                img.src = `{% static '${entry.category_logo}' %}`;
+                img.src = `${STATIC_BASE}${entry.category_logo}`;
               }
               img.alt = entry.category;
               img.className = 'card-image';
