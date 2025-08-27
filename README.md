@@ -56,3 +56,6 @@ python manage.py makemigrations
 python manage.py migrate
 
 git add *; git commit -am "test"; git push heroku main; git push personal main;
+
+To fix issue with static files:
+heroku run python manage.py collectstatic;
