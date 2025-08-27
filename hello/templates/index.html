@@ -2,20 +2,88 @@
 {% load static %}
 
 {% block content %}
-<p>
-  Hi. I'm <a href="https://www.worldcubeassociation.org/persons/2009DENG01" target="_blank">Bowen Deng</a>. I've been
-  speedcubing since 2007.
-</p>
 
-<p>
-  My ultimate goal with this site is to sync with the state-of-the-arts for competitive cubings. It's intended as the
-  home for advanced speedcubers to regularly check latest algorithms, learn practical cubing theories, and help make
-  improvement plans.
-</p>
+<div id="lang-toggle" role="group" aria-label="Language toggle">
+  <button id="btn-en" aria-pressed="false">English</button>
+  <button id="btn-zh" aria-pressed="false">中文</button>
+</div>
 
-<p>
-  Email me at my WCA ID @ gmail.com.
-</p>
+<div id="content-en" style="display:none;">
+  <p>
+    Hi. I'm <a href="https://www.worldcubeassociation.org/persons/2009DENG01" target="_blank"
+      rel="noopener noreferrer">Bowen Deng</a>. I've been
+    speedcubing since 2007.
+  </p>
+
+  <p>
+    My ultimate goal with this site is to sync with the state-of-the-arts for competitive cubings. It's intended as the
+    home for advanced speedcubers to regularly check latest algorithms, learn practical cubing theories, and help make
+    improvement plans.
+  </p>
+
+  <p>
+    Email me at my WCA ID @ gmail.com.
+  </p>
+</div>
+
+<div id="content-zh" style="display:none;">
+  <p>
+    你好，我是 <a href="https://www.worldcubeassociation.org/persons/2009DENG01" target="_blank"
+      rel="noopener noreferrer">Bowen Deng</a>。我从2007年开始速拧。
+  </p>
+
+  <p>
+    我建立这个网站的最终目标是与竞速魔方的最新技术同步。它旨在为高级速拧者提供一个平台，定期查看最新的公式，学习实用的魔方理论，并帮助制定改进计划。
+  </p>
+
+  <p>
+    可以通过我的 WCA ID @ gmail.com 给我发邮件。
+  </p>
+</div>
+
+<script>
+  const offset = new Date().getTimezoneOffset();
+  let currentLang = (offset / 60 === -8) ? 'zh' : 'en';
+
+  const contentEn = document.getElementById('content-en');
+  const contentZh = document.getElementById('content-zh');
+  const btnEn = document.getElementById('btn-en');
+  const btnZh = document.getElementById('btn-zh');
+
+  function updateContent() {
+    if (currentLang === 'en') {
+      contentEn.style.display = 'block';
+      contentZh.style.display = 'none';
+      btnEn.classList.add('active');
+      btnZh.classList.remove('active');
+      btnEn.setAttribute('aria-pressed', 'true');
+      btnZh.setAttribute('aria-pressed', 'false');
+    } else {
+      contentEn.style.display = 'none';
+      contentZh.style.display = 'block';
+      btnEn.classList.remove('active');
+      btnZh.classList.add('active');
+      btnEn.setAttribute('aria-pressed', 'false');
+      btnZh.setAttribute('aria-pressed', 'true');
+    }
+  }
+
+  btnEn.addEventListener('click', () => {
+    if (currentLang !== 'en') {
+      currentLang = 'en';
+      updateContent();
+    }
+  });
+
+  btnZh.addEventListener('click', () => {
+    if (currentLang !== 'zh') {
+      currentLang = 'zh';
+      updateContent();
+    }
+  });
+
+  updateContent();
+</script>
 
 <div id="index-page" class="sidebar-menu active">
 </div>

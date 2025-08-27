@@ -839,3 +839,41 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+#lang-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: #f0f0f0;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  display: inline-flex;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+  user-select: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  min-width: 200px !important;
+}
+
+#lang-toggle button {
+  border: none;
+  background: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  color: #555;
+  font-size: 16px;
+  flex: 1;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  display: block;
+}
+
+#lang-toggle button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+#lang-toggle button:not(.active):hover {
+  background-color: #e0e0e0;
+}
