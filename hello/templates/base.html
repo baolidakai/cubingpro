@@ -29,7 +29,6 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const STATIC_BASE = "/static/";
     fetch("{% static 'sidebar.json' %}")
       .then(response => response.json())
       .then(menuData => {
@@ -46,7 +45,7 @@
 
               const img = document.createElement('img');
               if (entry.category_logo && entry.category_logo.trim() !== '') {
-                img.src = `${STATIC_BASE}${entry.category_logo}`;
+                img.src = `{% static '${entry.category_logo}' %}`;
               }
               img.alt = entry.category;
               img.className = 'card-image';
@@ -84,7 +83,7 @@
 
               const img = document.createElement('img');
               if (item.logo && item.logo.trim() !== '') {
-                img.src = `${STATIC_BASE}${item.logo}`;
+                img.src = `{% static '${item.logo}' %}`;
               }
               img.alt = item.title;
               img.className = 'card-image';
