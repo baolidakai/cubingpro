@@ -44,9 +44,9 @@
               card.className = 'category-card';
 
               const img = document.createElement('img');
-              if (entry.category_logo && entry.category_logo.trim() !== '') {
-                img.src = `{% static '${entry.category_logo}' %}`;
-              }
+              // if (entry.category_logo && entry.category_logo.trim() !== '') {
+              //   img.src = `{% static '${entry.category_logo}' %}`;
+              // }
               img.alt = entry.category;
               img.className = 'card-image';
 
@@ -82,9 +82,9 @@
               card.className = 'item-card';
 
               const img = document.createElement('img');
-              if (item.logo && item.logo.trim() !== '') {
-                img.src = `{% static '${item.logo}' %}`;
-              }
+              // if (item.logo && item.logo.trim() !== '') {
+              //   img.src = `{% static '${item.logo}' %}`;
+              // }
               img.alt = item.title;
               img.className = 'card-image';
 
