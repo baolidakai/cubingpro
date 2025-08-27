@@ -83,7 +83,9 @@
               card.className = 'item-card';
 
               const img = document.createElement('img');
-              img.src = `${STATIC_BASE}${item.logo}`;
+              if (item.logo) {
+                img.src = `${STATIC_BASE}${item.logo}`;
+              }
               img.alt = item.title;
               img.className = 'card-image';
 
