@@ -29,6 +29,11 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    function getImageSrc(filename) {
+      const id = filename.toLowerCase().replace('.', '_'); // e.g., "fmc.jpg" -> "fmc_jpg"
+      const img = document.getElementById(id);
+      return img ? img.src : null;
+    }
     fetch("{% static 'sidebar.json' %}")
       .then(response => response.json())
       .then(menuData => {
@@ -44,9 +49,7 @@
               card.className = 'category-card';
 
               const img = document.createElement('img');
-              // if (entry.category_logo && entry.category_logo.trim() !== '') {
-              //   img.src = `static '${entry.category_logo}'`;
-              // }
+              img.src = getImageSrc(entry.category_logo);
               img.alt = entry.category;
               img.className = 'card-image';
 
@@ -82,9 +85,7 @@
               card.className = 'item-card';
 
               const img = document.createElement('img');
-              // if (item.logo && item.logo.trim() !== '') {
-              //   img.src = `'${item.logo}`;
-              // }
+              img.src = getImageSrc(item.logo);
               img.alt = item.title;
               img.className = 'card-image';
 
@@ -203,6 +204,38 @@
 
     gtag('config', 'G-CK6MWC01K0');
   </script>
+
+  <div id="phantom-images" style="display: none;">
+    <!-- Unique image files -->
+    <img id="3x3x3_png" src="{% static '3x3x3.png' %}" />
+    <img id="2x2x2_png" src="{% static '2x2x2.png' %}" />
+    <img id="4x4x4_jpg" src="{% static '4x4x4.jpg' %}" />
+    <img id="clock_png" src="{% static 'clock.png' %}" />
+    <img id="pyraminx_png" src="{% static 'pyraminx.png' %}" />
+    <img id="skewb_png" src="{% static 'skewb.png' %}" />
+    <img id="sq1_jpg" src="{% static 'sq1.jpg' %}" />
+    <img id="wca_png" src="{% static 'wca.png' %}" />
+    <img id="misc_png" src="{% static 'misc.png' %}" />
+    <img id="solver_png" src="{% static 'solver.png' %}" />
+    <img id="3bld_png" src="{% static '3bld.png' %}" />
+    <img id="fmc_jpg" src="{% static 'fmc.jpg' %}" />
+    <img id="eg_png" src="{% static 'eg.png' %}" />
+    <img id="yau_png" src="{% static 'yau.png' %}" />
+    <img id="4bld_jpg" src="{% static '4bld.jpg' %}" />
+    <img id="7simul_png" src="{% static '7simul.png' %}" />
+    <img id="corner_first_png" src="{% static 'corner_first.png' %}" />
+    <img id="v_first_png" src="{% static 'v_first.png' %}" />
+    <img id="sarah_png" src="{% static 'sarah.png' %}" />
+    <img id="cubeshape_jpg" src="{% static 'cubeshape.jpg' %}" />
+    <img id="eo_png" src="{% static 'eo.png' %}" />
+    <img id="wca_viz_png" src="{% static 'wca_viz.png' %}" />
+    <img id="mini_comp_jpg" src="{% static 'mini_comp.jpg' %}" />
+    <img id="geoguesser_png" src="{% static 'misc.png' %}" />
+    <img id="auto_interviewer_png" src="{% static 'misc.png' %}" />
+    <img id="tutorial_viewer_png" src="{% static 'misc.png' %}" />
+    <img id="tutorial_editor_png" src="{% static 'misc.png' %}" />
+  </div>
+
 
 </body>
 
