@@ -87,6 +87,11 @@
     "category_logo": "clock.png",
     "items": [
       {
+        "title": "Tommy's 7 Simul",
+        "url": "/clock/7simul_intro",
+        "logo": "7simul.png"
+      },
+      {
         "title": "7 Simul Flip",
         "url": "/clock/7simul_flip_intro",
         "logo": "7simul.png"
@@ -99,7 +104,7 @@
       {
         "title": "Math Theory",
         "url": "/clock/7simul_flip_theory",
-        "logo": "7simul.png"
+        "logo": "clock_math.png"
       },
       {
         "title": "7 Simul Flip Tool",

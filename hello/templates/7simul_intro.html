@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>
+    7 Simul Intro
+</h1>
+<p>
+    If you don't know how to solve Rubik's Clock using the Flip Method, please read <a href=""
+        https://www.stefan-pochmann.info/spocc/speedsolving/clock/">Stefan Pochmann's website</a>.<br>
+    Flip method is a very good method and can already help you achieve world class.<br>
+    But most top clock solvers use the so-called 7 simul method.<br>
+    The most popular 7 simul variant is Tommy's version, which requires using pinky finger for bottom dials.<br>
+</p>
+
+<h2>
+    Method
+</h2>
+<p>
+    In 7 simul, we use a fixed pin order to solve the clock.
+</p>
+<p>
+    Then we memorize 6 numbers based on modulo arithmetics of 12 (e.g. 5 = -7, 3 + 8 = 11 = -1, 5 + 8 = 13 = 1, 2 - 3 =
+    -1, 2 - 8 = -6 = 6).<br>
+    You will have the flexibility on how to memorize them. But we recommend several common strategies:
+<ol>
+    <li>Remember numbers as-is in your native language.</li>
+    <li>Encode numbers into A for 1, B for 2, ..., K for 11.</li>
+    <li>Combine both, e.g. 1-6 with native language, and E for 7, D for 8, etc.</li>
+    <li>Similarly, but instead of native language, use a language (e.g. Japanese/Korean/Chinese) which has low syllabus
+        count for numbers.</li>
+</ol>
+</p>
+<p>
+    After memorizing these 6 numbers, we will solve the clock with the aforementioned pin order.<br>
+    Each time, you will adjust two dials simultaneously (unless the adjustment required is 0), either based on the
+    memorized number, or based on intuitively matching two clock faces (similar to flip method).
+</p>
+<p>
+    The best way to illustrate this method is to use a
+    demo example.<br>
+</p>
+
+<div id="appendable-div">
+</div>
+
+<p>Now the clock is solved!</p>
+
+<script>
+    // Get Django variable safely into JavaScript
+    const table_data = JSON.parse('{{ table_data|escapejs }}');
+
+    for (let i = 0; i < table_data.length; i++) {
+        const li = document.createElement("div");
+        li.innerHTML = table_data[i].paragraph;
+        li.id = `item-${i}`;
+        document.getElementById("appendable-div").appendChild(li);
+        const viz = document.createElement("div");
+        viz.style = "max-width: 640px; margin: auto;";
+        const adj = document.createElement("div");
+        adj.id = `adjuster-${i}`;
+        adj.className = "has-text-centered";
+        const canvas = document.createElement("canvas");
+        canvas.id = `canvas-${i}`;
+        adj.appendChild(canvas);
+        viz.appendChild(adj);
+        document.getElementById("appendable-div").appendChild(viz);
+        let scramble = table_data[i].scramble.split(',').map(Number);
+        let operations = table_data[i].operations.split(',').map(Number);
+        let clocks = makeClocks2(scramble, operations);
+        if (!table_data[i].annotation) {
+            table_data[i].annotation = null;
+        }
+        if (!table_data[i].operations) {
+            table_data[i].operations = null;
+        }
+        if (!table_data[i].change_pins) {
+            table_data[i].change_pins = null;
+        }
+        let plot_pointer = true;
+        if (table_data[i].annotation && table_data[i].annotation.startsWith("UL")) {
+            plot_pointer = false;            
+        }
+        render(clocks, "x2", adj.id, canvas.id, convert_to_matrix(table_data[i].annotation), convert_to_change_pin_matrix(table_data[i].change_pins), plot_pointer);
+    }
+</script>
+
+{% endblock content %}

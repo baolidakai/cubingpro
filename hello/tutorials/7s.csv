@@ -1,0 +1,43 @@
+scramble;operations;change_pins;annotation;paragraph
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;;;;"
+<p>Scramble: UR5+ DR3+ DL3+ UL2+ U5- R1+ D5+ L1+ ALL1- y2 U3- R2+ D3+ L4- ALL1+</p>
+<p>Notice we flip from black face to white face with x2 rotation instead of y2 rotation.</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;;;UL,L,DL,U,C,D,UR,R,DR,ul,l,dl,u,c,d,ur,r,dr;"
+Memorize 6 numbers using aforementioned arithmetics applying modulo 12.
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,3,,,,,,,,,,,,;0,0,1,0;,,-1,,,,3,,,,,,,,,,,;"
+<ol>
+<li>Memo 1: memorize M1 = c - d. M1 = -1</li>
+<li>Memo 2: memorize M2 = dr - r + U - L. M2 = 3</li>
+<li>Memo 3: memorize M3 = L - U. M3 = 1</li>
+<li>Memo 4: memorize M4 = d - r. M4 = -2</li>
+<li>Memo 5: memorize M5 = UR - U + C - D + l - ul + r. M5 = -3</li>
+<li>Memo 6: memorize M6 = u - c + d + UL - L + DR - R. M6 = 5</li>
+</ol>
+<p>Now we should execute 7 simultaneous moves (14 moves in total).</p>
+<p><u>In our visualization, white pin means the pin is sticking out, otherwise it's black pin.</u></p>
+<p>As mentioned above, the execution requires some operation on the two bottom dials.</p>
+<p>Start the solve on the black face.</p>
+<p>Step 1: only press down bottomleft pin, then execute M1 with the bottom left dial and M2 with the top right dial.</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,3,-2,1,,,,,,,,,,;1,0,1,0;-2,,,,,,1,,,,,,,,,,,;"
+<p>Step 2: press also topleft pin, then execute <strong>M4</strong> with top left dial, and <strong>M3</strong> with top right dial. Notice how M4 is on the left instead of right.</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,3,-2,1,5,-3,,,,,,,,;1,1,1,0;5,,,,,,,,-3,,,,,,,,,;"
+<p>At this point, U and L should be equal, otherwise it indicates memo/execution was incorrect.</p>
+<p>Step 3: press also topright pin, then align UL to U (=L) with topleft dial, and align C to U (=L) with bottomright dial.</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,3,-2,1,5,-3,-3,5,,,,,,;0,1,1,0;-3,,,,,,5,,,,,,,,,,,;"
+<p>Step 4: press up topleft pin, then execute M5 with topleft dial, and apply M6 with topright dial.</p>
+<p>You may forget all the memos now, as they are used up already.</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,3,-2,1,5,-3,-3,5,3,1,,,,;0,1,1,1;3,,,,,,1,,,,,,,,,,,;"
+<p>Step 5: press down bottomright pin, then align topleft 2x2 (UL = U = L = C) to D with topleft dial, and align DL to D with topright dial.</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,3,-2,1,5,-3,-3,5,3,1,1,4,,;0,1,0,1;1,,,,,,4,,,,,,,,,,,;"
+<p>Step 6: press up bottomleft pin, then align left 3x2 to R with topleft dial, align DR to R with right dial.</p>
+"
+5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,3,-2,1,5,-3,-3,5,3,1,1,4,-1,2;0,1,0,1;-1,,,,,,2,,,,,,,,,,,;"
+<p>Step 7: now the last step, press up bottomright pin, then intuitively point all clock face to 12 with topleft and topright dial.</p>
+"
