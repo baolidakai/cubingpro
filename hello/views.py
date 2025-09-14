@@ -245,6 +245,7 @@ def process_for_obl(data):
     ans = []
     for row in data:
         row['viz'] = visualize_obl(row['case_name'])
+        row['slash_count'] = row['alg'].count('/')
         ans.append(row)
     return ans
 

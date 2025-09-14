@@ -57,7 +57,8 @@
     <li>3C0E</li>
 </ol>
 <p>
-    If the top layer is 2C0E, then the bottom layer must be 2C0E as well. In general, only same categories can be paired.
+    If the top layer is 2C0E, then the bottom layer must be 2C0E as well. In general, only same categories can be
+    paired.
 </p>
 <div style="display: flex; gap: 24px; flex-wrap: wrap;">
     <div style="flex: 1 1 0;">
@@ -200,10 +201,14 @@
     Tips
 </h2>
 
-<p>The best way to learn OBL is to start with 2 slash (meaning you make two slice moves to solve OBL) and 3 slash cases, and understand how to convert the case into a familiar one.</p>
+<p>The best way to learn OBL is to start with 2 slash (meaning you make two slice moves to solve OBL) and 3 slash cases,
+    and understand how to convert the case into a familiar one.</p>
 <p>This strategy is very similar to the cubeshape.</p>
-<p>During actual solve, if you don't recognize a case, you may always use the standard method. So it's very easy to practice OBL during regular solves.</p>
-<p>74 cases might sound like a lot, but similarly to cubeshape, each case has a parent case closer to fully solved, and they form a tree. Instead of memorizing the whole moves for each case, you only need to understand how to go to its parent.</p>
+<p>During actual solve, if you don't recognize a case, you may always use the standard method. So it's very easy to
+    practice OBL during regular solves.</p>
+<p>74 cases might sound like a lot, but similarly to cubeshape, each case has a parent case closer to fully solved, and
+    they form a tree. Instead of memorizing the whole moves for each case, you only need to understand how to go to its
+    parent.</p>
 
 <h2>
     Cases
@@ -212,29 +217,35 @@
 <p>
     There are 74 cases in total. We list all cases here with their full algorithms and the linkage to parent.
 </p>
-<p>During learning, you may filter by number of slashes away. You may also filter cases by E/C category so you can focus on one of the categories.</p>
-<p>When you want to deep dive a case, we show a special view which shows you all the way from the current case to each parent cases.</p>
+<p>During learning, you may filter by number of slashes away. You may also filter cases by E/C category so you can focus
+    on one of the categories.</p>
+<p>When you want to deep dive a case, we show a special view which shows you all the way from the current case to each
+    parent cases.</p>
 
-<table id="obl-cases-table" class="obl-table">
-    <thead>
-        <tr>
-            <th>Case Number</th>
-            <th>Case Category</th>
-            <th>Case Name</th>
-            <th>Image</th>
-            <th>Algorithm</th>
-            <th>Parent</th>
-            <th>Parent Number</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+<div class="obl-table-container">
+    <table id="obl-cases-table" class="obl-table">
+        <thead>
+            <tr>
+                <th>Case Number</th>
+                <th>Case Category</th>
+                <th>Case Name</th>
+                <th>Image</th>
+                <th>Algorithm</th>
+                <th>Parent</th>
+                <th>Parent Number</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
 <script>
     const table_data = JSON.parse('{{ table_data|safe }}');
     const tbody = document.querySelector('#obl-cases-table tbody');
     table_data.forEach(row => {
         const tr = document.createElement('tr');
+        tr.setAttribute('data-slash-count', row.slash_count);
+        tr.setAttribute('data-case-category', row.case_category);
         tr.innerHTML = `
             <td>${row.case_number}</td>
             <td>${row.case_category}</td>
@@ -258,6 +269,84 @@
             drawTwoSquareShapes(id, "21212121", pattern1, "12121212", pattern2, align = true);
         }
     });
+</script>
+
+<div id="filter-toolkit">
+  <div class="filter-group">
+    <strong>Slash Count</strong>
+    <div class="checkboxes" id="slash-count-filter">
+      <!-- Checkboxes 0–7 -->
+      <label><input type="checkbox" value="0" checked> 0</label>
+      <label><input type="checkbox" value="1" checked> 1</label>
+      <label><input type="checkbox" value="2" checked> 2</label>
+      <label><input type="checkbox" value="3" checked> 3</label>
+      <label><input type="checkbox" value="4" checked> 4</label>
+      <label><input type="checkbox" value="5" checked> 5</label>
+      <label><input type="checkbox" value="6" checked> 6</label>
+      <label><input type="checkbox" value="7" checked> 7</label>
+    </div>
+    <button onclick="selectAll('slash-count-filter')">Select All</button>
+    <button onclick="selectNone('slash-count-filter')">Select None</button>
+  </div>
+
+  <div class="filter-group">
+    <strong>Case Category</strong>
+    <div class="checkboxes" id="case-category-filter">
+      <!-- 12 Case Category Checkboxes -->
+      <label><input type="checkbox" value="0C1E" checked> 0C1E</label>
+      <label><input type="checkbox" value="0C2E" checked> 0C2E</label>
+      <label><input type="checkbox" value="0C3E" checked> 0C3E</label>
+      <label><input type="checkbox" value="0C4E" checked> 0C4E</label>
+      <label><input type="checkbox" value="1C0E" checked> 1C0E</label>
+      <label><input type="checkbox" value="1C1E" checked> 1C1E</label>
+      <label><input type="checkbox" value="1C2E" checked> 1C2E</label>
+      <label><input type="checkbox" value="1C3E" checked> 1C3E</label>
+      <label><input type="checkbox" value="2C0E" checked> 2C0E</label>
+      <label><input type="checkbox" value="2C1E" checked> 2C1E</label>
+      <label><input type="checkbox" value="2C2E" checked> 2C2E</label>
+      <label><input type="checkbox" value="3C0E" checked> 3C0E</label>
+    </div>
+    <button onclick="selectAll('case-category-filter')">Select All</button>
+    <button onclick="selectNone('case-category-filter')">Select None</button>
+  </div>
+</div>
+
+<script>
+function selectAll(groupId) {
+    document.querySelectorAll(`#${groupId} input[type="checkbox"]`).forEach(cb => cb.checked = true);
+    filterTable();
+}
+
+function selectNone(groupId) {
+    document.querySelectorAll(`#${groupId} input[type="checkbox"]`).forEach(cb => cb.checked = false);
+    filterTable();
+}
+
+function getCheckedValues(groupId) {
+    return Array.from(document.querySelectorAll(`#${groupId} input[type="checkbox"]:checked`))
+        .map(cb => cb.value);
+}
+
+function filterTable() {
+    const allowedSlashCounts = getCheckedValues('slash-count-filter');
+    const allowedCategories = getCheckedValues('case-category-filter');
+
+    const rows = document.querySelectorAll('#obl-cases-table tbody tr');
+    rows.forEach(row => {
+        const slashCount = row.dataset.slashCount;
+        const category = row.dataset.caseCategory;
+
+        const show = allowedSlashCounts.includes(slashCount) &&
+                     allowedCategories.includes(category);
+
+        row.style.display = show ? '' : 'none';
+    });
+}
+
+// Attach live event listeners
+document.querySelectorAll('#filter-toolkit input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', filterTable);
+});
 </script>
 
 {% endblock content %}

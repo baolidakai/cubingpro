@@ -915,6 +915,13 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
   max-height: 70vh;
 }
 
+#obl-cases-table thead th {
+    position: sticky;
+    top: 0;
+    background: white;        /* ensure it's visible over content */
+    z-index: 2;
+    border-bottom: 1px solid #ddd;
+}
 .obl-table {
     border-collapse: collapse;
     /* width: 100%; */
@@ -938,4 +945,34 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
     padding: 4px;
     width: 120px;
     width: 120px;
+}
+#filter-toolkit {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 260px;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    font-size: 14px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    z-index: 1000;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.filter-group {
+    margin-bottom: 16px;
+}
+
+.filter-group .checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin: 8px 0;
+}
+
+.filter-group label {
+    white-space: nowrap;
 }

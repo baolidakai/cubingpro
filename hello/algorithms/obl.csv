@@ -1,3 +1,4 @@
 case_number;case_category;case_name;alg;parent;parent_number
 0;0C0E;Solved;;N/A;-1
 1;2C2E;Left Kite / Left Kite;0,-1/0,1;Solved;0
+2;2C2E;Right Kite / Right Kite;1,0/-1,0;Solved;0
