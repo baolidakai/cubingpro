@@ -867,7 +867,7 @@ def get_skewb_color_from_alg(alg):
             return "x2"
         elif move == "z":
             return "z'"
-        elif move == "z'":  
+        elif move == "z'":
             return "z"
         elif move == "z2":
             return "z2"
@@ -910,12 +910,18 @@ def get_skewb_color_from_alg(alg):
             [9, 14, 19, 24],
         ],
         "y2": [
-            [0, 2], [1, 3],
-            [5, 15], [20, 10],
-            [6, 16], [21, 11],
-            [7, 17], [22, 12],
-            [8, 18], [23, 13],
-            [9, 19], [24, 14],
+            [0, 2],
+            [1, 3],
+            [5, 15],
+            [20, 10],
+            [6, 16],
+            [21, 11],
+            [7, 17],
+            [22, 12],
+            [8, 18],
+            [23, 13],
+            [9, 19],
+            [24, 14],
         ],
         "x": [
             [0, 22, 25, 10],
@@ -936,13 +942,20 @@ def get_skewb_color_from_alg(alg):
             [15, 18, 17, 16],
         ],
         "x2": [
-            [0, 25], [10, 22],
-            [1, 26], [11, 23],
-            [2, 27], [12, 20],
-            [3, 28], [13, 21],
-            [4, 29], [14, 24],
-            [5, 7], [6, 8],
-            [15, 17], [16, 18],
+            [0, 25],
+            [10, 22],
+            [1, 26],
+            [11, 23],
+            [2, 27],
+            [12, 20],
+            [3, 28],
+            [13, 21],
+            [4, 29],
+            [14, 24],
+            [5, 7],
+            [6, 8],
+            [15, 17],
+            [16, 18],
         ],
         "z": [
             [0, 16, 27, 8],
@@ -963,13 +976,20 @@ def get_skewb_color_from_alg(alg):
             [20, 21, 22, 23],
         ],
         "z2": [
-            [0, 27], [16, 8],
-            [1, 28], [17, 5],
-            [2, 25], [18, 6],
-            [3, 26], [15, 7],
-            [4, 29], [19, 9],
-            [10, 12], [11, 13],
-            [20, 22], [21, 23],
+            [0, 27],
+            [16, 8],
+            [1, 28],
+            [17, 5],
+            [2, 25],
+            [18, 6],
+            [3, 26],
+            [15, 7],
+            [4, 29],
+            [19, 9],
+            [10, 12],
+            [11, 13],
+            [20, 22],
+            [21, 23],
         ],
     }
     for m in converted:
@@ -986,5 +1006,64 @@ def get_skewb_color_from_alg(alg):
 def visualize_obl(case_name):
     if case_name == "Solved":
         return "bbbbbbbb-wwwwwwww"
-    else:
-        return "bbbbbbbw-wwwwwwwb"
+    case_row_map = {
+        "1E": "wbbbbbbb",
+        "2E Adj": "wbwbbbbb",
+        "2E Opp": "wbbbwbbb",
+        "3E": "wbwbbbwb",
+        "4E": "wbwbwbwb",
+        "1C": "bbbbbbbw",
+        "Tent": "bbbwwbbb",
+        "Whale": "bbwbbbbw",
+        "Axe": "wbbbwbbw",
+        "Gem": "wbbbbbww",
+        "Spill": "wwbbbbwb",
+        "Squid": "bbwbwbbw",
+        "Bunny": "wbwbwwbb",
+        "Thumb": "wbbbwwwb",
+        "2C Adj": "bwbbbbbw",
+        "2C Opp": "bbbwbbbw",
+        "Bird": "bwwbbbbw",
+        "Y": "bwbbwbbw",
+        "Dog": "bbbwwbbw",
+        "Shell": "wwbbbbbw",
+        "Cut": "bwbwwbwb",
+        "Kite": "bwwwwbbb",
+        "Fan": "bwwbbwwb",
+        "Tie": "wbbwbbww",
+        "Tree": "bbwwbwwb",
+        "3C": "bwbbbwbw",
+    }
+    def invert(colors):
+        return "".join("w" if c == "b" else "b" if c == "w" else c for c in colors)
+
+    def mirror(colors):
+        return colors[0] + colors[1:][::-1]
+    
+    def rotate(colors):
+        return colors[1:] + colors[0]
+
+    parts = [p.strip() for p in case_name.split("/")]
+    parts = [p[5:].strip() if p.startswith("Left ") else p.strip() for p in parts]
+    assert len(parts) == 2
+
+    top = parts[0]
+    rev_top = False
+    if top.startswith("Right "):
+        top = top[6:].strip()
+        rev_top = True
+    top_colors = case_row_map.get(top, "bbbbbbbb")
+    if rev_top:
+        top_colors = mirror(top_colors)
+    top_colors = rotate(top_colors)
+    
+    bottom = parts[1]
+    rev_bottom = False
+    if bottom.startswith("Right "):
+        bottom = bottom[6:].strip()
+        rev_bottom = True
+    bottom_colors = case_row_map.get(bottom, "bbbbbbbb")
+    if rev_bottom:
+        bottom_colors = mirror(bottom_colors)
+    bottom_colors = invert(bottom_colors)
+    return f"{top_colors}-{bottom_colors}"
