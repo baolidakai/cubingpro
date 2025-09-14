@@ -24,6 +24,40 @@ def index(request):
     return render(request, "index.html")
 
 
+def timer(request):
+    return render(request, "timer.html")
+
+
+def get_scramble(request):
+    cube_type = request.GET.get('cube_type')
+    scramble = generate_scramble(cube_type)
+    return JsonResponse({'scramble': scramble})
+
+def generate_scramble(cube_type):
+    if cube_type == '3x3x3':
+        moves = ["U", "D", "L", "R", "F", "B"]
+        modifiers = ["", "'", "2"]
+        scramble = []
+        last_move = ""
+        while len(scramble) < 20:
+            move = random.choice(moves)
+            if move != last_move:
+                scramble.append(move + random.choice(modifiers))
+                last_move = move
+        return ' '.join(scramble)
+
+    elif cube_type == '2x2x2':
+        moves = ["U", "D", "L", "R", "F", "B"]
+        modifiers = ["", "'", "2"]
+        scramble = [random.choice(moves) + random.choice(modifiers) for _ in range(11)]
+        return ' '.join(scramble)
+
+    elif cube_type == 'Clock':
+        return "UR6+ DR3- DL5+ UL6- U6+ R3- D5+ L6- ALL4+ y2"
+
+    return "Invalid cube type"
+
+
 def eg_intro(request):
     return render(request, "eg_intro.html")
 
@@ -207,6 +241,14 @@ def convert_ns_to_fcn(alg):
     return ' '.join(ans)
 
 
+def process_for_obl(data):
+    ans = []
+    for row in data:
+        row['viz'] = visualize_obl(row['case_name'])
+        ans.append(row)
+    return ans
+
+
 def process_for_skewb_intermediate(data):
     ans = []
     for row in data:
@@ -346,6 +388,12 @@ def cube_shape(request):
 
 def sq1_eo(request):
     return render(request, "sq1_eo.html")
+
+
+def sq1_obl(request):
+    table_data = read_csv_data('hello/algorithms/obl.csv', ';')
+    table_data = process_for_obl(table_data)
+    return render(request, "sq1_obl.html", {'table_data': json.dumps(table_data)})
 
 
 def geoguesser(request):

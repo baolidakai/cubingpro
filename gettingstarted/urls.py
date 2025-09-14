@@ -57,6 +57,8 @@ urlpatterns = [
     path("mini_comp", hello.views.mini_comp, name="mini_comp"),
     path("mini_comp_submit/", hello.views.submit_solution, name="submit_solution"),
     path("mini_comp_results/", hello.views.get_results, name="get_results"),
+    path("timer/", hello.views.timer, name="timer"),
+    path('get_scramble/', hello.views.get_scramble, name='get_scramble'),
     path("fmc/dr", hello.views.dr, name="dr"),
     path("3bld/memo", hello.views.memo, name="memo"),
     path("3bld/m2op", hello.views.m2op, name="m2op"),
@@ -83,6 +85,7 @@ urlpatterns = [
     path('fmc/theory', hello.views.fmc_theory, name='fmc_theory'),
     path('sq1/cube_shape/', hello.views.cube_shape, name='cube_shape'),
     path('sq1/eo/', hello.views.sq1_eo, name='sq1_eo'),
+    path('sq1/obl/', hello.views.sq1_obl, name='sq1_obl'),
     path('gemini-chat/', hello.views.chat_api, name='chat_api'),
     path('auto_interviewer/', hello.views.chat_view, name='chat_page'),
 ]

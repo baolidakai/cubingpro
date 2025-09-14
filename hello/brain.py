@@ -981,3 +981,10 @@ def get_skewb_color_from_alg(alg):
                 nxt[dst] = curr[src]
         curr = nxt[:]
     return "".join(curr)
+
+
+def visualize_obl(case_name):
+    if case_name == "Solved":
+        return "bbbbbbbb-wwwwwwww"
+    else:
+        return "bbbbbbbw-wwwwwwwb"

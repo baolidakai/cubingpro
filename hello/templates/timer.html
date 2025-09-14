@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>Rubik's Cube Timer</h1>
+
+<header>
+    <div class="topbar">
+        <div>
+            Cube type:
+            <select id="cube-selector">
+                <option value="3x3x3">3x3x3</option>
+                <option value="2x2x2">2x2x2</option>
+                <option value="Clock">Clock</option>
+            </select>
+        </div>
+        <div>PB: <span id="personal-best">--</span> seconds</div>
+    </div>
+    <div id="scramble">Select a cube type to get scramble</div>
+</header>
+
+<div id="timer">Whitespace to start inspection, start solving, and complete</div>
+
+<div id="history">
+    <table>
+        <thead>
+            <tr>
+                <th>Inspection</th>
+                <th>Solve</th>
+            </tr>
+        </thead>
+        <tbody id="history-body">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    let state = 0;  // 0 = idle, 1 = inspecting, 2 = solving
+    let t0, t1, t2;
+    let interval;
+    let lastSolveTime = null;
+
+    const timerDisplay = document.getElementById('timer');
+    const historyBody = document.getElementById('history-body');
+    const pbDisplay = document.getElementById('personal-best');
+    const scrambleDisplay = document.getElementById('scramble');
+    const cubeSelector = document.getElementById('cube-selector');
+
+    let currentScramble = "";
+
+    function updateTimerDisplay(startTime) {
+        interval = setInterval(() => {
+            const elapsed = (Date.now() - startTime) / 1000;
+            timerDisplay.textContent = elapsed.toFixed(2);
+        }, 100);
+    }
+
+    function stopTimer() {
+        clearInterval(interval);
+    }
+
+    function updateHistory(inspectionTime, solveTime) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${inspectionTime.toFixed(2)}</td><td>${solveTime.toFixed(2)}</td>`;
+        historyBody.insertBefore(row, historyBody.firstChild);
+
+        const history = JSON.parse(localStorage.getItem('solves') || '[]');
+        history.unshift({ inspection: inspectionTime, solve: solveTime });
+        localStorage.setItem('solves', JSON.stringify(history));
+
+        updatePB();
+    }
+
+    function updatePB() {
+        const history = JSON.parse(localStorage.getItem('solves') || '[]');
+        if (history.length === 0) return;
+        const best = Math.min(...history.map(e => e.solve));
+        pbDisplay.textContent = best.toFixed(2);
+    }
+
+    function loadHistory() {
+        const history = JSON.parse(localStorage.getItem('solves') || '[]');
+        historyBody.innerHTML = '';
+        history.forEach(({ inspection, solve }) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${inspection.toFixed(2)}</td><td>${solve.toFixed(2)}</td>`;
+            historyBody.appendChild(row);
+        });
+        updatePB();
+    }
+
+    function getScramble(cubeType) {
+        fetch(`/get_scramble/?cube_type=${cubeType}`)
+            .then(res => res.json())
+            .then(data => {
+                currentScramble = data.scramble;
+                scrambleDisplay.textContent = currentScramble;
+            });
+    }
+
+    document.body.addEventListener('keydown', (e) => {
+        if (e.code !== 'Space') return;
+
+        e.preventDefault();
+
+        if (state === 0) {
+            t0 = Date.now();
+            updateTimerDisplay(t0);
+            state = 1;
+        } else if (state === 1) {
+            stopTimer();
+            t1 = Date.now();
+            updateTimerDisplay(t1);
+            state = 2;
+        } else if (state === 2) {
+            stopTimer();
+            t2 = Date.now();
+
+            const inspectionTime = (t1 - t0) / 1000;
+            const solveTime = (t2 - t1) / 1000;
+
+            timerDisplay.textContent = `Inspection: ${inspectionTime.toFixed(2)}s, Solve: ${solveTime.toFixed(2)}s`;
+
+            updateHistory(inspectionTime, solveTime);
+
+            state = 0;
+
+            // Refresh scramble
+            getScramble(cubeSelector.value);
+        }
+    });
+
+    cubeSelector.addEventListener('change', () => {
+        getScramble(cubeSelector.value);
+    });
+
+    loadHistory();
+</script>
+
+{% endblock content %}

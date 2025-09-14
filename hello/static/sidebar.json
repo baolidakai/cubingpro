@@ -1,5 +1,16 @@
 [
   {
+    "category": "Timer",
+    "category_logo": "timer.png",
+    "items": [
+      {
+        "title": "Rubik's Cube Timer",
+        "url": "/timer",
+        "logo": "timer.png"
+      }
+    ]
+  },
+  {
     "category": "3x3x3 Rubik's Cube",
     "category_logo": "3x3x3.png",
     "items": [
@@ -168,6 +179,11 @@
         "title": "EO",
         "url": "/sq1/eo",
         "logo": "eo.png"
+      },
+      {
+        "title": "OBL",
+        "url": "/sq1/obl",
+        "logo": "sq1.jpg"
       }
     ]
   },

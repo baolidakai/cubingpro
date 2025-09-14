@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>
+    SQ-1 Orient Both Layers (OBL)
+</h1>
+
+<h2>
+    Introduction
+</h2>
+
+<p>
+    OBL stands for “Orient Both Layers”. Vandenbergh method consists of:
+</p>
+<ol>
+    <li>Cubeshape</li>
+    <li>Corner orientation</li>
+    <li>Edge orientation</li>
+    <li>Corner permutation</li>
+    <li>Edge permutation</li>
+</ol>
+
+<p>There is an advanced technique to combine corner and edge permutation, called PBL (permute both layers).</p>
+<p>This page introduces an advanced method which combines corner and edge orientation.</p>
+
+<p>Further reference: <a href="https://sq1obl.com/" target="_blank">SQ1 OBL Homepage</a></p>
+
+<h2>
+    Face mnemonics
+</h2>
+
+<p>
+    Each OBL case can be represented by a pair of face mnemonics, one for top layer and one for bottom layer.
+</p>
+<p>
+    Each face can be characterized by two numbers: number of white corners and number of white edges.
+</p>
+<p>
+    Due to symmetry, we may treat 0C4E and 4C0E as the same case.
+</p>
+<p>
+    Hence, there are following 12 categories:
+</p>
+<ol>
+    <li>0C1E</li>
+    <li>0C2E</li>
+    <li>0C3E</li>
+    <li>0C4E</li>
+    <li>1C0E</li>
+    <li>1C1E</li>
+    <li>1C2E</li>
+    <li>1C3E</li>
+    <li>2C0E</li>
+    <li>2C1E</li>
+    <li>2C2E</li>
+    <li>3C0E</li>
+</ol>
+<p>
+    If the top layer is 2C0E, then the bottom layer must be 2C0E as well. In general, only same categories can be paired.
+</p>
+<div style="display: flex; gap: 24px; flex-wrap: wrap;">
+    <div style="flex: 1 1 0;">
+        <table border="1" class="obl-table">
+            <tr>
+                <th>Case Category</th>
+                <th>Case Name</th>
+                <th>Case Visualization</th>
+            </tr>
+            <tr>
+                <td>0C3E</td>
+                <td>3E</td>
+                <td><img src="{% static 'obl/3e.jpg' %}" alt="0C3E"></td>
+            </tr>
+            <tr>
+                <td>0C4E</td>
+                <td>4E</td>
+                <td><img src="{% static 'obl/4e.jpg' %}" alt="0C4E"></td>
+            </tr>
+            <tr>
+                <td>1C0E</td>
+                <td>1C</td>
+                <td><img src="{% static 'obl/1c.jpg' %}" alt="1C0E"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">1C1E</td>
+                <td>Tent</td>
+                <td><img src="{% static 'obl/tent.jpg' %}" alt="1C1E Type A"></td>
+            </tr>
+            <tr>
+                <td>Whale</td>
+                <td><img src="{% static 'obl/whale.jpg' %}" alt="1C1E Type B"></td>
+            </tr>
+            <tr>
+                <td rowspan="4">1C2E</td>
+                <td>Axe</td>
+                <td><img src="{% static 'obl/axe.jpg' %}" alt="1C2E Type A"></td>
+            </tr>
+            <tr>
+                <td>Gem</td>
+                <td><img src="{% static 'obl/gem.jpg' %}" alt="1C2E Type B"></td>
+            </tr>
+            <tr>
+                <td>Spill</td>
+                <td><img src="{% static 'obl/spill.jpg' %}" alt="1C2E Type C"></td>
+            </tr>
+            <tr>
+                <td>Squid</td>
+                <td><img src="{% static 'obl/squid.jpg' %}" alt="1C2E Type D"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">1C3E</td>
+                <td>Bunny</td>
+                <td><img src="{% static 'obl/bunny.jpg' %}" alt="1C3E Type A"></td>
+            </tr>
+            <tr>
+                <td>Thumb</td>
+                <td><img src="{% static 'obl/thumb.jpg' %}" alt="1C3E Type B"></td>
+            </tr>
+        </table>
+    </div>
+    <div style="flex: 1 1 0;">
+        <table border="1" class="obl-table">
+            <tr>
+                <th>Case Category</th>
+                <th>Case Name</th>
+                <th>Case Visualization</th>
+            </tr>
+            <tr>
+                <td rowspan="2">2C0E</td>
+                <td>2C adj</td>
+                <td><img src="{% static 'obl/cadj.jpg' %}" alt="2C0E Type A"></td>
+            </tr>
+            <tr>
+                <td>2C diag</td>
+                <td><img src="{% static 'obl/copp.jpg' %}" alt="2C0E Type B"></td>
+            </tr>
+            <tr>
+                <td rowspan="4">2C1E</td>
+                <td>Bird</td>
+                <td><img src="{% static 'obl/bird.jpg' %}" alt="2C1E Type A"></td>
+            </tr>
+            <tr>
+                <td>Y</td>
+                <td><img src="{% static 'obl/hazard.jpg' %}" alt="2C1E Type B"></td>
+            </tr>
+            <tr>
+                <td>Dog</td>
+                <td><img src="{% static 'obl/dog.jpg' %}" alt="2C1E Type C"></td>
+            </tr>
+            <tr>
+                <td>Shell</td>
+                <td><img src="{% static 'obl/shell.jpg' %}" alt="2C1E Type D"></td>
+            </tr>
+            <tr>
+                <td rowspan="5">2C2E</td>
+                <td>Cut</td>
+                <td><img src="{% static 'obl/cut.jpg' %}" alt="2C2E Type A"></td>
+            </tr>
+            <tr>
+                <td>Kite</td>
+                <td><img src="{% static 'obl/kite.jpg' %}" alt="2C2E Type B"></td>
+            </tr>
+            <tr>
+                <td>Fan</td>
+                <td><img src="{% static 'obl/pinwheel.jpg' %}" alt="2C2E Type C"></td>
+            </tr>
+            <tr>
+                <td>Tie</td>
+                <td><img src="{% static 'obl/tie.jpg' %}" alt="2C2E Type D"></td>
+            </tr>
+            <tr>
+                <td>Tree</td>
+                <td><img src="{% static 'obl/tree.jpg' %}" alt="2C2E Type E"></td>
+            </tr>
+            <tr>
+                <td>3C0E</td>
+                <td>3C</td>
+                <td><img src="{% static 'obl/3c.jpg' %}" alt="3C0E"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<h2>
+    Tips
+</h2>
+
+<p>The best way to learn OBL is to start with 2 slash (meaning you make two slice moves to solve OBL) and 3 slash cases, and understand how to convert the case into a familiar one.</p>
+<p>This strategy is very similar to the cubeshape.</p>
+<p>During actual solve, if you don't recognize a case, you may always use the standard method. So it's very easy to practice OBL during regular solves.</p>
+<p>74 cases might sound like a lot, but similarly to cubeshape, each case has a parent case closer to fully solved, and they form a tree. Instead of memorizing the whole moves for each case, you only need to understand how to go to its parent.</p>
+
+<h2>
+    Cases
+</h2>
+
+<p>
+    There are 74 cases in total. We list all cases here with their full algorithms and the linkage to parent.
+</p>
+<p>During learning, you may filter by number of slashes away. You may also filter cases by E/C category so you can focus on one of the categories.</p>
+<p>When you want to deep dive a case, we show a special view which shows you all the way from the current case to each parent cases.</p>
+
+<table id="obl-cases-table" class="obl-table">
+    <thead>
+        <tr>
+            <th>Case Number</th>
+            <th>Case Category</th>
+            <th>Case Name</th>
+            <th>Image</th>
+            <th>Algorithm</th>
+            <th>Parent</th>
+            <th>Parent Number</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+    const table_data = JSON.parse('{{ table_data|safe }}');
+    const tbody = document.querySelector('#obl-cases-table tbody');
+    table_data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${row.case_number}</td>
+            <td>${row.case_category}</td>
+            <td>${row.case_name}</td>
+            <td><canvas id="square-${row.viz}" width="100" height="200"></canvas></td>
+            <td>${row.alg}</td>
+            <td>${row.parent}</td>
+            <td>${row.parent_number}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // Find all canvas elements with id starting with "square-"
+    document.querySelectorAll('canvas[id^="square-"]').forEach(canvas => {
+        const id = canvas.id;
+        // Expect id format: square-<pattern1>-<pattern2>
+        const match = id.match(/^square-([a-z0-9]+)-([a-z0-9]+)$/);
+        if (match) {
+            const pattern1 = match[1];
+            const pattern2 = match[2];
+            drawTwoSquareShapes(id, "21212121", pattern1, "12121212", pattern2, align = true);
+        }
+    });
+</script>
+
+{% endblock content %}

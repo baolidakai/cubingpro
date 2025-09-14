@@ -1,5 +1,5 @@
 // Given a string of 1 and 2, with sum of 12, draw the shape.
-const drawSquareShape = (canvas_id, one_two_string, color_string = "", y_offset = 0) => {
+const drawSquareShape = (canvas_id, one_two_string, color_string = "", y_offset = 0, start_offset = 0) => {
     const canvas = document.getElementById(canvas_id);
     const ctx = canvas.getContext("2d");
 
@@ -58,11 +58,11 @@ const drawSquareShape = (canvas_id, one_two_string, color_string = "", y_offset 
 
     const colorMap = {
         w: "white",
-        b: "black",
+        b: "#222", // slightly lighter than pure black
         y: "yellow"
     };
 
-    let start = 0;
+    let start = start_offset;
     for (let i = 0; i < one_two_string.length; i++) {
         const c = one_two_string.charAt(i);
         const color = color_string ? colorMap[color_string.charAt(i)] : "white";
@@ -75,7 +75,7 @@ const drawSquareShape = (canvas_id, one_two_string, color_string = "", y_offset 
     }
 };
 
-const drawTwoSquareShapes = (canvas_id, shape1_string, shape1_color, shape2_string, shape2_color) => {
-    drawSquareShape(canvas_id, shape1_string, shape1_color, 0);
-    drawSquareShape(canvas_id, shape2_string, shape2_color, 100);
+const drawTwoSquareShapes = (canvas_id, shape1_string, shape1_color, shape2_string, shape2_color, align = false) => {
+    drawSquareShape(canvas_id, shape1_string, shape1_color, 0, align ? 0.5 : 0);
+    drawSquareShape(canvas_id, shape2_string, shape2_color, 100, align ? -0.5 : 0);
 };

@@ -877,3 +877,65 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
 #lang-toggle button:not(.active):hover {
   background-color: #e0e0e0;
 }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #333;
+}
+
+#cube-selector {
+  margin-left: 10px;
+}
+
+#scramble {
+  text-align: center;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+#timer {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+}
+
+#history {
+  position: absolute;
+  left: 10px;
+  top: 100px;
+  bottom: 10px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  font-size: 0.9em;
+  max-height: 70vh;
+}
+
+.obl-table {
+    border-collapse: collapse;
+    /* width: 100%; */
+    margin: 24px 0;
+    font-size: 1rem;
+    background: #fafafa;
+}
+.obl-table th, .obl-table td {
+    border: 1px solid #bbb;
+    padding: 8px 12px;
+    text-align: center;
+}
+.obl-table th {
+    background: #e0e0e0;
+    font-weight: bold;
+}
+.obl-table img {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    background: #fff;
+    padding: 4px;
+    width: 120px;
+    width: 120px;
+}
