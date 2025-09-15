@@ -1,17 +1,58 @@
-case_number;case_category;case_name;alg;parent;parent_number;memo
+case_number;case_category;case_name;alg;parent;memo
 0;0C0E;Solved;;N/A;;
-1;2C2E;Kite / Kite;0,-1/0,1;Solved;0;intuitive
-2;2C2E;Mirror Kite / Mirror Kite;1,0/-1,0;Solved;0;intuitive
-3;2C0E;2C Diag / 2C Diag;1,0/2,2/0,1;Kite / Kite;1;2C is two move
-4;0C2E;2E Opp / 2E Opp;1,0/-1,-1/0,1;Kite / Kite;1;M2
-5;2C2E;Fan / Fan;0,-1/-3,-3/0,1;Kite / Kite;1;Fan is two move
-6;1C1E;Tent / Tent;3,-4/-3,0/0,1;Kite / Kite;1;Tent is two move
-7;1C3E;Thumb / Thumb;1,6/-4,-1/0,1;Kite / Kite;1;Thumb is two move
-8;1C3E;Mirror Fan / Mirror Fan;1,0/-3,-3/-1,0;Mirror Kite / Mirror Kite;2;Fan is two move
-9;1C1E;Mirror Tent / Mirror Tent;1,6/-3,0/-1,0;Mirror Kite / Mirror Kite;2;Tent is two move
-10;1C3E;Mirror Thumb / Mirror Thumb;6,-1/4,1/-1,0;Mirror Kite / Mirror Kite;2;Thumb is two move
-11;1C2E;Gem / Axe;4,6/-3,0/2,-1/0,1;Tent / Tent;6;Convert to tent
-12;1C2E;Axe / Gem;-5,3/2,-1/-3,0/0,1;Tent / Tent;6;Convert to tent
-13;1C2E;Gem / Mirror Axe;6,-1/1,-2/0,3/-1,0;Mirror Tent / Mirror Tent;9;Convert to tent
-14;1C2E;Mirror Axe / Gem;0,5/-2,1/3,0/-1,0;Mirror Tent / Mirror Tent;9;Convert to tent
-15;1C2E;Axe / Spill;6,-1/0,-3/1,4/-1,0;Mirror Thumb / Mirror Thumb;10;Convert to thumb
+1;2C2E;Kite / Kite;0,-1/0,1;Solved;intuitive
+2;2C2E;Mirror Kite / Mirror Kite;1,0/-1,0;Solved;intuitive
+3;2C0E;2C Diag / 2C Diag;1,0/2,2/0,1;Kite / Kite;2C is two move
+4;0C2E;2E Opp / 2E Opp;1,0/-1,-1/0,1;Kite / Kite;M2
+5;2C2E;Fan / Fan;0,-1/-3,-3/0,1;Kite / Kite;Fan is two move
+6;1C1E;Tent / Tent;3,-4/-3,0/0,1;Kite / Kite;Tent is two move
+7;1C3E;Thumb / Thumb;1,6/-4,-1/0,1;Kite / Kite;Thumb is two move
+8;1C3E;Mirror Fan / Mirror Fan;1,0/-3,-3/-1,0;Mirror Kite / Mirror Kite;Fan is two move
+9;1C1E;Mirror Tent / Mirror Tent;1,6/-3,0/-1,0;Mirror Kite / Mirror Kite;Tent is two move
+10;1C3E;Mirror Thumb / Mirror Thumb;6,-1/4,1/-1,0;Mirror Kite / Mirror Kite;Thumb is two move
+11;1C2E;Gem / Axe;4,6/-3,0/2,-1/0,1;Tent / Tent;Convert to tent
+12;1C2E;Axe / Gem;-5,3/2,-1/-3,0/0,1;Tent / Tent;Convert to tent
+13;1C2E;Gem / Mirror Axe;6,-1/1,-2/0,3/-1,0;Mirror Tent / Mirror Tent;Convert to tent
+14;1C2E;Mirror Axe / Gem;0,5/-2,1/3,0/-1,0;Mirror Tent / Mirror Tent;Convert to tent
+15;1C2E;Axe / Spill;6,-1/0,-3/1,4/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+16;1C2E;Spill / Axe;0,5/-3,0/4,1/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+17;1C2E;Mirror Axe / Mirror Spill;1,6/0,3/-1,-4/0,1;Thumb / Thumb;Convert to thumb
+18;1C2E;Mirror Spill / Mirror Axe;-5,0/3,0/-4,-1/0,1;Thumb / Thumb;Convert to thumb
+19;2C1E;Bird / Mirror Dog;4,3/0,-3/-1,-4/0,1;Thumb / Thumb;Convert to thumb
+20;2C1E;Mirror Dog / Bird;4,3/-3,0/-4,-1/0,1;Thumb / Thumb;Convert to thumb
+21;2C1E;Mirror Bird / Dog;3,2/0,3/1,4/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+22;2C1E;Dog / Mirror Bird;3,2/3,0/4,1/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+23;1C3E;Bunny / Bunny;-5,6/3,-3/-4,-1/0,1;Thumb / Thumb;Convert to thumb
+24;1C3E;Mirror Bunny / Mirror Bunny;0,-1/-3,3/4,1/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+25;2C2E;Cut / Cut;6,5/-2,4/-1,-1/0,1;2E Opp / 2E Opp;One move to M2
+26;2C2E;Mirror Cut / Mirror Cut;1,0/-3,3/-1,-1/0,1;2E Opp / 2E Opp;One move to M2
+27;2C2E;Cut / Mirror Kite;-2,0/-1,-1/-3,0/0,1;Tent / Tent;Convert to tent
+28;2C2E;Mirror Kite / Cut;1,-3/-1,-1/0,-3/0,1;Tent / Tent;Convert to tent
+29;2C2E;Mirror Cut / Kite;-3,5/1,1/3,0/-1,0;Mirror Tent / Mirror Tent;Convert to tent
+30;2C2E;Kite / Mirror Cut;0,2/1,1/0,3/-1,0;Mirror Tent / Mirror Tent;Convert to tent
+31;2C2E;Kite / Fan;0,-1/0,3/0,3/0,1;Tent / Tent;CO
+32;2C2E;Fan / Kite;3,-1/-3,0/-3,0/0,1;Tent / Tent;CO
+33;2C2E;Mirror Kite / Mirror Fan;1,0/0,3/0,3/-1,0;Mirror Tent / Mirror Tent;CO
+34;2C2E;Mirror Fan / Mirror Kite;1,0/-3,0/-3,0/-1,0;Mirror Tent / Mirror Tent;CO
+35;2C1E;Dog / Shell;1,0/3,0/2,-1/0,1;Tent / Tent;Block building CO
+36;2C1E;Shell / Dog;1,0/-1,2/0,3/0,1;Tent / Tent;Block building CO
+37;2C1E;Mirror Dog / Shell;6,-1/-2,1/-3,0/-1,0;Mirror Tent / Mirror Tent;Block building CO
+38;2C1E;Shell / Mirror Dog;0,5/1,-2/0,-3/-1,0;Mirror Tent / Mirror Tent;Block building CO
+39;1C1E;Tent / Mirror Whale;1,0/-1,-4/1,4/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+40;1C1E;Mirror Whale / Tent;1,0/-4,-1/4,1/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+41;1C1E;Mirror Tent / Whale;0,-1/4,1/-1,-4/0,1;Thumb / Thumb;Convert to thumb
+42;1C1E;Whale / Mirror Tent;0,-1/1,4/-4,-1/0,1;Thumb / Thumb;Convert to thumb
+43;1C1E;Whale / Whale;3,2/-5,1/3,0/-1,0;Mirror Tent / Mirror Tent;Convert to tent
+44;1C1E;Mirror Whale / Mirror Whale;4,3/5,-1/-3,0/0,1;Tent / Tent;Convert to tent
+45;2C2E;Same Tie / Tie;-2,3/0,3/2,2/0,1;2C Diag / 2C Diag;Convert to 2C diag
+46;2C2E;Tie / Tree;-2,-3/2,-1/4,1/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+47;2C2E;Tree / Tie;-2,-3/-1,2/1,4/-1,0;Mirror Thumb / Mirror Thumb;Convert to thumb
+48;2C2E;Same Tree / Tree;4,-3/-3,0/-1,-1/0,1;2E Opp / 2E Opp;One move to M2
+49;0C4E;4E / 4E;1,0/-1,-1/-2,4/-1,-1/0,1;Cut / Cut;Standard EO
+50;2C0E;2C Adj / 2C Adj;-2,3/-3,0/-1,-1/-3,0/0,1;Cut / Mirror Kite;Convert to Cut / Mirror
+51;0C2E;2E Adj / 2E Adj;-5,0/3,0/-1,-1/-3,0/0,1;Cut / Mirror Kite;Standard EO
+52;1C2E;Gem / Gem;-2,6/-4,-1/-2,1/-3,0/-1,0;Mirror Dog / Shell;Convert to Mirror Dog / Shell
+53;1C2E;Gem / Spill;-5,3/2,-1/4,1/-4,-1/0,1;Mirror Whale / Mirror Tent;
+54;1C2E;Gem / Squid;-3,2/-3,0/0,3/1,1/-1,0;Same Tree / Tree;CO into M2
+55;2C1E;Y / Bird;0,2/0,3/1,4/-4,-1/0,1;Whale / Mirror Tent;
+56;2C1E;Y / Dog;-3,-1/0,-3/-3,3/4,1/-1,0;Mirror Bunny / Mirror Bunny;Why dog? To catch bunnies!

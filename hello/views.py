@@ -250,6 +250,7 @@ def process_for_obl(data):
         row['slash_count'] = row['alg'].count('/')
         row['case_name'] = clean(row['case_name'])
         ans.append(row)
+    ans.sort(key=lambda x: (x['slash_count'], x['case_category'], int(x['case_number'])))
     return ans
 
 

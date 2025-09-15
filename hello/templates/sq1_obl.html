@@ -220,20 +220,21 @@
 <p>During learning, you may filter by number of slashes away. You may also filter cases by E/C category so you can focus
     on one of the categories.</p>
 <p>When you want to deep dive a case, we show a special view which shows you all the way from the current case to each
-    parent cases. We also show a list of immediate children of this case for learners trying to build up cases.</p>
+    parent cases.</p>
 <p>When we use a "Mirror &lt;Case Name&gt;", we refer to the pattern mirroring that case.</p>
+<p>Special note for Tie and Tree: 2C2E case is special because if flipping all its color it's also 2C2E. Therefore, if you get a tree on top side, it's possible you can get a tree of exactly the same color, or of the opposite color. We will differentiate those two cases with Same Tree / Tree or Tree / Tree or Same Tie / Tree. It's important to understand this differentiation during learning, knowing the differentiation and understand visually is more important than understanding the term "Same".</p>
+<p>For up to 3 slashes cases, we present all cases including left/right mirrors (e.g. Fan / Kite and Mirror Fan / Mirror Kite) and top/bottom mirrors (e.g. Kite / Fan and Fan / Kite are both shown).</p>
+<p>For cases from 4 slashes, we only show one case for each left/right. The rest should be derived intuitively.</p>
 
 <div class="obl-table-container">
     <table id="obl-cases-table" class="obl-table">
         <thead>
             <tr>
-                <th>Case Number</th>
                 <th>Case Category</th>
                 <th>Case Name</th>
                 <th>Image</th>
                 <th>Algorithm</th>
                 <th>Parent</th>
-                <th>Parent Number</th>
                 <th>Memo</th>
             </tr>
         </thead>
@@ -249,13 +250,11 @@
         tr.setAttribute('data-slash-count', row.slash_count);
         tr.setAttribute('data-case-category', row.case_category);
         tr.innerHTML = `
-            <td>${row.case_number}</td>
             <td>${row.case_category}</td>
             <td>${row.case_name}</td>
             <td><canvas id="square-${row.viz}" width="100" height="200"></canvas></td>
             <td>${row.alg}</td>
             <td>${row.parent}</td>
-            <td>${row.parent_number}</td>
             <td>${row.memo}</td>
         `;
         tbody.appendChild(tr);

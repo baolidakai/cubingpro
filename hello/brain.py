@@ -1033,6 +1033,8 @@ def visualize_obl(case_name):
         "Tie": "wbbwbbww",
         "Tree": "bbwwbwwb",
         "3C": "bwbbbwbw",
+        "Same Tie": "bwwbwwbb",
+        "Same Tree": "wwbbwbbw",
     }
     def invert(colors):
         return "".join("w" if c == "b" else "b" if c == "w" else c for c in colors)
