@@ -1,4 +1,17 @@
-case_number;case_category;case_name;alg;parent;parent_number
-0;0C0E;Solved;;N/A;-1
-1;2C2E;Left Kite / Left Kite;0,-1/0,1;Solved;0
-2;2C2E;Right Kite / Right Kite;1,0/-1,0;Solved;0
+case_number;case_category;case_name;alg;parent;parent_number;memo
+0;0C0E;Solved;;N/A;;
+1;2C2E;Kite / Kite;0,-1/0,1;Solved;0;intuitive
+2;2C2E;Mirror Kite / Mirror Kite;1,0/-1,0;Solved;0;intuitive
+3;2C0E;2C Diag / 2C Diag;1,0/2,2/0,1;Kite / Kite;1;2C is two move
+4;0C2E;2E Opp / 2E Opp;1,0/-1,-1/0,1;Kite / Kite;1;M2
+5;2C2E;Fan / Fan;0,-1/-3,-3/0,1;Kite / Kite;1;Fan is two move
+6;1C1E;Tent / Tent;3,-4/-3,0/0,1;Kite / Kite;1;Tent is two move
+7;1C3E;Thumb / Thumb;1,6/-4,-1/0,1;Kite / Kite;1;Thumb is two move
+8;1C3E;Mirror Fan / Mirror Fan;1,0/-3,-3/-1,0;Mirror Kite / Mirror Kite;2;Fan is two move
+9;1C1E;Mirror Tent / Mirror Tent;1,6/-3,0/-1,0;Mirror Kite / Mirror Kite;2;Tent is two move
+10;1C3E;Mirror Thumb / Mirror Thumb;6,-1/4,1/-1,0;Mirror Kite / Mirror Kite;2;Thumb is two move
+11;1C2E;Gem / Axe;4,6/-3,0/2,-1/0,1;Tent / Tent;6;Convert to tent
+12;1C2E;Axe / Gem;-5,3/2,-1/-3,0/0,1;Tent / Tent;6;Convert to tent
+13;1C2E;Gem / Mirror Axe;6,-1/1,-2/0,3/-1,0;Mirror Tent / Mirror Tent;9;Convert to tent
+14;1C2E;Mirror Axe / Gem;0,5/-2,1/3,0/-1,0;Mirror Tent / Mirror Tent;9;Convert to tent
+15;1C2E;Axe / Spill;6,-1/0,-3/1,4/-1,0;Mirror Thumb / Mirror Thumb;10;Convert to thumb

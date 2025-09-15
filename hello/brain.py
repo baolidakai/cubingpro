@@ -1022,7 +1022,7 @@ def visualize_obl(case_name):
         "Bunny": "wbwbwwbb",
         "Thumb": "wbbbwwwb",
         "2C Adj": "bwbbbbbw",
-        "2C Opp": "bbbwbbbw",
+        "2C Diag": "bbbwbbbw",
         "Bird": "bwwbbbbw",
         "Y": "bwbbwbbw",
         "Dog": "bbbwwbbw",
@@ -1044,12 +1044,11 @@ def visualize_obl(case_name):
         return colors[1:] + colors[0]
 
     parts = [p.strip() for p in case_name.split("/")]
-    parts = [p[5:].strip() if p.startswith("Left ") else p.strip() for p in parts]
     assert len(parts) == 2
 
     top = parts[0]
     rev_top = False
-    if top.startswith("Right "):
+    if top.startswith("Mirror "):
         top = top[6:].strip()
         rev_top = True
     top_colors = case_row_map.get(top, "bbbbbbbb")
@@ -1059,7 +1058,7 @@ def visualize_obl(case_name):
     
     bottom = parts[1]
     rev_bottom = False
-    if bottom.startswith("Right "):
+    if bottom.startswith("Mirror "):
         bottom = bottom[6:].strip()
         rev_bottom = True
     bottom_colors = case_row_map.get(bottom, "bbbbbbbb")

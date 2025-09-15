@@ -220,7 +220,8 @@
 <p>During learning, you may filter by number of slashes away. You may also filter cases by E/C category so you can focus
     on one of the categories.</p>
 <p>When you want to deep dive a case, we show a special view which shows you all the way from the current case to each
-    parent cases.</p>
+    parent cases. We also show a list of immediate children of this case for learners trying to build up cases.</p>
+<p>When we use a "Mirror &lt;Case Name&gt;", we refer to the pattern mirroring that case.</p>
 
 <div class="obl-table-container">
     <table id="obl-cases-table" class="obl-table">
@@ -233,6 +234,7 @@
                 <th>Algorithm</th>
                 <th>Parent</th>
                 <th>Parent Number</th>
+                <th>Memo</th>
             </tr>
         </thead>
         <tbody>
@@ -254,6 +256,7 @@
             <td>${row.alg}</td>
             <td>${row.parent}</td>
             <td>${row.parent_number}</td>
+            <td>${row.memo}</td>
         `;
         tbody.appendChild(tr);
     });
@@ -275,7 +278,6 @@
   <div class="filter-group">
     <strong>Slash Count</strong>
     <div class="checkboxes" id="slash-count-filter">
-      <!-- Checkboxes 0–7 -->
       <label><input type="checkbox" value="0" checked> 0</label>
       <label><input type="checkbox" value="1" checked> 1</label>
       <label><input type="checkbox" value="2" checked> 2</label>
@@ -292,7 +294,7 @@
   <div class="filter-group">
     <strong>Case Category</strong>
     <div class="checkboxes" id="case-category-filter">
-      <!-- 12 Case Category Checkboxes -->
+      <label><input type="checkbox" value="0C0E" checked> 0C0E</label>
       <label><input type="checkbox" value="0C1E" checked> 0C1E</label>
       <label><input type="checkbox" value="0C2E" checked> 0C2E</label>
       <label><input type="checkbox" value="0C3E" checked> 0C3E</label>

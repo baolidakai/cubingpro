@@ -243,9 +243,12 @@ def convert_ns_to_fcn(alg):
 
 def process_for_obl(data):
     ans = []
+    def clean(case_name):
+        return case_name.replace('Left ', '').replace('Right ', 'Mirror ')
     for row in data:
         row['viz'] = visualize_obl(row['case_name'])
         row['slash_count'] = row['alg'].count('/')
+        row['case_name'] = clean(row['case_name'])
         ans.append(row)
     return ans
 
