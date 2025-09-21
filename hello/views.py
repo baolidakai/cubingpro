@@ -409,6 +409,10 @@ def u2r2(request):
     return render(request, "u2r2.html")
 
 
+def bld5(request):
+    return render(request, "bld5.html")
+
+
 def exec_trainer(request):
     return render(request, "exec_trainer.html")
 

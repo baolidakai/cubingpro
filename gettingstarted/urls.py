@@ -64,6 +64,7 @@ urlpatterns = [
     path("3bld/m2op", hello.views.m2op, name="m2op"),
     path("3bld/orozco", hello.views.orozco, name="orozco"),
     path("4bld/u2r2", hello.views.u2r2, name="u2r2"),
+    path("5bld/u2r2", hello.views.bld5, name="bld5"),
     path("3bld/exec_trainer", hello.views.exec_trainer, name="exec_trainer"),
     path("3bld/exec_trainer/generate_3_cycle_scramble", hello.views.generate_3_cycle_scramble, name="generate_3_cycle_scramble"),
     path("big_cube/yau", hello.views.yau, name="yau"),

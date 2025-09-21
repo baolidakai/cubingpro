@@ -20,26 +20,6 @@
         "logo": "solver.png"
       },
       {
-        "title": "3x3x3 blindfolded memo",
-        "url": "/3bld/memo",
-        "logo": "3bld.png"
-      },
-      {
-        "title": "3x3x3 blindfolded exec trainer",
-        "url": "/3bld/exec_trainer",
-        "logo": "3bld.png"
-      },
-      {
-        "title": "3x3x3 blindfolded with M2 and OP",
-        "url": "/3bld/m2op",
-        "logo": "3bld.png"
-      },
-      {
-        "title": "3x3x3 blindfolded with Orozco",
-        "url": "/3bld/orozco",
-        "logo": "3bld.png"
-      },
-      {
         "title": "FMC Domino Reduction",
         "url": "/fmc/dr",
         "logo": "fmc.jpg"
@@ -85,11 +65,42 @@
         "title": "Yau method",
         "url": "/big_cube/yau",
         "logo": "yau.png"
+      }
+    ]
+  },
+  {
+    "category": "Blindfolded",
+    "category_logo": "3bld.png",
+    "items": [
+      {
+        "title": "3x3x3 blindfolded memo",
+        "url": "/3bld/memo",
+        "logo": "3bld.png"
+      },
+      {
+        "title": "3x3x3 blindfolded exec trainer",
+        "url": "/3bld/exec_trainer",
+        "logo": "3bld.png"
+      },
+      {
+        "title": "3x3x3 blindfolded with M2 and OP",
+        "url": "/3bld/m2op",
+        "logo": "3bld.png"
+      },
+      {
+        "title": "3x3x3 blindfolded with Orozco",
+        "url": "/3bld/orozco",
+        "logo": "3bld.png"
       },
       {
         "title": "4x4x4 blindfolded with U2 and r2",
         "url": "/4bld/u2r2",
         "logo": "4bld.jpg"
+      },
+      {
+        "title": "5x5x5 blindfolded with U2 and r2",
+        "url": "/5bld/u2r2",
+        "logo": "5bld.png"
       }
     ]
   },

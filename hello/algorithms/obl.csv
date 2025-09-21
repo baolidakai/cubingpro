@@ -56,3 +56,13 @@ case_number;case_category;case_name;alg;parent;memo
 54;1C2E;Gem / Squid;-3,2/-3,0/0,3/1,1/-1,0;Same Tree / Tree;CO into M2
 55;2C1E;Y / Bird;0,2/0,3/1,4/-4,-1/0,1;Whale / Mirror Tent;
 56;2C1E;Y / Dog;-3,-1/0,-3/-3,3/4,1/-1,0;Mirror Bunny / Mirror Bunny;Why dog? To catch bunnies!
+57;2C1E;Y / Shell;0,-1/-2,1/3,0/-4,-1/0,1;Mirror Spill / Mirror Axe;
+58;1C2E;Axe / Mirror Spill;0,2/1,1/-4,-1/-3,0/0,1;Mirror Dog / Shell;
+59;1C3E;Axe / Squid;6,-4/0,-3/1,-2/-1,-4/0,1;Tree / Tie;Use an axe to cut a squid, on the tree.
+60;2C1E;Bird / Dog;3,2/-2,-2/-3,0/2,-1/0,1;Gem / Axe;
+61;2C1E;Bird / Mirror Bird;-5,3/-3,0/2,-1/-3,0/0,1;Axe / Gem;
+62;2C1E;Bird / Shell;-5,0/3,0/-4,-1/4,1/-1,0;Mirror Whale / Tent;See a bird and a shell, near a whale.
+63;1C3E;Bunny / Thumb;-2,6/-4,-1/-5,1/3,0/-1,0;Whale / Whale;
+64;1C3E;Bunny / Mirror Thumb;1,0/3,0/-3,0/-4,-1/0,1;Dog / Bird;
+65;2C2E;Cut / Fan;1,0/-1,-4/-3,3/4,1/-1,0;Mirror Bunny / Mirror Bunny;
+66;2C2E;Cut / Tie;3,-4/1,4/0,-3/-4,-1/0,1;Mirror Dog / Bird;
