@@ -3,7 +3,7 @@ scramble;operations;change_pins;annotation;paragraph
 <p>Scramble: UR5+ DR3+ DL3+ UL2+ U5- R1+ D5+ L1+ ALL1- y2 U3- R2+ D3+ L4- ALL1+</p>
 "
 5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;;;UL,L,DL,U,C,D,UR,R,DR,ul,l,dl,u,c,d,ur,r,dr;"
-Memorize 4 numbers using aforementioned arithmetics applying modulo 12.
+Memorize 6 numbers using aforementioned arithmetics applying modulo 12.
 "
 5, 3, 3, 2, 7, 1, 5, 1, 11, 9, 2, 3, 8, 1;-1,2,,,,,,,,,,,,;0,1,0,0;-1,,,,,,2,,,,,,,,,,,;"
 <ol>
