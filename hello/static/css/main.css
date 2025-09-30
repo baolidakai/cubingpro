@@ -73,6 +73,8 @@ p {
   background: #fff;
   width: 100%;
   outline: none !important;
+  position: fixed;
+  z-index: 9999;
 }
 
 .sidebar-menu.active {
