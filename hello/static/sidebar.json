@@ -195,7 +195,18 @@
         "title": "OBL",
         "url": "/sq1/obl",
         "logo": "sq1.jpg"
+      },
+      {
+        "title": "SQ1 Solver",
+        "url": "/sq1/solver",
+        "logo": "sq1.jpg"
+      },
+      {
+        "title": "SQ1 Trainer",
+        "url": "/sq1/trainer",
+        "logo": "sq1.jpg"
       }
+
     ]
   },
   {

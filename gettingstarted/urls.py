@@ -87,6 +87,8 @@ urlpatterns = [
     path('sq1/cube_shape/', hello.views.cube_shape, name='cube_shape'),
     path('sq1/eo/', hello.views.sq1_eo, name='sq1_eo'),
     path('sq1/obl/', hello.views.sq1_obl, name='sq1_obl'),
+    path('sq1/trainer/', hello.views.sq1_trainer, name='sq1_trainer'),
+    path('sq1/solver/', hello.views.sq1_solver, name='sq1_solver'),
     path('gemini-chat/', hello.views.chat_api, name='chat_api'),
     path('auto_interviewer/', hello.views.chat_view, name='chat_page'),
 ]

@@ -1,5 +1,6 @@
 from twophase import solver as sv
 from .models import SolverFeedback
+from .sq1 import jaap as sq1_sv
 
 import json
 import re
@@ -1068,3 +1069,7 @@ def visualize_obl(case_name):
         bottom_colors = mirror(bottom_colors)
     bottom_colors = invert(bottom_colors)
     return f"{top_colors}-{bottom_colors}"
+
+
+def solve_sq1(state):
+    sq1_sv.solve(state)

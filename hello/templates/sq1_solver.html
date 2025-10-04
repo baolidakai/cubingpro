@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>Square-1 Solver</h1>
+<p>Enter a Square-1 state below and click "Solve" to see the solution.</p>
+
+<form method="post" action="{% url 'sq1_solver' %}">
+    {% csrf_token %}
+    <label for="sq1-state">Square-1 State:</label>
+    <input type="text" id="sq1-state" name="sq1_state" placeholder="A1B2C4D38E6F7G5H-" style="flex: 1; min-width: 300px;" value="{{ sq1_state|default:'A1B2C4D38E6F7G5H-' }}">
+    <button type="submit" class="big-button">Solve</button>
+</form>
+
+{% if solution %}
+    <div style="margin-top: 1em;">
+        <h2>Solution:</h2>
+        <pre>{{ solution }}</pre>
+    </div>
+{% endif %}
+
+<div style="margin-bottom: 1em;">
+    <h2>Instructions:</h2>
+    <p>
+        <strong>A1B2C3D45E6F7G8H-</strong> is the solved position. Letters represent corners, numbers the edges, starting from the front seam clockwise around the top layer and then clockwise around the bottom layer. Optionally, the middle layer is denoted by a <strong>-</strong> for a square and <strong>/</strong> for a kite shape.
+    </p>
+    <p>The solved state looks like:</p>
+    <h3>Top Layer</h3>
+    <pre>
+--------------
+| \       /  |
+|B \  2  / C |
+|___\   /____|
+| 1        3 |
+|___/   \____|
+|A /  4  \ D |
+| /       \  |
+--------------
+    </pre>
+    <h3>Bottom Layer</h3>
+    <pre>
+--------------
+| \       /  |
+|H \  5  / E |
+|___\   /____|
+| 8        6 |
+|___/   \____|
+|G /  7  \ F |
+| /       \  |
+--------------
+    </pre>
+    <p>
+        Example: Solves adjacent edge swap on both sides: <code>python jaap.py A1B2C4D38E6F7G5H-</code>
+    </p>
+    <p>
+        Solves the parity: <code>python jaap.py A1B2C4D35E6F7G8H/</code>
+    </p>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        // Only auto-submit if there's no solution yet (first load)
+        const solution = "{{ solution|escapejs }}";
+        const solutionPresent = solution.trim().length > 0;
+        if (!solutionPresent) {
+            document.getElementById('sq1-form').submit();
+        }
+    });
+</script>
+
+{% endblock content %}

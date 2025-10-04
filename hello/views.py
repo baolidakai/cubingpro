@@ -550,6 +550,24 @@ def view_page(request, page_id):
     return render(request, 'view.html', {'page': page, 'html': html})
 
 
+def sq1_trainer(request):
+    return render(request, 'sq1_trainer.html', {})
+
+
+@csrf_exempt
+def sq1_solver(request):
+    solution = ''
+    sq1_state = ''
+    if request.method == 'POST':
+        sq1_state = request.POST.get('sq1_state', '')
+        try:
+            # Use your Square-1 solver from brain.py (imported as sq1_solver)
+            solution = sq1_sv.solve(sq1_state)
+        except Exception as e:
+            solution = f"Error: {str(e)}"
+    return render(request, 'sq1_solver.html', {'solution': solution, 'sq1_state': sq1_state})
+
+
 @csrf_exempt
 def api_solver(request):
     if request.method == 'POST':

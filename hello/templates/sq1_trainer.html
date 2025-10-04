@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>Square-1 Trainer</h1>
+<p>Enter a Square-1 state below and click "Solve" to see the solution.</p>
+<form method="post" action="{% url 'sq1_solver' %}"></form>
+    {% csrf_token %}
+    <label for="sq1-state">Square-1 State:</label>
+    <input type="text" id="sq1-state" name="sq1_state" placeholder="e.g. (1,0)/(-3,0)">
+    <button type="submit" class="big-button">Solve</button>
+</form>
+
+{% if solution %}
+    <div style="margin-top: 1em;">
+        <h2>Solution:</h2>
+        <pre>{{ solution }}</pre>
+    </div>
+{% endif %}
+
+{% endblock content %}
