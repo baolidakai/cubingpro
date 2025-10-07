@@ -106,7 +106,8 @@ def check_3x3x3_solved_from_scramble_string(scramble_string):
         return "Unsolved!"
 
 
-def generate_3_cycle_scramble_helper(buffer="UF"):
+def generate_3_cycle_scramble_helper(buffer="UF", alg_map=dict()):
+    rec = None
     state = original_state()
     mapping = "U1,U2,U3,U4,U5,U6,U7,U8,U9,R1,R2,R3,R4,R5,R6,R7,R8,R9,F1,F2,F3,F4,F5,F6,F7,F8,F9,D1,D2,D3,D4,D5,D6,D7,D8,D9,L1,L2,L3,L4,L5,L6,L7,L8,L9,B1,B2,B3,B4,B5,B6,B7,B8,B9".split(
         ","
@@ -215,6 +216,46 @@ def generate_3_cycle_scramble_helper(buffer="UF"):
         state[k0], state[k2] = state[k2], state[k0]
         state = "".join(state)
         solution = sv.solve(state, 0, 0.1)
+        if buffer == 'UFR':
+            to_letter = {
+                'U1': 'C',
+                'U3': 'D',
+                'U7': 'B',
+                'F1': 'K',
+                'F7': 'L',
+                'F9': 'J',
+                'L3': 'M',
+                'L9': 'N',
+                'L1': 'O',
+                'L7': 'P',
+                'B3': 'Q',
+                'B9': 'R',
+                'B1': 'S',
+                'B7': 'T',
+                'R3': 'W',
+                'R9': 'X',
+                'R7': 'Z',
+                'D3': 'E',
+                'D1': 'F',
+                'D7': 'G',
+                'D9': 'H',
+            }
+            p1, p2 = mapping[i1], mapping[i2]
+            def reverse_comm(alg):
+                left_bracket = alg.rfind("[")
+                right_bracket = alg.find("]")
+                if left_bracket != -1 and right_bracket != -1 and left_bracket < right_bracket:
+                    content = alg[left_bracket + 1:right_bracket]
+                    parts = content.split(",")
+                    if len(parts) == 2:
+                        return f"{alg[:left_bracket + 1]}{parts[1].strip()}, {parts[0].strip()}{alg[right_bracket:]}"
+                return None
+            if p1 in to_letter and p2 in to_letter:
+                l1, l2 = to_letter[p1], to_letter[p2]
+                if l1 + l2 in alg_map:
+                    rec = alg_map[l1 + l2]
+                elif l2 + l1 in alg_map:
+                    rec = reverse_comm(alg_map[l2 + l1])
     solution = solution.strip()
     if solution.endswith(")"):
         solution = solution[: solution.rfind("(")].strip()
@@ -232,7 +273,7 @@ def generate_3_cycle_scramble_helper(buffer="UF"):
             raise ValueError(f"Unknown move: {move}")
 
     solution = " ".join([convert_move(m) for m in solution.split()])
-    return solution
+    return solution, rec
 
 
 def solve_3x3x3(user_input_json_string):

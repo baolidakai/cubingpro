@@ -418,8 +418,22 @@ def exec_trainer(request):
 
 
 def generate_3_cycle_scramble(request):
-    scramble = generate_3_cycle_scramble_helper(request.GET.get('buffer', 'UF'))
-    return JsonResponse({'scramble': scramble})
+    csv_path = os.path.join(settings.BASE_DIR, 'hello/algorithms/bld_3style.tsv')
+    alg_map = dict()
+    with open(csv_path, newline='') as csvfile:
+        for line in csvfile:
+            previous_token = ''
+            for token in line.strip().split('\t'):
+                token = token.strip()
+                if not token:
+                    previous_token = ''
+                else:
+                    if previous_token:
+                        alg_map[previous_token] = token
+                    else:
+                        previous_token = token
+    scramble, rec = generate_3_cycle_scramble_helper(request.GET.get('buffer', 'UF'), alg_map)
+    return JsonResponse({'scramble': scramble, 'rec': rec})
 
 
 def eg_alg(request):

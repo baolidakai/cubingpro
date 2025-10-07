@@ -16,15 +16,34 @@
     <label><strong>Select Buffer:</strong></label>
     <div class="buffer-options">
         <div style="display: flex; flex-direction: column; gap: 0.5em;">
-            <label><input type="radio" name="buffer" value="UF" id="buffer-uf" checked> UF Edge Buffer <span class="note">(3-style)</span></label>
-            <label><input type="radio" name="buffer" value="DF" id="buffer-df"> DF Edge Buffer <span class="note">(M2)</span></label>
-            <label><input type="radio" name="buffer" value="UFR" id="buffer-ufr"> UFR Corner Buffer <span class="note">(3-style)</span></label>
-            <label><input type="radio" name="buffer" value="UBL" id="buffer-ubl"> UBL Corner Buffer <span class="note">(OP)</span></label>
-        </div></div>
+            <label><input type="radio" name="buffer" value="UF" id="buffer-uf" checked> UF Edge Buffer <span
+                    class="note">(3-style)</span></label>
+            <label><input type="radio" name="buffer" value="DF" id="buffer-df"> DF Edge Buffer <span
+                    class="note">(M2)</span></label>
+            <label><input type="radio" name="buffer" value="UFR" id="buffer-ufr"> UFR Corner Buffer <span
+                    class="note">(3-style)</span></label>
+            <label><input type="radio" name="buffer" value="UBL" id="buffer-ubl"> UBL Corner Buffer <span
+                    class="note">(OP)</span></label>
+        </div>
     </div>
+</div>
 </div>
 <button type="button" id="generate-scramble-btn" class="big-button">Generate new 3 edge cycle scramble</button>
 <div id="scramble-display" class="scramble-display"></div>
+<div id="solution-container" style="display: none;">
+    <button type="button" id="toggle-rec-display-btn" class="big-button">Show/Hide Solution</button>
+    <div id="rec-display" class="rec-display" style="display: none;"></div>
+</div>
+<script>
+    document.getElementById('toggle-rec-display-btn').addEventListener('click', function () {
+        const recDisplay = document.getElementById('rec-display');
+        if (recDisplay.style.display === 'none') {
+            recDisplay.style.display = 'block';
+        } else {
+            recDisplay.style.display = 'none';
+        }
+    });
+</script>
 <div style="margin-top: 1em;">
     <button type="button" id="correct-btn" class="big-button" disabled>Correct</button>
     <button type="button" id="incorrect-btn" class="big-button" disabled>Incorrect</button>
@@ -78,8 +97,18 @@
             .then(data => {
                 currentScramble = data.scramble || '';
                 document.getElementById('scramble-display').textContent = data.scramble || 'No scramble generated.';
+                document.getElementById('rec-display').textContent = data.rec || '';
                 document.getElementById('correct-btn').disabled = false;
                 document.getElementById('incorrect-btn').disabled = false;
+                // Show or hide the solution container based on the content of rec-display
+                const solutionContainer = document.getElementById('solution-container');
+                if (data.rec && data.rec.trim() !== '') {
+                    solutionContainer.style.display = 'block';
+                } else {
+                    solutionContainer.style.display = 'none';
+                }
+                const recDisplay = document.getElementById('rec-display');
+                recDisplay.style.display = 'none';
             })
             .catch(() => {
                 currentScramble = '';
