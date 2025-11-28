@@ -106,7 +106,7 @@ def check_3x3x3_solved_from_scramble_string(scramble_string):
         return "Unsolved!"
 
 
-def generate_3_cycle_scramble_helper(buffer="UF", alg_map=dict()):
+def generate_3_cycle_scramble_helper(buffer="UF", alg_map=dict(), edge_map=dict()):
     rec = None
     state = original_state()
     mapping = "U1,U2,U3,U4,U5,U6,U7,U8,U9,R1,R2,R3,R4,R5,R6,R7,R8,R9,F1,F2,F3,F4,F5,F6,F7,F8,F9,D1,D2,D3,D4,D5,D6,D7,D8,D9,L1,L2,L3,L4,L5,L6,L7,L8,L9,B1,B2,B3,B4,B5,B6,B7,B8,B9".split(
@@ -175,6 +175,39 @@ def generate_3_cycle_scramble_helper(buffer="UF", alg_map=dict()):
         state[j0], state[j2] = state[j2], state[j0]
         state = "".join(state)
         solution = sv.solve(state, 0, 0.1)
+        if buffer == 'UF':
+            to_letter = {
+                'U2': 'UB',
+                'U4': 'UL',
+                'U6': 'UR',
+                'U8': 'UF',
+                'F2': 'FU',
+                'F4': 'FL',
+                'F6': 'FR',
+                'F8': 'FD',
+                'D2': 'DF',
+                'D4': 'DL',
+                'D6': 'DR',
+                'D8': 'DB',
+                'L2': 'LU',
+                'L4': 'LB',
+                'L6': 'LF',
+                'L8': 'LD',
+                'B2': 'BU',
+                'B4': 'BR',
+                'B6': 'BD',
+                'B8': 'BL',
+                'R2': 'RU',
+                'R4': 'RF',
+                'R6': 'RB',
+                'R8': 'RD',
+            }
+            p1, p2 = mapping[i1], mapping[i2]
+            if p1 in to_letter and p2 in to_letter:
+                l1, l2 = to_letter[p1], to_letter[p2]
+                l1, l2 = l2, l1
+                if (l1, l2) in edge_map:
+                    rec = edge_map[(l1, l2)]
     else:
         assert buffer in ["UFR", "UBL"]
         old_cp = [

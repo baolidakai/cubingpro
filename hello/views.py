@@ -432,7 +432,16 @@ def generate_3_cycle_scramble(request):
                         alg_map[previous_token] = token
                     else:
                         previous_token = token
-    scramble, rec = generate_3_cycle_scramble_helper(request.GET.get('buffer', 'UF'), alg_map)
+    edge_map = dict()
+    csv_path = os.path.join(settings.BASE_DIR, 'hello/algorithms/edge_comm.tsv')
+    with open(csv_path, newline='') as csvfile:
+        headers = next(csvfile).strip().split('\t')[1:]  # Extract column headers, skipping the first column
+        for line in csvfile:
+            cells = line.strip().split('\t')
+            row_key = cells[0]  # First cell is the row key
+            for col_key, content in zip(headers, cells[1:]):  # Map each column header to its content
+                edge_map[(row_key, col_key)] = content
+    scramble, rec = generate_3_cycle_scramble_helper(request.GET.get('buffer', 'UF'), alg_map, edge_map)
     return JsonResponse({'scramble': scramble, 'rec': rec})
 
 
