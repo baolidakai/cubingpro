@@ -175,32 +175,32 @@ def generate_3_cycle_scramble_helper(buffer="UF", alg_map=dict(), edge_map=dict(
         state[j0], state[j2] = state[j2], state[j0]
         state = "".join(state)
         solution = sv.solve(state, 0, 0.1)
-        if buffer == 'UF':
+        if buffer == "UF":
             to_letter = {
-                'U2': 'UB',
-                'U4': 'UL',
-                'U6': 'UR',
-                'U8': 'UF',
-                'F2': 'FU',
-                'F4': 'FL',
-                'F6': 'FR',
-                'F8': 'FD',
-                'D2': 'DF',
-                'D4': 'DL',
-                'D6': 'DR',
-                'D8': 'DB',
-                'L2': 'LU',
-                'L4': 'LB',
-                'L6': 'LF',
-                'L8': 'LD',
-                'B2': 'BU',
-                'B4': 'BR',
-                'B6': 'BD',
-                'B8': 'BL',
-                'R2': 'RU',
-                'R4': 'RF',
-                'R6': 'RB',
-                'R8': 'RD',
+                "U2": "UB",
+                "U4": "UL",
+                "U6": "UR",
+                "U8": "UF",
+                "F2": "FU",
+                "F4": "FL",
+                "F6": "FR",
+                "F8": "FD",
+                "D2": "DF",
+                "D4": "DL",
+                "D6": "DR",
+                "D8": "DB",
+                "L2": "LU",
+                "L4": "LB",
+                "L6": "LF",
+                "L8": "LD",
+                "B2": "BU",
+                "B4": "BR",
+                "B6": "BD",
+                "B8": "BL",
+                "R2": "RU",
+                "R4": "RF",
+                "R6": "RB",
+                "R8": "RD",
             }
             p1, p2 = mapping[i1], mapping[i2]
             if p1 in to_letter and p2 in to_letter:
@@ -249,40 +249,46 @@ def generate_3_cycle_scramble_helper(buffer="UF", alg_map=dict(), edge_map=dict(
         state[k0], state[k2] = state[k2], state[k0]
         state = "".join(state)
         solution = sv.solve(state, 0, 0.1)
-        if buffer == 'UFR':
+        if buffer == "UFR":
             to_letter = {
-                'U1': 'C',
-                'U3': 'D',
-                'U7': 'B',
-                'F1': 'K',
-                'F7': 'L',
-                'F9': 'J',
-                'L3': 'M',
-                'L9': 'N',
-                'L1': 'O',
-                'L7': 'P',
-                'B3': 'Q',
-                'B9': 'R',
-                'B1': 'S',
-                'B7': 'T',
-                'R3': 'W',
-                'R9': 'X',
-                'R7': 'Z',
-                'D3': 'E',
-                'D1': 'F',
-                'D7': 'G',
-                'D9': 'H',
+                "U1": "C",
+                "U3": "D",
+                "U7": "B",
+                "F1": "K",
+                "F7": "L",
+                "F9": "J",
+                "L3": "M",
+                "L9": "N",
+                "L1": "O",
+                "L7": "P",
+                "B3": "Q",
+                "B9": "R",
+                "B1": "S",
+                "B7": "T",
+                "R3": "W",
+                "R9": "X",
+                "R7": "Z",
+                "D3": "E",
+                "D1": "F",
+                "D7": "G",
+                "D9": "H",
             }
             p1, p2 = mapping[i1], mapping[i2]
+
             def reverse_comm(alg):
                 left_bracket = alg.rfind("[")
                 right_bracket = alg.find("]")
-                if left_bracket != -1 and right_bracket != -1 and left_bracket < right_bracket:
-                    content = alg[left_bracket + 1:right_bracket]
+                if (
+                    left_bracket != -1
+                    and right_bracket != -1
+                    and left_bracket < right_bracket
+                ):
+                    content = alg[left_bracket + 1 : right_bracket]
                     parts = content.split(",")
                     if len(parts) == 2:
                         return f"{alg[:left_bracket + 1]}{parts[1].strip()}, {parts[0].strip()}{alg[right_bracket:]}"
                 return None
+
             if p1 in to_letter and p2 in to_letter:
                 l1, l2 = to_letter[p1], to_letter[p2]
                 if l1 + l2 in alg_map:
@@ -1111,12 +1117,13 @@ def visualize_obl(case_name):
         "Same Tie": "bwwbwwbb",
         "Same Tree": "wwbbwbbw",
     }
+
     def invert(colors):
         return "".join("w" if c == "b" else "b" if c == "w" else c for c in colors)
 
     def mirror(colors):
         return colors[0] + colors[1:][::-1]
-    
+
     def rotate(colors):
         return colors[1:] + colors[0]
 
@@ -1132,7 +1139,7 @@ def visualize_obl(case_name):
     if rev_top:
         top_colors = mirror(top_colors)
     top_colors = rotate(top_colors)
-    
+
     bottom = parts[1]
     rev_bottom = False
     if bottom.startswith("Mirror "):
@@ -1147,3 +1154,396 @@ def visualize_obl(case_name):
 
 def solve_sq1(state):
     sq1_sv.solve(state)
+
+
+from enum import Enum, auto
+
+
+class PieceType(Enum):
+    CORNER = auto()
+    WING = auto()
+    # MIDGE = auto()
+    # X_CENTER = auto()
+    # P_CENTER = auto()
+
+
+CORNER_POSITIONS = [
+    "UFR",
+    "UFL",
+    "UBL",
+    "UBR",
+    "DFR",
+    "DFL",
+    "DBL",
+    "DBR",
+]
+
+WING_POSITIONS = [
+    "UFr",
+    "UFl",
+    "URf",
+    "URb",
+    "UBl",
+    "UBr",
+    "ULb",
+    "ULf",
+    "DFr",
+    "DFl",
+    "DRf",
+    "DRb",
+    "DBl",
+    "DBr",
+    "DLb",
+    "DLf",
+    "FRu",
+    "FRd",
+    "FLu",
+    "FLd",
+    "BLu",
+    "BLd",
+    "BRu",
+    "BRd",
+]
+
+
+class LetterScheme:
+    def __init__(self, corner_position_letters: dict, buffer: str):
+        """
+        corner_position_letters: position -> [letter0, letter1, letter2]
+        buffer: the buffer corner position (like 'UBL')
+        """
+        self.corner_position_letters = corner_position_letters
+        self.buffer = buffer
+
+        # Flatten all letters
+        self.all_corner_letters = {l for triplet in corner_position_letters.values() for l in triplet}
+
+        # Precompute map: letter -> its 2 neighbors in the corner
+        self.letter_neighbors = {}
+        for letters in corner_position_letters.values():
+            a, b, c = letters
+            self.letter_neighbors[a] = [b, c]
+            self.letter_neighbors[b] = [c, a]
+            self.letter_neighbors[c] = [a, b]
+
+LETTER_SCHEMES = {
+    "efgh_on_bottom": {
+        PieceType.CORNER: LetterScheme(
+            corner_position_letters={
+                "UFR": ["A", "Y", "I"],
+                "UFL": ["B", "K", "M"],
+                "UBL": ["C", "O", "Q"],
+                "UBR": ["D", "S", "W"],
+                "DFR": ["E", "J", "Z"],
+                "DFL": ["F", "N", "L"],
+                "DBL": ["G", "R", "P"],
+                "DBR": ["H", "X", "T"],
+            },
+            buffer="C",
+        )
+    },
+}
+
+
+class PiecePermutationSolver:
+    """
+    Generic permutation solver for a cube piece category.
+    Orientation is ignored for now.
+    """
+
+    def __init__(
+        self, piece_type: PieceType, letter_scheme_name: str = "efgh_on_bottom"
+    ):
+        self.piece_type = piece_type
+        self.letter_scheme = LETTER_SCHEMES[letter_scheme_name][piece_type] if piece_type in LETTER_SCHEMES[letter_scheme_name] else None
+        self.positions, self.move_cycles = self._load_parameters(piece_type)
+        self.state = self._solved_state()
+        if piece_type == PieceType.CORNER:
+            self.corner_orientation = [0] * 8  # index = corner position, value = 0,1,2
+        self.corner_orientation_delta = self._load_corner_orientation_delta()
+
+    def get_identity_letter_permutation(self):
+        return {l: l for l in self.letter_scheme.all_corner_letters}
+
+    def _load_corner_orientation_delta(self):
+        return {
+            "U": [0, 0, 0, 0],
+            "D": [0, 0, 0, 0],
+            "R": [2, 1, 2, 1],
+            "L": [1, 2, 1, 2],
+            "F": [1, 2, 1, 2],
+            "B": [1, 2, 1, 2],
+        }
+
+    def _load_letter_scheme(self):
+        if self.piece_type == PieceType.CORNER:
+            return {
+                "A": "UFR",
+                "B": "UFL",
+                "C": "UBL",
+                "D": "UBR",
+                "E": "DFR",
+                "F": "DFL",
+                "G": "DBL",
+                "H": "DBR",
+            }
+
+        if self.piece_type == PieceType.WING:
+            return {
+                "A": "UFr",
+                "B": "UFl",
+                "C": "UBl",
+                "D": "UBr",
+                "E": "URf",
+                "F": "ULf",
+                "G": "ULb",
+                "H": "URb",
+            }
+
+        return {}
+
+    def _load_parameters(self, piece_type: PieceType):
+        if piece_type == PieceType.CORNER:
+            positions = CORNER_POSITIONS
+
+            move_cycles = {
+                "U": [["UFR", "UFL", "UBL", "UBR"]],
+                "D": [["DFR", "DBR", "DBL", "DFL"]],
+                "R": [["UFR", "UBR", "DBR", "DFR"]],
+                "L": [["UFL", "DFL", "DBL", "UBL"]],
+                "F": [["UFR", "DFR", "DFL", "UFL"]],
+                "B": [["UBL", "DBL", "DBR", "UBR"]],
+            }
+
+            return positions, move_cycles
+
+        if piece_type == PieceType.WING:
+            positions = WING_POSITIONS
+
+            move_cycles = {
+                "U": [
+                    ["UFr", "ULf", "UBl", "URb"],
+                    ["UFl", "ULb", "UBr", "URf"],
+                ],
+                "Uw": [
+                    ["UFr", "ULf", "UBl", "URb"],
+                    ["UFl", "ULb", "UBr", "URf"],
+                    ["FRu", "FLu", "BLu", "BRu"],
+                ],
+                "D": [
+                    ["DFr", "DRb", "DBl", "DLf"],
+                    ["DFl", "DRf", "DBr", "DLb"],
+                ],
+                "Dw": [
+                    ["DFr", "DRb", "DBl", "DLf"],
+                    ["DFl", "DRf", "DBr", "DLb"],
+                    ["FRd", "BRd", "BLd", "FLd"],
+                ],
+                "R": [
+                    ["URf", "BRu", "DRb", "FRd"],
+                    ["URb", "BRd", "DRf", "FRu"],
+                ],
+                "Rw": [
+                    ["URf", "BRu", "DRb", "FRd"],
+                    ["URb", "BRd", "DRf", "FRu"],
+                    ["UFr", "UBr", "DBr", "DFr"],
+                ],
+                "L": [
+                    ["ULf", "FLd", "DLb", "BLu"],
+                    ["ULb", "FLu", "DLf", "BLd"],
+                ],
+                "Lw": [
+                    ["ULf", "FLd", "DLb", "BLu"],
+                    ["ULb", "FLu", "DLf", "BLd"],
+                    ["UFl", "DFl", "DBl", "UBl"],
+                ],
+                "F": [
+                    ["UFr", "FRd", "DFl", "UFl"],
+                    ["UFl", "FRu", "DFr", "UFr"],
+                ],
+                "Fw": [
+                    ["UFr", "FRd", "DFl", "UFl"],
+                    ["UFl", "FRu", "DFr", "UFr"],
+                    ["ULf", "URf", "DRf", "DLf"],
+                ],
+                "B": [
+                    ["UBr", "BLu", "DBl", "BRd"],
+                    ["UBl", "BLd", "DBr", "BRu"],
+                ],
+                "Bw": [
+                    ["UBr", "BLu", "DBl", "BRd"],
+                    ["UBl", "BLd", "DBr", "BRu"],
+                    ["URb", "ULb", "DLb", "DRb"],
+                ],
+            }
+
+            return positions, move_cycles
+
+        raise ValueError(f"Unsupported piece type: {piece_type}")
+
+    def _solved_state(self):
+        return {pos: pos for pos in self.positions}
+
+    def reset(self):
+        self.state = self._solved_state()
+
+    def get_corner_letter_permutation(self):
+        """
+        Convert the current corner state + orientation into a flat letter permutation.
+        Returns: dict(letter -> letter)
+        """
+        perm = {}
+
+        for solved_pos in CORNER_POSITIONS:
+            # Letters in solved position
+            solved_letters = self.letter_scheme.corner_position_letters[solved_pos]
+
+            # Piece currently at this solved position
+            piece_at_pos = self.state[solved_pos]
+
+            # Orientation of that piece at this position
+            piece_index = CORNER_POSITIONS.index(piece_at_pos)
+            ori = self.corner_orientation[piece_index]
+
+            # Letters of the piece, rotated by its orientation
+            piece_letters = self.letter_scheme.corner_position_letters[piece_at_pos]
+            rotated_letters = piece_letters[ori:] + piece_letters[:ori]
+
+            # Map solved letters → current letters
+            for sl, cl in zip(solved_letters, rotated_letters):
+                perm[sl] = cl
+
+        return perm
+
+    def get_user_letter_permutation(self, memo_str):
+        """
+        Convert a user memo string into a letter permutation, accounting for corner stickers.
+        """
+        buffer_letter = self.letter_scheme.buffer
+        targets = list(memo_str.replace(" ", "").strip())
+
+        perm = {l: l for l in self.letter_scheme.all_corner_letters}
+
+        for target_letter in targets:
+            # Find all three letters for buffer and target
+            buffer_triplet = [buffer_letter] + self.letter_scheme.letter_neighbors[buffer_letter]
+            target_triplet = [target_letter] + self.letter_scheme.letter_neighbors[target_letter]
+
+            # Swap corresponding stickers
+            for b, t in zip(buffer_triplet, target_triplet):
+                perm[b], perm[t] = perm[t], perm[b]
+
+        return perm
+
+    def apply_user_memo_and_check(self, memo_str):
+        """
+        Returns True if the user memo correctly solves the cube from current state.
+        """
+        current_perm = self.get_corner_letter_permutation()
+        user_perm = self.get_user_letter_permutation(memo_str)
+        
+        print({k: v for k, v in self.state.items() if k != v})
+        print({k: v for k, v in current_perm.items() if k != v})
+        print({k: v for k, v in user_perm.items() if k != v})
+
+        # Compose: apply current_perm first, then user_perm
+        final_perm = {l: user_perm[current_perm[l]] for l in current_perm}
+
+        # Identity: solved letters map to themselves
+        return all(final_perm[l] == l for l in final_perm)
+
+    def solved_permutation(self):
+        """
+        Returns the solved permutation: piece -> solved position
+        """
+        return {pos: pos for pos in self.positions}
+
+    def _apply_cycle(self, cycle, orientation_change=None):
+        new_state = self.state.copy()
+        if self.piece_type == PieceType.CORNER:
+            ori_copy = self.corner_orientation.copy()
+        for i in range(len(cycle)):
+            src = cycle[i]
+            dst = cycle[(i + 1) % len(cycle)]
+            new_state[dst] = self.state[src]
+            if self.piece_type == PieceType.CORNER:
+                self.corner_orientation[CORNER_POSITIONS.index(dst)] = (
+                    ori_copy[CORNER_POSITIONS.index(src)] + orientation_change[i]
+                ) % 3
+        self.state = new_state
+
+    def apply_move(self, move: str):
+        # Determine power
+        if move.endswith("2"):
+            power = 2
+            base = move[:-1]
+        elif move.endswith("'"):
+            power = 3
+            base = move[:-1]
+        else:
+            power = 1
+            base = move
+
+        if self.piece_type == PieceType.CORNER:
+            base = base[0]
+        cycles = self.move_cycles.get(base, [])
+        orientation_change = (
+            self.corner_orientation_delta.get(base[0])
+            if self.piece_type == PieceType.CORNER
+            else None
+        )
+
+        for _ in range(power):
+            for cycle in cycles:
+                self._apply_cycle(cycle, orientation_change)
+
+    def apply_scramble(self, scramble: str):
+        for move in scramble.strip().split():
+            self.apply_move(move)
+
+    def get_state(self):
+        return self.state.copy()
+
+    def apply_user_string(self, user_str: str):
+        self.apply_scramble(user_str)
+
+    @property
+    def is_solved(self) -> bool:
+        """
+        Returns True if current state matches the solved state.
+        """
+        return self.state == self._solved_state() and (
+            self.piece_type != PieceType.CORNER
+            or all(ori == 0 for ori in self.corner_orientation)
+        )
+
+
+PIECE_TYPES = [
+    (PieceType.CORNER, "corner"),
+    # (PieceType.WING, "wing"),
+    # (PieceType.MIDGE, "midge"),
+    # (PieceType.X_CENTER, "x_center"),
+    # (PieceType.P_CENTER, "p_center"),
+]
+
+
+def evaluate_big_bld_memo(
+    scramble: str,
+    letter_scheme: str,
+    memo: dict,
+):
+    verdict = {}
+
+    for piece_type, display_name in PIECE_TYPES:
+        solver = PiecePermutationSolver(piece_type, letter_scheme)
+
+        # Apply scramble
+        solver.apply_scramble(scramble)
+
+        # Apply user-provided string
+        user_str = memo.get(display_name, "")
+
+        # Evaluate correctness (currently is_solved for all)
+        verdict[display_name] = solver.apply_user_memo_and_check(user_str)
+
+    return verdict

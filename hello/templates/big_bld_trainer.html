@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>5 BLD trainer</h1>
+
+<p>There are two trainers available:</p>
+<ol>
+    <li>First trainer helps you practice memo only.</li>
+    <li>Second trainer helps you practice execution only.</li>
+</ol>
+<p>Prerequisite: You should already know how to solve 5 BLD, and have a letter scheme for it.</p>
+<p>Provide your letter scheme by either choosing from the two presets.</p>
+<p>For both trainers, you will provided a scramble generated from a timer or other online resources.</p>
+<p><strong>Note:</strong> Scramble from your regular cube holding position.</p>
+<p>For the memo practice trainer, you should memorize the whole cube using your standard memo order, then after you
+    memorize, enter your letter pairs (including the last parity letter).</p>
+<p>The trainer will score correctness for each of the piece types (e.g. wings, corners) individually.</p>
+<p>For the execution trainer, you will be provided also an auto-generated memo sequence. You will be responsible for
+    executing acording to the memo sequence, and see whether you got successful.</p>
+
+<h2>Memo trainer</h2>
+<div>
+    <label>Scramble</label><br>
+    <textarea id="scramble" rows="5" placeholder="Your scramble e.g., Rw U Rw' U'"
+        style="width: 100%; font-size: 1.1em;"></textarea>
+</div>
+
+<br>
+
+<div>
+    <strong>Timer:</strong>
+    <span id="timer">0</span> seconds
+</div>
+
+<button id="startBtn">Start memo</button>
+<button id="endBtn" disabled>End memo</button>
+
+<hr>
+
+<div id="memoSection" style="display: none;">
+    <h3>Letter scheme</h3>
+
+    <label>
+        <input type="radio" name="letter_scheme" value="efgh_on_bottom" checked>
+        EFGH on bottom
+    </label>
+    <br>
+
+    <label>
+        <input type="radio" name="letter_scheme" value="speffz">
+        Speffz
+    </label>
+
+    <hr>
+
+    <h3>Enter your memo</h3>
+
+    <label>X-center</label><br>
+    <textarea id="x_center" rows="3" style="width:100%;"></textarea><br><br>
+
+    <label>+-center</label><br>
+    <textarea id="+_center" rows="3" style="width:100%;"></textarea><br><br>
+
+    <label>Midge</label><br>
+    <textarea id="midge" rows="3" style="width:100%;"></textarea><br><br>
+
+    <label>Wing</label><br>
+    <textarea id="wing" rows="3" style="width:100%;"></textarea><br><br>
+
+    <label>Corner</label><br>
+    <textarea id="corner" rows="3" style="width:100%;"></textarea><br><br>
+
+    <button id="submitMemo">Submit memo</button>
+</div>
+
+<hr>
+
+<div id="verdictSection"></div>
+
+<script>
+    let timerInterval = null;
+    let elapsed = 0;
+
+    const timerEl = document.getElementById("timer");
+    const startBtn = document.getElementById("startBtn");
+    const endBtn = document.getElementById("endBtn");
+    const memoSection = document.getElementById("memoSection");
+    const verdictSection = document.getElementById("verdictSection");
+
+    startBtn.onclick = () => {
+        elapsed = 0;
+        timerEl.textContent = elapsed;
+
+        timerInterval = setInterval(() => {
+            elapsed += 1;
+            timerEl.textContent = elapsed;
+        }, 1000);
+
+        startBtn.disabled = true;
+        endBtn.disabled = false;
+    };
+
+    endBtn.onclick = () => {
+        clearInterval(timerInterval);
+        memoSection.style.display = "block";
+        endBtn.disabled = true;
+    };
+
+    document.getElementById("submitMemo").onclick = async () => {
+        const payload = {
+            scramble: document.getElementById("scramble").value,
+            time: elapsed,
+            letter: document.querySelector('input[name="letter_scheme"]:checked').value,
+            memo: {
+                x_center: document.getElementById("x_center").value,
+                p_center: document.getElementById("+_center").value,
+                midge: document.getElementById("midge").value,
+                wing: document.getElementById("wing").value,
+                corner: document.getElementById("corner").value,
+            }
+        };
+
+        const response = await fetch("{% url 'submit_big_bld_trainer_memo' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showVerdict(data.verdict);
+        }
+    };
+
+    function showVerdict(verdict) {
+        verdictSection.innerHTML = "<h3>Result</h3>";
+
+        for (const [key, value] of Object.entries(verdict)) {
+            const color = value ? "green" : "red";
+            const text = value ? "Correct" : "Incorrect";
+
+            verdictSection.innerHTML += `
+            <p>
+                <strong>${key.replace("_", " ")}:</strong>
+                <span style="color:${color}">${text}</span>
+            </p>
+        `;
+        }
+    }
+</script>
+
+<h2>Exec trainer</h2>
+<p>Coming soon...</p>
+
+
+{% endblock content %}

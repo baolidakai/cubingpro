@@ -101,6 +101,11 @@
         "title": "5x5x5 blindfolded with U2 and r2",
         "url": "/5bld/u2r2",
         "logo": "5bld.png"
+      },
+      {
+        "title": "5x5x5 blindfolded trainer",
+        "url": "/5bld/trainer",
+        "logo": "5bld.png"
       }
     ]
   },

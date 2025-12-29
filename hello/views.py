@@ -413,6 +413,29 @@ def bld5(request):
     return render(request, "bld5.html")
 
 
+def big_bld_trainer(request):
+    return render(request, "big_bld_trainer.html")
+
+
+@csrf_exempt
+def submit_big_bld_trainer_memo(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request"}, status=400)
+
+    data = json.loads(request.body)
+
+    verdict = evaluate_big_bld_memo(
+        scramble=data.get("scramble"),
+        letter_scheme=data.get("letter"),
+        memo=data["memo"],
+    )
+
+    return JsonResponse({
+        "success": True,
+        "verdict": verdict
+    })
+
+
 def exec_trainer(request):
     return render(request, "exec_trainer.html")
 
