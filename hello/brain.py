@@ -1420,12 +1420,12 @@ class PiecePermutationSolver:
                     ["UFl", "DFl", "DBl", "UBl"],
                 ],
                 "F": [
-                    ["UFr", "FRd", "DFl", "UFl"],
-                    ["UFl", "FRu", "DFr", "UFr"],
+                    ["UFr", "FRd", "DFl", "FLu"],
+                    ["UFl", "FRu", "DFr", "FLd"],
                 ],
                 "Fw": [
-                    ["UFr", "FRd", "DFl", "UFl"],
-                    ["UFl", "FRu", "DFr", "UFr"],
+                    ["UFr", "FRd", "DFl", "FLu"],
+                    ["UFl", "FRu", "DFr", "FLd"],
                     ["ULf", "URf", "DRf", "DLf"],
                 ],
                 "B": [
@@ -1524,10 +1524,9 @@ class PiecePermutationSolver:
         current_perm = self.get_corner_letter_permutation() if self.piece_type == PieceType.CORNER else self.get_letter_permutation()
         user_perm = self.get_user_letter_permutation(memo_str)
 
-        # print({k: v for k, v in self.state.items() if k != v})
-        # print(self.corner_orientation)
-        # print({k: v for k, v in current_perm.items() if k != v})
-        # print({k: v for k, v in user_perm.items() if k != v})
+        print({k: v for k, v in self.state.items() if k != v})
+        print({k: v for k, v in current_perm.items() if k != v})
+        print({k: v for k, v in user_perm.items() if k != v})
 
         # Compose: apply current_perm first, then user_perm
         final_perm = {l: user_perm[current_perm[l]] for l in current_perm}
