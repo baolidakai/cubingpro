@@ -1157,6 +1157,7 @@ def solve_sq1(state):
 
 
 from enum import Enum, auto
+import copy
 
 
 class PieceType(Enum):
@@ -1403,7 +1404,7 @@ class PiecePermutationSolver:
 
             # Orientation of that piece at this position
             piece_index = CORNER_POSITIONS.index(piece_at_pos)
-            ori = self.corner_orientation[piece_index]
+            ori = (3 - self.corner_orientation[piece_index]) % 3
 
             # Letters of the piece, rotated by its orientation
             piece_letters = self.letter_scheme.corner_position_letters[piece_at_pos]
@@ -1442,9 +1443,10 @@ class PiecePermutationSolver:
         current_perm = self.get_corner_letter_permutation()
         user_perm = self.get_user_letter_permutation(memo_str)
         
-        print({k: v for k, v in self.state.items() if k != v})
-        print({k: v for k, v in current_perm.items() if k != v})
-        print({k: v for k, v in user_perm.items() if k != v})
+        # print({k: v for k, v in self.state.items() if k != v})
+        # print(self.corner_orientation)
+        # print({k: v for k, v in current_perm.items() if k != v})
+        # print({k: v for k, v in user_perm.items() if k != v})
 
         # Compose: apply current_perm first, then user_perm
         final_perm = {l: user_perm[current_perm[l]] for l in current_perm}
@@ -1459,16 +1461,14 @@ class PiecePermutationSolver:
         return {pos: pos for pos in self.positions}
 
     def _apply_cycle(self, cycle, orientation_change=None):
-        new_state = self.state.copy()
-        if self.piece_type == PieceType.CORNER:
-            ori_copy = self.corner_orientation.copy()
+        new_state = copy.deepcopy(self.state)
         for i in range(len(cycle)):
-            src = cycle[i]
+            src = self.state[cycle[i]]
             dst = cycle[(i + 1) % len(cycle)]
-            new_state[dst] = self.state[src]
+            new_state[dst] = src
             if self.piece_type == PieceType.CORNER:
-                self.corner_orientation[CORNER_POSITIONS.index(dst)] = (
-                    ori_copy[CORNER_POSITIONS.index(src)] + orientation_change[i]
+                self.corner_orientation[CORNER_POSITIONS.index(src)] = (
+                    self.corner_orientation[CORNER_POSITIONS.index(src)] + orientation_change[(i + len(cycle) - 1) % len(cycle)]
                 ) % 3
         self.state = new_state
 
