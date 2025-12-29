@@ -1208,7 +1208,9 @@ WING_POSITIONS = [
 
 
 class LetterScheme:
-    def __init__(self, corner_position_letters: dict, buffer: str):
+    def __init__(
+        self, corner_position_letters: dict, buffer: str, position_letters: dict
+    ):
         """
         corner_position_letters: position -> [letter0, letter1, letter2]
         buffer: the buffer corner position (like 'UBL')
@@ -1217,7 +1219,9 @@ class LetterScheme:
         self.buffer = buffer
 
         # Flatten all letters
-        self.all_corner_letters = {l for triplet in corner_position_letters.values() for l in triplet}
+        self.all_corner_letters = {
+            l for triplet in corner_position_letters.values() for l in triplet
+        }
 
         # Precompute map: letter -> its 2 neighbors in the corner
         self.letter_neighbors = {}
@@ -1226,6 +1230,9 @@ class LetterScheme:
             self.letter_neighbors[a] = [b, c]
             self.letter_neighbors[b] = [c, a]
             self.letter_neighbors[c] = [a, b]
+
+        self.position_letters = position_letters
+
 
 LETTER_SCHEMES = {
     "efgh_on_bottom": {
@@ -1241,7 +1248,84 @@ LETTER_SCHEMES = {
                 "DBR": ["H", "X", "T"],
             },
             buffer="C",
-        )
+            position_letters={},
+        ),
+        PieceType.WING: LetterScheme(
+            corner_position_letters={},
+            buffer="E",
+            position_letters={
+                "UFr": "I",
+                "UFl": "A",
+                "URf": "D",
+                "URb": "W",
+                "UBl": "Q",
+                "UBr": "C",
+                "ULb": "B",
+                "ULf": "M",
+                "DFr": "E",
+                "DFl": "K",
+                "DRf": "Y",
+                "DRb": "H",
+                "DBl": "G",
+                "DBr": "S",
+                "DLb": "O",
+                "DLf": "F",
+                "FRu": "Z",
+                "FRd": "J",
+                "FLu": "L",
+                "FLd": "N",
+                "BLu": "P",
+                "BLd": "R",
+                "BRu": "T",
+                "BRd": "X",
+            },
+        ),
+    },
+    "speffz": {
+        PieceType.CORNER: LetterScheme(
+            corner_position_letters={
+                "UFR": ["C", "M", "J"],
+                "UFL": ["D", "I", "F"],
+                "UBL": ["A", "E", "R"],
+                "UBR": ["V", "K", "P"],
+                "DFR": ["V", "K", "P"],
+                "DFL": ["U", "G", "L"],
+                "DBL": ["X", "S", "H"],
+                "DBR": ["W", "O", "T"],
+            },
+            buffer="A",
+            position_letters={},
+        ),
+        PieceType.WING: LetterScheme(
+            corner_position_letters={},
+            buffer="K",
+            position_letters={
+                "UFr": "C",
+                "UFl": "I",
+                "URf": "M",
+                "URb": "B",
+                "UBl": "A",
+                "UBr": "Q",
+                "ULb": "E",
+                "ULf": "D",
+                "DFr": "K",
+                "DFl": "U",
+                "DRf": "V",
+                "DRb": "O",
+                "DBl": "S",
+                "DBr": "W",
+                "DLb": "X",
+                "DLf": "G",
+                "FRu": "J",
+                "FRd": "P",
+                "FLu": "F",
+                "FLd": "L",
+                "BLu": "R",
+                "BLd": "H",
+                "BRu": "M",
+                "BRd": "T",
+            },
+        ),
     },
 }
 
@@ -1256,7 +1340,11 @@ class PiecePermutationSolver:
         self, piece_type: PieceType, letter_scheme_name: str = "efgh_on_bottom"
     ):
         self.piece_type = piece_type
-        self.letter_scheme = LETTER_SCHEMES[letter_scheme_name][piece_type] if piece_type in LETTER_SCHEMES[letter_scheme_name] else None
+        self.letter_scheme = (
+            LETTER_SCHEMES[letter_scheme_name][piece_type]
+            if piece_type in LETTER_SCHEMES[letter_scheme_name]
+            else None
+        )
         self.positions, self.move_cycles = self._load_parameters(piece_type)
         self.state = self._solved_state()
         if piece_type == PieceType.CORNER:
@@ -1275,33 +1363,6 @@ class PiecePermutationSolver:
             "F": [1, 2, 1, 2],
             "B": [1, 2, 1, 2],
         }
-
-    def _load_letter_scheme(self):
-        if self.piece_type == PieceType.CORNER:
-            return {
-                "A": "UFR",
-                "B": "UFL",
-                "C": "UBL",
-                "D": "UBR",
-                "E": "DFR",
-                "F": "DFL",
-                "G": "DBL",
-                "H": "DBR",
-            }
-
-        if self.piece_type == PieceType.WING:
-            return {
-                "A": "UFr",
-                "B": "UFl",
-                "C": "UBl",
-                "D": "UBr",
-                "E": "URf",
-                "F": "ULf",
-                "G": "ULb",
-                "H": "URb",
-            }
-
-        return {}
 
     def _load_parameters(self, piece_type: PieceType):
         if piece_type == PieceType.CORNER:
@@ -1416,6 +1477,22 @@ class PiecePermutationSolver:
 
         return perm
 
+    def get_letter_permutation(self):
+        perm = {}
+
+        for solved_pos, solved_letters in self.letter_scheme.position_letters.items():
+            # Piece currently at this solved position
+            piece_at_pos = self.state[solved_pos]
+
+            # Letters of the piece, rotated by its orientation
+            piece_letters = self.letter_scheme.position_letters[piece_at_pos]
+
+            # Map solved letters → current letters
+            for sl, cl in zip(solved_letters, piece_letters):
+                perm[sl] = cl
+
+        return perm
+
     def get_user_letter_permutation(self, memo_str):
         """
         Convert a user memo string into a letter permutation, accounting for corner stickers.
@@ -1423,12 +1500,16 @@ class PiecePermutationSolver:
         buffer_letter = self.letter_scheme.buffer
         targets = list(memo_str.replace(" ", "").strip())
 
-        perm = {l: l for l in self.letter_scheme.all_corner_letters}
+        perm = {l: l for l in (self.letter_scheme.all_corner_letters if self.piece_type == PieceType.CORNER else self.letter_scheme.position_letters.values())}
 
         for target_letter in targets:
             # Find all three letters for buffer and target
-            buffer_triplet = [buffer_letter] + self.letter_scheme.letter_neighbors[buffer_letter]
-            target_triplet = [target_letter] + self.letter_scheme.letter_neighbors[target_letter]
+            buffer_triplet = [buffer_letter] + ([] if self.piece_type != PieceType.CORNER else self.letter_scheme.letter_neighbors[
+                buffer_letter
+            ])
+            target_triplet = [target_letter] + ([] if self.piece_type != PieceType.CORNER else self.letter_scheme.letter_neighbors[
+                target_letter
+            ])
 
             # Swap corresponding stickers
             for b, t in zip(buffer_triplet, target_triplet):
@@ -1440,9 +1521,9 @@ class PiecePermutationSolver:
         """
         Returns True if the user memo correctly solves the cube from current state.
         """
-        current_perm = self.get_corner_letter_permutation()
+        current_perm = self.get_corner_letter_permutation() if self.piece_type == PieceType.CORNER else self.get_letter_permutation()
         user_perm = self.get_user_letter_permutation(memo_str)
-        
+
         # print({k: v for k, v in self.state.items() if k != v})
         # print(self.corner_orientation)
         # print({k: v for k, v in current_perm.items() if k != v})
@@ -1468,7 +1549,8 @@ class PiecePermutationSolver:
             new_state[dst] = src
             if self.piece_type == PieceType.CORNER:
                 self.corner_orientation[CORNER_POSITIONS.index(src)] = (
-                    self.corner_orientation[CORNER_POSITIONS.index(src)] + orientation_change[(i + len(cycle) - 1) % len(cycle)]
+                    self.corner_orientation[CORNER_POSITIONS.index(src)]
+                    + orientation_change[(i + len(cycle) - 1) % len(cycle)]
                 ) % 3
         self.state = new_state
 
@@ -1520,7 +1602,7 @@ class PiecePermutationSolver:
 
 PIECE_TYPES = [
     (PieceType.CORNER, "corner"),
-    # (PieceType.WING, "wing"),
+    (PieceType.WING, "wing"),
     # (PieceType.MIDGE, "midge"),
     # (PieceType.X_CENTER, "x_center"),
     # (PieceType.P_CENTER, "p_center"),
