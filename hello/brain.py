@@ -1163,9 +1163,9 @@ import copy
 class PieceType(Enum):
     CORNER = auto()
     WING = auto()
-    # MIDGE = auto()
-    # X_CENTER = auto()
-    # P_CENTER = auto()
+    MIDGE = auto()
+    X_CENTER = auto()
+    P_CENTER = auto()
 
 
 CORNER_POSITIONS = [
@@ -1206,10 +1206,83 @@ WING_POSITIONS = [
     "BRd",
 ]
 
+MIDGE_POSITIONS = [
+    "UF",
+    "UL",
+    "UB",
+    "UR",
+    "DF",
+    "DL",
+    "DB",
+    "DR",
+    "FR",
+    "FL",
+    "BL",
+    "BR",
+]
+
+X_CENTER_POSITIONS = [
+    "UFR",
+    "FRU",
+    "RUF",
+    "UFL",
+    "FLU",
+    "LUF",
+    "UBL",
+    "BLU",
+    "LUB",
+    "UBR",
+    "BRU",
+    "RUB",
+    "DFR",
+    "FRD",
+    "RDF",
+    "DFL",
+    "FLD",
+    "LDF",
+    "DBL",
+    "BLD",
+    "LDB",
+    "DBR",
+    "BRD",
+    "RDB",
+]
+
+P_CENTER_POSITIONS = [
+    "UF",
+    "FU",
+    "UL",
+    "LU",
+    "UB",
+    "BU",
+    "UR",
+    "RU",
+    "DF",
+    "FD",
+    "DL",
+    "LD",
+    "DB",
+    "BD",
+    "DR",
+    "RD",
+    "FR",
+    "RF",
+    "FL",
+    "LF",
+    "BL",
+    "LB",
+    "BR",
+    "RB",
+]
+
 
 class LetterScheme:
     def __init__(
-        self, corner_position_letters: dict, buffer: str, position_letters: dict
+        self,
+        corner_position_letters: dict,
+        buffer: str,
+        position_letters: dict,
+        midge_position_letters: dict,
     ):
         """
         corner_position_letters: position -> [letter0, letter1, letter2]
@@ -1230,6 +1303,14 @@ class LetterScheme:
             self.letter_neighbors[a] = [b, c]
             self.letter_neighbors[b] = [c, a]
             self.letter_neighbors[c] = [a, b]
+        self.all_midge_letters = {
+            l for pair in midge_position_letters.values() for l in pair
+        }
+        self.midge_position_letters = midge_position_letters
+        for letters in midge_position_letters.values():
+            a, b = letters
+            self.letter_neighbors[a] = [b]
+            self.letter_neighbors[b] = [a]
 
         self.position_letters = position_letters
 
@@ -1249,6 +1330,7 @@ LETTER_SCHEMES = {
             },
             buffer="C",
             position_letters={},
+            midge_position_letters={},
         ),
         PieceType.WING: LetterScheme(
             corner_position_letters={},
@@ -1279,6 +1361,88 @@ LETTER_SCHEMES = {
                 "BRu": "T",
                 "BRd": "X",
             },
+            midge_position_letters={},
+        ),
+        PieceType.MIDGE: LetterScheme(
+            corner_position_letters={},
+            buffer="E",
+            position_letters={},
+            midge_position_letters={
+                "UF": ["A", "I"],
+                "UL": ["B", "M"],
+                "UB": ["C", "Q"],
+                "UR": ["D", "W"],
+                "DF": ["E", "K"],
+                "DL": ["F", "O"],
+                "DB": ["G", "S"],
+                "DR": ["H", "Y"],
+                "FR": ["J", "Z"],
+                "FL": ["L", "N"],
+                "BL": ["R", "P"],
+                "BR": ["T", "X"],
+            },
+        ),
+        PieceType.X_CENTER: LetterScheme(
+            corner_position_letters={},
+            buffer="C",
+            position_letters={
+                "UFR": "A",
+                "FRU": "I",
+                "RUF": "Y",
+                "UFL": "B",
+                "FLU": "K",
+                "LUF": "M",
+                "UBL": "C",
+                "BLU": "Q",
+                "LUB": "O",
+                "UBR": "D",
+                "BRU": "S",
+                "RUB": "W",
+                "DFR": "E",
+                "FRD": "J",
+                "RDF": "Z",
+                "DFL": "F",
+                "FLD": "L",
+                "LDF": "N",
+                "DBL": "G",
+                "BLD": "R",
+                "LDB": "P",
+                "DBR": "H",
+                "BRD": "T",
+                "RDB": "X",
+            },
+            midge_position_letters={},
+        ),
+        PieceType.P_CENTER: LetterScheme(
+            corner_position_letters={},
+            buffer="B",
+            position_letters={
+                "UF": "A",
+                "FU": "I",
+                "UL": "B",
+                "LU": "M",
+                "UB": "C",
+                "BU": "Q",
+                "UR": "D",
+                "RU": "W",
+                "DF": "E",
+                "FD": "K",
+                "DL": "F",
+                "LD": "O",
+                "DB": "G",
+                "BD": "S",
+                "DR": "H",
+                "RD": "Y",
+                "FR": "J",
+                "RF": "Z",
+                "FL": "L",
+                "LF": "N",
+                "BL": "R",
+                "LB": "P",
+                "BR": "T",
+                "RB": "X",
+            },
+            midge_position_letters={},
         ),
     },
     "speffz": {
@@ -1295,6 +1459,7 @@ LETTER_SCHEMES = {
             },
             buffer="A",
             position_letters={},
+            midge_position_letters={},
         ),
         PieceType.WING: LetterScheme(
             corner_position_letters={},
@@ -1325,6 +1490,88 @@ LETTER_SCHEMES = {
                 "BRu": "M",
                 "BRd": "T",
             },
+            midge_position_letters={},
+        ),
+        PieceType.MIDGE: LetterScheme(
+            corner_position_letters={},
+            buffer="U",
+            position_letters={},
+            midge_position_letters={
+                "UF": ["C", "I"],
+                "UL": ["D", "E"],
+                "UR": ["B", "M"],
+                "UB": ["A", "Q"],
+                "DF": ["U", "K"],
+                "DL": ["X", "G"],
+                "DB": ["W", "S"],
+                "DR": ["V", "O"],
+                "FR": ["J", "P"],
+                "FL": ["L", "F"],
+                "BL": ["H", "R"],
+                "BR": ["T", "N"],
+            },
+        ),
+        PieceType.X_CENTER: LetterScheme(
+            corner_position_letters={},
+            buffer="A",
+            position_letters={
+                "UFR": "C",
+                "FRU": "J",
+                "RUF": "M",
+                "UFL": "D",
+                "FLU": "J",
+                "LUF": "F",
+                "UBL": "A",
+                "BLU": "R",
+                "LUB": "E",
+                "UBR": "B",
+                "BRU": "Q",
+                "RUB": "N",
+                "DFR": "V",
+                "FRD": "K",
+                "RDF": "P",
+                "DFL": "U",
+                "FLD": "L",
+                "LDF": "G",
+                "DBL": "X",
+                "BLD": "S",
+                "LDB": "H",
+                "DBR": "W",
+                "BRD": "T",
+                "RDB": "O",
+            },
+            midge_position_letters={},
+        ),
+        PieceType.P_CENTER: LetterScheme(
+            corner_position_letters={},
+            buffer="D",
+            position_letters={
+                "UF": "C",
+                "FU": "I",
+                "UL": "D",
+                "LU": "E",
+                "UB": "A",
+                "BU": "Q",
+                "UR": "B",
+                "RU": "M",
+                "DF": "U",
+                "FD": "K",
+                "DL": "X",
+                "LD": "G",
+                "DB": "W",
+                "BD": "S",
+                "DR": "V",
+                "RD": "O",
+                "FR": "J",
+                "RF": "P",
+                "FL": "L",
+                "LF": "F",
+                "BL": "R",
+                "LB": "H",
+                "BR": "T",
+                "RB": "N",
+            },
+            midge_position_letters={},
         ),
     },
 }
@@ -1350,9 +1597,9 @@ class PiecePermutationSolver:
         if piece_type == PieceType.CORNER:
             self.corner_orientation = [0] * 8  # index = corner position, value = 0,1,2
         self.corner_orientation_delta = self._load_corner_orientation_delta()
-
-    def get_identity_letter_permutation(self):
-        return {l: l for l in self.letter_scheme.all_corner_letters}
+        if piece_type == PieceType.MIDGE:
+            self.midge_orientation = [0] * 12  # index = midge position, value = 0,1
+        self.midge_orientation_delta = self._load_midge_orientation_delta()
 
     def _load_corner_orientation_delta(self):
         return {
@@ -1362,6 +1609,16 @@ class PiecePermutationSolver:
             "L": [1, 2, 1, 2],
             "F": [1, 2, 1, 2],
             "B": [1, 2, 1, 2],
+        }
+
+    def _load_midge_orientation_delta(self):
+        return {
+            "U": [0, 0, 0, 0],
+            "D": [0, 0, 0, 0],
+            "R": [0] * 4,
+            "L": [0] * 4,
+            "F": [1, 1, 1, 1],
+            "B": [1, 1, 1, 1],
         }
 
     def _load_parameters(self, piece_type: PieceType):
@@ -1441,6 +1698,101 @@ class PiecePermutationSolver:
 
             return positions, move_cycles
 
+        if piece_type == PieceType.MIDGE:
+            positions = MIDGE_POSITIONS
+
+            move_cycles = {
+                "U": [["UF", "UL", "UB", "UR"]],
+                "D": [["DF", "DR", "DB", "DL"]],
+                "R": [["UR", "BR", "DR", "FR"]],
+                "L": [["UL", "FL", "DL", "BL"]],
+                "F": [["UF", "FR", "DF", "FL"]],
+                "B": [["UB", "BL", "DB", "BR"]],
+            }
+
+            return positions, move_cycles
+
+        if piece_type == PieceType.X_CENTER:
+            positions = X_CENTER_POSITIONS
+
+            move_cycles = {
+                "U": [
+                    ["UFR", "UFL", "UBL", "UBR"],
+                ],
+                "Uw": [
+                    ["UFR", "UFL", "UBL", "UBR"],
+                    ["FRU", "LUF", "BLU", "RUB"],
+                    ["RUF", "FLU", "LUB", "BRU"],
+                ],
+                "D": [
+                    ["DFR", "DBR", "DBL", "DFL"],
+                ],
+                "Dw": [
+                    ["DFR", "DBR", "DBL", "DFL"],
+                    ["FRD", "RDB", "BLD", "LDF"],
+                    ["RDF", "BRD", "LDB", "FLD"],
+                ],
+                "F": [
+                    [
+                        "FRU",
+                        "FRD",
+                        "FLD",
+                        "FLU",
+                    ]
+                ],
+                "Fw": [
+                    ["FRU", "FRD", "FLD", "FLU"],
+                    ["RUF", "DFR", "LDF", "UFL"],
+                    ["UFR", "RDF", "DFL", "LUF"],
+                ],
+                "B": [
+                    ["BLU", "BLD", "BRD", "BRU"],
+                ],
+                "Bw": [
+                    ["BLU", "BLD", "BRD", "BRU"],
+                    ["LUB", "DBL", "RDB", "UBR"],
+                    ["UBL", "LDB", "DBR", "RUB"],
+                ],
+                "L": [
+                    ["LUF", "LDF", "LDB", "LUB"],
+                ],
+                "Lw": [
+                    ["LUF", "LDF", "LDB", "LUB"],
+                    ["UFL", "FLD", "DBL", "BLU"],
+                    ["FLU", "DFL", "BLD", "UBL"],
+                ],
+                "R": [
+                    ["RUF", "RUB", "RDB", "RDF"],
+                ],
+                "Rw": [
+                    ["RUF", "RUB", "RDB", "RDF"],
+                    ["UFR", "BRU", "DBR", "FRD"],
+                    ["FRU", "UBR", "BRD", "DFR"],
+                ],
+            }
+
+            return positions, move_cycles
+
+        if piece_type == PieceType.P_CENTER:
+            positions = P_CENTER_POSITIONS
+
+            move_cycles = {
+                "U": [["UF", "UL", "UB", "UR"]],
+                "Uw": [["UF", "UL", "UB", "UR"], ["FU", "LU", "BU", "RU"]],
+                "D": [["DF", "DR", "DB", "DL"]],
+                "Dw": [["DF", "DR", "DB", "DL"], ["FD", "RD", "BD", "LD"]],
+                "R": [["RU", "RB", "RD", "RF"]],
+                "Rw": [["RU", "RB", "RD", "RF"], ["UR", "BR", "DR", "FR"]],
+                "L": [["LU", "LF", "LD", "LB"]],
+                "Lw": [["LU", "LF", "LD", "LB"], ["UL", "FL", "DL", "BL"]],
+                "F": [["FU", "FR", "FD", "FL"]],
+                "Fw": [["FU", "FR", "FD", "FL"], ["UF", "RF", "DF", "LF"]],
+                "B": [["BU", "BL", "BD", "BR"]],
+                "Bw": [["BU", "BL", "BD", "BR"], ["UB", "LB", "DB", "RB"]],
+            }
+
+            return positions, move_cycles
+
         raise ValueError(f"Unsupported piece type: {piece_type}")
 
     def _solved_state(self):
@@ -1477,17 +1829,39 @@ class PiecePermutationSolver:
 
         return perm
 
-    def get_letter_permutation(self):
+    def get_midge_letter_permutation(self):
         perm = {}
 
-        for solved_pos, solved_letters in self.letter_scheme.position_letters.items():
+        for solved_pos in MIDGE_POSITIONS:
+            # Letters in solved position
+            solved_letters = self.letter_scheme.midge_position_letters[solved_pos]
+
             # Piece currently at this solved position
             piece_at_pos = self.state[solved_pos]
 
+            # Orientation of that piece at this position
+            piece_index = MIDGE_POSITIONS.index(piece_at_pos)
+            ori = self.midge_orientation[piece_index]
+
             # Letters of the piece, rotated by its orientation
-            piece_letters = self.letter_scheme.position_letters[piece_at_pos]
+            piece_letters = self.letter_scheme.midge_position_letters[piece_at_pos]
+            rotated_letters = piece_letters[ori:] + piece_letters[:ori]
 
             # Map solved letters → current letters
+            for sl, cl in zip(solved_letters, rotated_letters):
+                perm[sl] = cl
+
+        return perm
+
+    def get_letter_permutation(self):
+        if self.piece_type == PieceType.MIDGE:
+            return self.get_midge_letter_permutation()
+        if self.piece_type == PieceType.CORNER:
+            return self.get_corner_letter_permutation()
+        perm = {}
+        for solved_pos, solved_letters in self.letter_scheme.position_letters.items():
+            piece_at_pos = self.state[solved_pos]
+            piece_letters = self.letter_scheme.position_letters[piece_at_pos]
             for sl, cl in zip(solved_letters, piece_letters):
                 perm[sl] = cl
 
@@ -1500,16 +1874,29 @@ class PiecePermutationSolver:
         buffer_letter = self.letter_scheme.buffer
         targets = list(memo_str.replace(" ", "").strip())
 
-        perm = {l: l for l in (self.letter_scheme.all_corner_letters if self.piece_type == PieceType.CORNER else self.letter_scheme.position_letters.values())}
+        perm = {
+            l: l
+            for l in (
+                self.letter_scheme.all_corner_letters
+                if self.piece_type == PieceType.CORNER
+                else self.letter_scheme.position_letters.values()
+            )
+        }
+        if self.piece_type == PieceType.MIDGE:
+            perm = {l: l for l in self.letter_scheme.all_midge_letters}
 
         for target_letter in targets:
             # Find all three letters for buffer and target
-            buffer_triplet = [buffer_letter] + ([] if self.piece_type != PieceType.CORNER else self.letter_scheme.letter_neighbors[
-                buffer_letter
-            ])
-            target_triplet = [target_letter] + ([] if self.piece_type != PieceType.CORNER else self.letter_scheme.letter_neighbors[
-                target_letter
-            ])
+            buffer_triplet = [buffer_letter] + (
+                []
+                if self.piece_type not in [PieceType.CORNER, PieceType.MIDGE]
+                else self.letter_scheme.letter_neighbors[buffer_letter]
+            )
+            target_triplet = [target_letter] + (
+                []
+                if self.piece_type not in [PieceType.CORNER, PieceType.MIDGE]
+                else self.letter_scheme.letter_neighbors[target_letter]
+            )
 
             # Swap corresponding stickers
             for b, t in zip(buffer_triplet, target_triplet):
@@ -1518,21 +1905,19 @@ class PiecePermutationSolver:
         return perm
 
     def apply_user_memo_and_check(self, memo_str):
-        """
-        Returns True if the user memo correctly solves the cube from current state.
-        """
-        current_perm = self.get_corner_letter_permutation() if self.piece_type == PieceType.CORNER else self.get_letter_permutation()
+        current_perm = self.get_letter_permutation()
         user_perm = self.get_user_letter_permutation(memo_str)
-
-        print({k: v for k, v in self.state.items() if k != v})
-        print({k: v for k, v in current_perm.items() if k != v})
-        print({k: v for k, v in user_perm.items() if k != v})
-
-        # Compose: apply current_perm first, then user_perm
-        final_perm = {l: user_perm[current_perm[l]] for l in current_perm}
-
-        # Identity: solved letters map to themselves
-        return all(final_perm[l] == l for l in final_perm)
+        final_perm = {l: current_perm[user_perm[l]] for l in user_perm}
+        if self.piece_type not in [PieceType.X_CENTER, PieceType.P_CENTER]:
+            return all(final_perm[l] == l for l in final_perm)
+        color_map = dict()
+        for pos, letters in self.letter_scheme.position_letters.items():
+            for letter in letters:
+                color_map[letter] = pos[0]
+        for l in final_perm:
+            if color_map[l] != color_map[final_perm[l]]:
+                return False
+        return True
 
     def solved_permutation(self):
         """
@@ -1551,6 +1936,11 @@ class PiecePermutationSolver:
                     self.corner_orientation[CORNER_POSITIONS.index(src)]
                     + orientation_change[(i + len(cycle) - 1) % len(cycle)]
                 ) % 3
+            if self.piece_type == PieceType.MIDGE:
+                self.midge_orientation[MIDGE_POSITIONS.index(src)] = (
+                    self.midge_orientation[MIDGE_POSITIONS.index(src)]
+                    + orientation_change[(i + len(cycle) - 1) % len(cycle)]
+                ) % 2
         self.state = new_state
 
     def apply_move(self, move: str):
@@ -1565,13 +1955,17 @@ class PiecePermutationSolver:
             power = 1
             base = move
 
-        if self.piece_type == PieceType.CORNER:
+        if self.piece_type in [PieceType.CORNER, PieceType.MIDGE]:
             base = base[0]
         cycles = self.move_cycles.get(base, [])
         orientation_change = (
             self.corner_orientation_delta.get(base[0])
             if self.piece_type == PieceType.CORNER
-            else None
+            else (
+                self.midge_orientation_delta.get(base[0])
+                if self.piece_type == PieceType.MIDGE
+                else None
+            )
         )
 
         for _ in range(power):
@@ -1593,18 +1987,21 @@ class PiecePermutationSolver:
         """
         Returns True if current state matches the solved state.
         """
-        return self.state == self._solved_state() and (
-            self.piece_type != PieceType.CORNER
-            or all(ori == 0 for ori in self.corner_orientation)
-        )
+        if self.state != self._solved_state():
+            return False
+        if self.piece_type == PieceType.CORNER:
+            return all(ori == 0 for ori in self.corner_orientation)
+        if self.piece_type == PieceType.MIDGE:
+            return all(ori == 0 for ori in self.midge_orientation)
+        return True
 
 
 PIECE_TYPES = [
     (PieceType.CORNER, "corner"),
     (PieceType.WING, "wing"),
-    # (PieceType.MIDGE, "midge"),
-    # (PieceType.X_CENTER, "x_center"),
-    # (PieceType.P_CENTER, "p_center"),
+    (PieceType.MIDGE, "midge"),
+    (PieceType.X_CENTER, "x_center"),
+    (PieceType.P_CENTER, "p_center"),
 ]
 
 
