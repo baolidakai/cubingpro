@@ -187,6 +187,82 @@
 
         {% block content %}{% endblock content %}
 
+        <style>
+        .discount-banner {
+            margin-top: 40px;
+            padding: 28px 32px;
+            background: linear-gradient(135deg, #2d6a2e 0%, #4CAF50 50%, #57B647 100%);
+            border-radius: 16px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 32px rgba(76, 175, 80, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .discount-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { transform: translate(-10%, -10%); }
+            50% { transform: translate(10%, 10%); }
+        }
+        .discount-banner h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #e8f5e9;
+            position: relative;
+        }
+        .discount-banner .discount-code {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            border: 2px dashed rgba(255,255,255,0.6);
+            border-radius: 10px;
+            padding: 10px 28px;
+            font-size: 1.6em;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 12px rgba(255,255,255,0.4);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .discount-banner .discount-code:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+        .discount-banner .discount-label {
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 4px;
+            position: relative;
+        }
+        .discount-banner .discount-shops {
+            margin-top: 10px;
+            font-size: 0.85em;
+            color: rgba(255,255,255,0.85);
+            position: relative;
+        }
+        </style>
+
+        <div class="discount-banner">
+            <div class="discount-label">🎉 5% OFF</div>
+            <h3>Use my discount code at TheCubicle & SpeedCubeShop</h3>
+            <div class="discount-code" onclick="navigator.clipboard.writeText('CUBINGPRO'); this.textContent='COPIED!'; setTimeout(() => this.textContent='CUBINGPRO', 1500);">CUBINGPRO</div>
+            <div class="discount-shops">Click the code to copy • Works at checkout on both stores</div>
+        </div>
+
       </div>
 
     </div>
