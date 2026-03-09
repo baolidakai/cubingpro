@@ -33,6 +33,11 @@
         "title": "FMC Theory",
         "url": "/fmc/theory",
         "logo": "fmc.jpg"
+      },
+      {
+        "title": "OH PLL algorithms",
+        "url": "/3x3x3/oh_pll",
+        "logo": "3x3x3.png"
       }
     ]
   },

@@ -69,6 +69,7 @@ urlpatterns = [
     path("5bld/trainer/memo", hello.views.submit_big_bld_trainer_memo, name="submit_big_bld_trainer_memo"),
     path("3bld/exec_trainer", hello.views.exec_trainer, name="exec_trainer"),
     path("3bld/exec_trainer/generate_3_cycle_scramble", hello.views.generate_3_cycle_scramble, name="generate_3_cycle_scramble"),
+    path("3x3x3/oh_pll/", hello.views.oh_pll, name="oh_pll"),
     path("big_cube/yau", hello.views.yau, name="yau"),
     path("solver/", hello.views.solver, name="solver"),
     path("game/geoguesser", hello.views.geoguesser, name="geoguesser"),

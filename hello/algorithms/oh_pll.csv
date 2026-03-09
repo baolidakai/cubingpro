@@ -1,0 +1,22 @@
+Case,alg,auf,category
+Ua,R U' R U R U R U' R' U' R2,,Edges-only
+Ub,L' U L' U' L' U' L' U L U L2,,Edges-only
+Z,(R' U' R U') (R U R U') (R' U R U) R2 U' R',,Edges-only
+H,x' R r U2' R' r' u' U' R2 U D,,Edges-only
+Aa,x R' U (R' D2) R U' (R' D2 R2),,Corner-only
+Ab,x (R2 D2) R U (R' D2) R U' R,,Corner-only
+E,x' (R U' R' D) (R U R' D') (R U R' D) (R U' R' u'),,Corner-only
+F,R U R' U' R' U R U2 R' (L' U) (R U') L U' R U' R',,Adjacent Corner Swap
+Ja,R' U2' R U R' U2' L U' R U r',,Adjacent Corner Swap
+Jb,R U2 R' U' R U2 L' U R' U' r,,Adjacent Corner Swap
+Ra,R U' R' U' R U R (D R') U' R (D' R') U2 R',,Adjacent Corner Swap
+Rb,R' U2 R' D' R U' R' D R U R U' R' U' R,,Adjacent Corner Swap
+T,R U R' U' R' F R2 U' R' U' R U R' F',,Adjacent Corner Swap
+Y,R2 U' R' U R U' x' U' z' U' R U' R' U' r B,,Diagonal Corner Swap
+V,R U2' R' D R U' R U' R (U R2 D R') U' R u2,,Diagonal Corner Swap
+Na,R U R' U (R U2 R' U' R U2 L' U R' U' L) U' R U' R',= R U R' U (Jb Perm r→L) U' R U' R',Diagonal Corner Swap
+Nb,R' U' R U' (R' U2 R U R' U2 L U' R U L') U R' U R,= R' U' R U' (Ja Perm r'→L') U R' U R,Diagonal Corner Swap
+Ga,R2 u R' U R' U' R u' R2 y' R' U R,,G Permutation
+Gb,R' U' R y R2 u R' U R U' R u' R2,,G Permutation
+Gc,R2 u' R U' R U R' u R2 y R U' R',,G Permutation
+Gd,R U R' y' R2 u' R U' R' U R' u R2,,G Permutation

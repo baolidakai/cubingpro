@@ -473,6 +473,39 @@ def eg_alg(request):
     return render(request, "eg_alg.html", {'table_data': table_data})
 
 
+def cube_3x3_inverse(alg):
+    # Strip parentheses used for readability grouping
+    alg = alg.replace('(', '').replace(')', '')
+    pattern = r"[RLUDFBMESxyzruldfb][w]?2?'?"
+    moves = re.findall(pattern, alg)
+    moves.reverse()
+    def inv(m):
+        if '2' in m:
+            return m.replace("'", "")  # U2' == U2, both self-inverse
+        if m.endswith("'"):
+            return m[:-1]
+        return m + "'"
+    return ' '.join([inv(m) for m in moves])
+
+
+def read_3x3_csv_data(filepath, delimiter=','):
+    data = []
+    csv_path = os.path.join(settings.BASE_DIR, filepath)
+
+    with open(csv_path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=delimiter)
+        for row in reader:
+            row['viz'] = cube_3x3_inverse(row.get('alg', ''))
+            data.append(row)
+
+    return data
+
+
+def oh_pll(request):
+    table_data = read_3x3_csv_data('hello/algorithms/oh_pll.csv')
+    return render(request, "oh_pll.html", {'table_data': table_data})
+
+
 def eg_trainer(request):
     # Following code are one-time for generating the eg_trainer CSV only.
     """

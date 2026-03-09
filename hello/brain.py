@@ -1451,7 +1451,7 @@ LETTER_SCHEMES = {
                 "UFR": ["C", "M", "J"],
                 "UFL": ["D", "I", "F"],
                 "UBL": ["A", "E", "R"],
-                "UBR": ["V", "K", "P"],
+                "UBR": ["B", "Q", "N"],
                 "DFR": ["V", "K", "P"],
                 "DFL": ["U", "G", "L"],
                 "DBL": ["X", "S", "H"],
@@ -1487,7 +1487,7 @@ LETTER_SCHEMES = {
                 "FLd": "L",
                 "BLu": "R",
                 "BLd": "H",
-                "BRu": "M",
+                "BRu": "N",
                 "BRd": "T",
             },
             midge_position_letters={},
@@ -1519,7 +1519,7 @@ LETTER_SCHEMES = {
                 "FRU": "J",
                 "RUF": "M",
                 "UFL": "D",
-                "FLU": "J",
+                "FLU": "I",
                 "LUF": "F",
                 "UBL": "A",
                 "BLU": "R",
@@ -1907,6 +1907,9 @@ class PiecePermutationSolver:
     def apply_user_memo_and_check(self, memo_str):
         current_perm = self.get_letter_permutation()
         user_perm = self.get_user_letter_permutation(memo_str)
+        print(self.piece_type)
+        print(current_perm)
+        print(user_perm)
         final_perm = {l: current_perm[user_perm[l]] for l in user_perm}
         if self.piece_type not in [PieceType.X_CENTER, PieceType.P_CENTER]:
             return all(final_perm[l] == l for l in final_perm)

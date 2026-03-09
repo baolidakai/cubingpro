@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>
+    3x3x3 OH PLL Algorithms
+</h1>
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Case</th>
+            <th>Algorithm</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in table_data %}
+        {% ifchanged row.category %}
+        <tr>
+            <td colspan="2" style="padding-top: 20px;">
+                <h2 style="margin: 0;">{{ row.category }}</h2>
+            </td>
+        </tr>
+        {% endifchanged %}
+        <tr>
+            <td>{{ row.Case }}</td>
+            <td>
+                <div style="text-align: center;">
+                    <twisty-player style="width: 256px;height: 192px;" experimental-setup-anchor="end" puzzle="3x3x3"
+                        background="none" control-panel="none" alg="{{row.viz}} x2"></twisty-player>
+                    {{row.alg}}<br>
+                    {{row.auf}}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
