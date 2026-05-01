@@ -3,7 +3,7 @@ gunicorn>=23,<24
 dj-database-url>=2,<3
 whitenoise[brotli]>=6,<7
 RubikTwoPhase
-markdown>=3.0
+markdown>=3.10.2
 django-cors-headers
 requests
 google-genai
