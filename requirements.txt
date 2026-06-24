@@ -1,7 +1,7 @@
 django>=4.0
 gunicorn>=23,<24
 dj-database-url>=2,<3
-whitenoise[brotli]>=6,<7
+whitenoise[brotli]>=6.12.0,<7
 RubikTwoPhase
 markdown>=3.0
 django-cors-headers
