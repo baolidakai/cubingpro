@@ -920,3 +920,15 @@ def chat_view(request):
     request.session['chat_history'] = chat_history
 
     return render(request, 'auto_interviewer.html', {"chat_history": chat_history})
+
+
+def fto_bencisco(request):
+    return render(request, 'fto_bencisco.html', {})
+
+
+def fto_benezisko(request):
+    return render(request, 'fto_bencisco.html', {})
+
+
+def fto_hardware(request):
+    return render(request, 'fto_bencisco.html', {})

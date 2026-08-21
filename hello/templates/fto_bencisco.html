@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Face-Turning Octahedron (FTO) Tutorial: Bencisco Method & Best Speed Cubes | Cubing Pro{% endblock title %}
+{% block meta_description %}Complete Face-Turning Octahedron (FTO) tutorial for the Bencisco method, algorithms, and 2026 hardware recommendations for DaYan FTO M and DianSheng FTO Neo.{% endblock meta_description %}
+{% block meta_keywords %}face turning octahedron tutorial, fto tutorial, fto algorithms, bencisco method, best fto speed cube, dayan fto ball core, diansheng fto neo, cubingpro{% endblock meta_keywords %}
+
+{% block content %}
+
+<style>
+.hardware-promo-hero {
+    background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #40916c 100%);
+    border-radius: 16px;
+    padding: 28px 24px;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(27, 67, 50, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+.hardware-promo-hero h2 {
+    color: #ffffff !important;
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.hardware-promo-hero p {
+    font-size: 1rem;
+    color: #d8f3dc;
+    max-width: 750px;
+    margin: 0 auto 16px auto;
+}
+.promo-code-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px dashed #74c69d;
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+.promo-code-badge:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.3);
+}
+.promo-code-text {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #ffffff;
+}
+.promo-code-sub {
+    font-size: 0.85rem;
+    color: #b7e4c7;
+    margin-top: 4px;
+}
+
+.cube-card {
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    transition: border-color 0.2s ease;
+}
+.cube-card:hover {
+    border-color: #57B647;
+}
+.cube-rank {
+    display: inline-block;
+    background: #57B647;
+    color: white;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+.cube-title {
+    margin-top: 0;
+    margin-bottom: 6px;
+    color: #2d6a2e;
+}
+.cube-specs {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+.shop-cta-btn {
+    display: inline-block;
+    background: #3764c8;
+    color: #ffffff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s ease;
+    margin-right: 8px;
+    margin-top: 8px;
+}
+.shop-cta-btn:hover {
+    background: #284da3;
+}
+</style>
+
+<h1>Face-Turning Octahedron (FTO) Tutorial: Bencisco Method</h1>
+
+<p>
+    The <strong>Bencisco Method</strong> is the premier speedsolving method for the Face-Turning Octahedron (FTO). 
+    Developed by <strong>Ben Streeter</strong> between 2018 and 2019, it revolutionized FTO speedsolving by introducing an efficient block-building framework with superb ergonomics and low move counts.
+</p>
+<p>
+    The name is a portmanteau of Ben's first name (<em>Ben</em>) and <em>Triangular Francisco</em> (a 3x3 method family whose naming scheme was adapted for FTO).
+</p>
+
+<h2>Method Overview</h2>
+
+<p>
+    Bencisco structures an FTO solve into four distinct steps:
+    <ol>
+        <li><strong>First Block (dBL Block):</strong> Build a 4-piece block on the down-back-left side of the puzzle.</li>
+        <li><strong>Last 3 Large Centers (L3C):</strong> Solve the remaining 3 large center faces while preserving the first block.</li>
+        <li><strong>Top Corner Pair (UBL Corner & Centers):</strong> Solve the UBL corner and its 2 adjacent small centers to finalize the left portion of the puzzle.</li>
+        <li><strong>Last 3 Triplets (L3T):</strong> Solve the remaining corners and centers on the right and front faces using intuitive insertions and algorithmic cases.</li>
+    </ol>
+</p>
+
+<h2>Step-by-Step Breakdown</h2>
+
+<h3>Step 1: First Block (dBL Block)</h3>
+<p>
+    In this initial phase, you construct a block around the <code>dBL</code> (down-back-left) face. 
+    This involves pairing up one large center with its adjacent corner and edge pieces to create a solid anchor block.
+    <br><br>
+    <em>Key tip:</em> Because this step is entirely intuitive, practice inspecting the full block during your pre-solve inspection time to achieve a seamless transition into step 2.
+</p>
+
+<h3>Step 2: Last 3 Large Centers (L3C)</h3>
+<p>
+    With the <code>dBL</code> block stored safely out of the way on your left, you solve the remaining 3 large centers. 
+    This step relies on intuitive slice-turn-slice movements (similar to big cube center solving in methods like Yau), ensuring that the first block is never disturbed.
+</p>
+
+<h3>Step 3: UBL Corner and Centers (Top Corner Pair)</h3>
+<p>
+    Next, you pair up the <code>UBL</code> corner piece along with its two corresponding center pieces. 
+    Inserting this piece-group finishes off the entire left/back section of the FTO, leaving only the right/front layer triplets to solve.
+</p>
+
+<h3>Step 4: Last 3 Triplets (L3T)</h3>
+<p>
+    The final stage solves the remaining 3 sets of corners and small centers (the Last 3 Triplets). 
+    Solvers generally accomplish this using a combination of intuitive insertions and algorithmic set combinations (such as 3-cycle commutators and orientation algorithms).
+</p>
+
+<h2>Why Learn Bencisco?</h2>
+
+<p>
+    Prior to Bencisco, FTO solving heavily relied on basic reduction methods that suffered from high move counts and awkward rotations. Bencisco offers several major advantages:
+    <ul>
+        <li><strong>Great Ergonomics:</strong> Keeps the solved block on the left/back, allowing you to execute most moves using fast R, U, and F turns.</li>
+        <li><strong>Low Move Count:</strong> A typical Bencisco solve requires significantly fewer moves than standard reduction methods.</li>
+        <li><strong>High TPS & Lookahead:</strong> Once the first block is placed, lookahead becomes very fluid through the center and triplet stages.</li>
+    </ul>
+</p>
+
+<h2>Improvement & Progression Plan</h2>
+
+<p>
+    If you are getting started with FTO speedsolving, here is a recommended path for mastering Bencisco:
+    <ol>
+        <li><strong>Master Block Building:</strong> Spend time building the <code>dBL</code> block untimed until you can consistently construct it in under 10-12 moves.</li>
+        <li><strong>Fluid Center Solving:</strong> Practice solving the last 3 large centers without looking at the first block, training yourself to use wide slice turns effortlessly.</li>
+        <li><strong>Intuitive L3T:</strong> Learn the basic 3-cycle commutators for the last 3 triplets before memorizing dedicated algorithm sets.</li>
+        <li><strong>Full Inspection:</strong> Work toward planning the entire <code>dBL</code> block during 15-second inspection.</li>
+    </ol>
+</p>
+
+<h2>External Links & History</h2>
+
+<p>
+    For historical records, example solves, and original community documentation, check out:
+    <ul>
+        <li><a href="https://www.cubinghistory.com/FTO/Methods/Bencisco" target="_blank" rel="noopener noreferrer">Cubing History: Bencisco Method</a></li>
+        <li><a href="https://docs.google.com/document/d/e/2PACX-1vTDL7-XvpNrhIc2Q_1nHfeJyG7tIazgBCq88PE8ahqIbvPb3LPQsM3_vsdqX6y8sxte1n5jGk2J3c5V/pub" target="_blank" rel="noopener noreferrer">Ben Streeter's Original Bencisco Document</a></li>
+    </ul>
+</p>
+
+<hr style="margin: 40px 0; border: 0; border-top: 1px solid #e9ecef;">
+
+<!-- Merged Hardware Section -->
+<div class="hardware-promo-hero">
+    <h2>Recommended FTO Speed Cubes (Hardware Guide)</h2>
+    <p>Ready to practice Bencisco on top-tier hardware? Here are the best flagship FTO speed cubes on the market.</p>
+    
+    <div class="promo-code-badge" onclick="navigator.clipboard.writeText('CUBINGPRO'); this.querySelector('.promo-code-text').textContent='COPIED!'; setTimeout(() => this.querySelector('.promo-code-text').textContent='CUBINGPRO', 1500);">
+        <div class="promo-code-text">CUBINGPRO</div>
+        <div class="promo-code-sub">🎁 Click to copy • Save 5% at TheCubicle & SpeedCubeShop</div>
+    </div>
+</div>
+
+<div class="cube-card">
+    <span class="cube-rank">🏆 #1 BEST OVERALL FLAGSHIP</span>
+    <h3 class="cube-title">DaYan FTO M Ball-Core</h3>
+    <div class="cube-specs">Price: ~$27.99 | Mechanism: Anti-Pop + Ball-Core Magnetics | Feel: Smooth, Fast & Premium</div>
+    <p>
+        The <strong>DaYan FTO M Ball-Core</strong> represents the pinnacle of modern FTO engineering. Featuring an advanced internal anti-pop mechanism and a magnetic ball-core, it offers unmatched stability, effortless corner cutting, and near-zero pop frequency.
+    </p>
+    <a href="https://www.thecubicle.com/products/dayan-fto-magnetic-ball-core?_pos=1&_sid=a4ce98255&_ss=r" target="_blank" rel="noopener noreferrer" class="shop-cta-btn">Buy on TheCubicle (Code: CUBINGPRO)</a>
+    <a href="https://speedcubeshop.com/products/dayan-fto-magnetic-ball-core" target="_blank" rel="noopener noreferrer" class="shop-cta-btn">Buy on SpeedCubeShop (Code: CUBINGPRO)</a>
+</div>
+
+<div class="cube-card">
+    <span class="cube-rank">🥈 #2 BEST VALUE FLAGSHIP ALTERNATIVE</span>
+    <h3 class="cube-title">DianSheng FTO Neo (Magnetic + Ball-Core)</h3>
+    <div class="cube-specs">Price: ~$21.99 | Mechanism: Ball-Core Magnetic | Feel: Compact, Crisp & Tactile</div>
+    <p>
+        The <strong>DianSheng FTO Neo</strong> is a fantastic compact option that packs a magnetic ball-core into a slightly smaller outer shell. Perfect for cubers with smaller hands or anyone looking for flagship ball-core performance at a more accessible price point.
+    </p>
+    <a href="https://www.thecubicle.com/products/diansheng-galaxy-fto-neo-magnetic-ball-core?_pos=1&_psq=DianSheng+FTO+Neo+%28Magnetic+++Ball-Core%29&_psid=7104eba0c&_ss=e" target="_blank" rel="noopener noreferrer" class="shop-cta-btn">Buy on TheCubicle (Code: CUBINGPRO)</a>
+    <a href="https://speedcubeshop.com/products/diansheng-fto-neo-magnetic-ball-core" target="_blank" rel="noopener noreferrer" class="shop-cta-btn">Buy on SpeedCubeShop (Code: CUBINGPRO)</a>
+</div>
+
+<h2>Hardware Setup & Maintenance Tips</h2>
+<p>
+    <ul>
+        <li><strong>Lube Choice:</strong> Magnetic FTOs benefit from medium-viscosity silicon lube on the core combined with a light lube on piece tracks to prevent lockups.</li>
+        <li><strong>Tensions:</strong> Keep core tensions even across all 8 faces to ensure uniform corner-cutting angles.</li>
+        <li><strong>Discount Code:</strong> Use code <strong><code>CUBINGPRO</code></strong> at checkout on <strong>TheCubicle</strong> or <strong>SpeedCubeShop</strong> to get 5% OFF your order!</li>
+    </ul>
+</p>
+
+{% endblock content %}

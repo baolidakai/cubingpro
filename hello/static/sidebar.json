@@ -188,6 +188,17 @@
     ]
   },
   {
+    "category": "Face-Turning Octahedron (FTO)",
+    "category_logo": "fto.png",
+    "items": [
+      {
+        "title": "Bencisco Method & Hardware",
+        "url": "/fto/bencisco",
+        "logo": "fto.png"
+      }
+    ]
+  },
+  {
     "category": "Square-1",
     "category_logo": "sq1.jpg",
     "items": [

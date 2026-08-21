@@ -4,11 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Cubing Pro</title>
+  <title>{% block title %}Cubing Pro{% endblock title %}</title>
 
   <meta name="author" content="Bowen Deng">
-  <meta name="description" content="Home for competitive speedcubers.">
-  <meta name="keywords" content="rubik's cube, cubing, speedcubing, algorithms, algs">
+  <meta name="description" content="{% block meta_description %}Home for competitive speedcubers.{% endblock meta_description %}">
+  <meta name="keywords" content="{% block meta_keywords %}rubik's cube, cubing, speedcubing, algorithms, algs, face turning octahedron, fto{% endblock meta_keywords %}">
 
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
   <script async="" src="//www.google-analytics.com/analytics.js"></script>
@@ -24,7 +24,6 @@
   <script type="module">
     import "https://cdn.cubing.net/v0/js/cubing/twisty";
   </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -290,6 +289,7 @@
     <img id="clock_png" src="{% static 'clock.png' %}" />
     <img id="pyraminx_png" src="{% static 'pyraminx.png' %}" />
     <img id="skewb_png" src="{% static 'skewb.png' %}" />
+    <img id="fto_png" src="{% static 'fto.png' %}" />
     <img id="sq1_jpg" src="{% static 'sq1.jpg' %}" />
     <img id="wca_png" src="{% static 'wca.png' %}" />
     <img id="misc_png" src="{% static 'misc.png' %}" />

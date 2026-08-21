@@ -94,5 +94,8 @@ urlpatterns = [
     path('sq1/solver/', hello.views.sq1_solver, name='sq1_solver'),
     path('gemini-chat/', hello.views.chat_api, name='chat_api'),
     path('auto_interviewer/', hello.views.chat_view, name='chat_page'),
+    path('fto/bencisco', hello.views.fto_bencisco, name='fto_bencisco'),
+    path('fto/benezisko', hello.views.fto_benezisko, name='fto_benezisko'),
+    path('fto/hardware', hello.views.fto_hardware, name='fto_hardware'),
 ]
 
