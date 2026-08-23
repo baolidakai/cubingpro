@@ -8,6 +8,131 @@
 {% block content %}
 
 <style>
+/* ── Language Toggle ── */
+.lang-toggle {
+    position: sticky;
+    top: 70px;
+    z-index: 500;
+    text-align: right;
+    margin-bottom: 10px;
+}
+.lang-toggle button {
+    padding: 6px 16px;
+    border: 2px solid #57B647;
+    background: #fff;
+    color: #333;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.lang-toggle button:first-child {
+    border-radius: 8px 0 0 8px;
+    border-right: 1px solid #57B647;
+}
+.lang-toggle button:last-child {
+    border-radius: 0 8px 8px 0;
+    border-left: 1px solid #57B647;
+}
+.lang-toggle button.active {
+    background: #57B647;
+    color: #fff;
+}
+/* Language visibility */
+.lang-zh { display: none; }
+body.zh .lang-en { display: none; }
+body.zh .lang-zh { display: initial; }
+/* For block-level elements */
+div.lang-zh, p.lang-zh, h1.lang-zh, h2.lang-zh, h3.lang-zh,
+li.lang-zh, ol.lang-zh, ul.lang-zh, table.lang-zh, section.lang-zh { display: none; }
+body.zh div.lang-en, body.zh p.lang-en, body.zh h1.lang-en, body.zh h2.lang-en, body.zh h3.lang-en,
+body.zh li.lang-en, body.zh ol.lang-en, body.zh ul.lang-en, body.zh table.lang-en, body.zh section.lang-en { display: none; }
+body.zh div.lang-zh, body.zh p.lang-zh, body.zh h1.lang-zh, body.zh h2.lang-zh, body.zh h3.lang-zh,
+body.zh li.lang-zh, body.zh ol.lang-zh, body.zh ul.lang-zh, body.zh table.lang-zh, body.zh section.lang-zh { display: block; }
+body.zh li.lang-zh { display: list-item; }
+
+/* ── Tutorial Styles ── */
+.alg-box {
+    background: #f4f4f4;
+    border-left: 4px solid #57B647;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.05rem;
+    overflow-x: auto;
+}
+.notation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+}
+.notation-table th, .notation-table td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+.notation-table th {
+    background: #57B647;
+    color: white;
+}
+.notation-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+.step-header {
+    background: linear-gradient(90deg, #2d6a2e 0%, #57B647 100%);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-top: 35px;
+    margin-bottom: 12px;
+}
+.tip-box {
+    background: #e8f5e9;
+    border-left: 4px solid #4CAF50;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 8px 8px 0;
+}
+.warning-box {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 8px 8px 0;
+}
+.twizzle-link {
+    display: inline-block;
+    background: #3764c8;
+    color: #fff !important;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin: 4px 2px;
+    transition: background 0.2s;
+}
+.twizzle-link:hover {
+    background: #284da3;
+}
+.color-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    vertical-align: middle;
+    margin: 0 2px;
+}
+.credit-box {
+    background: #f0f0f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Hardware promo (preserved) */
 .hardware-promo-hero {
     background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #40916c 100%);
     border-radius: 16px;
@@ -57,7 +182,6 @@
     color: #b7e4c7;
     margin-top: 4px;
 }
-
 .cube-card {
     background: #ffffff;
     border: 2px solid #e9ecef;
@@ -108,96 +232,713 @@
 }
 </style>
 
-<h1>Face-Turning Octahedron (FTO) Tutorial: Bencisco Method</h1>
+<!-- Language Toggle -->
+<div class="lang-toggle">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button><button id="btn-zh" onclick="setLang('zh')">中文</button>
+</div>
 
-<p>
-    The <strong>Bencisco Method</strong> is the premier speedsolving method for the Face-Turning Octahedron (FTO). 
-    Developed by <strong>Ben Streeter</strong> between 2018 and 2019, it revolutionized FTO speedsolving by introducing an efficient block-building framework with superb ergonomics and low move counts.
+<script>
+function setLang(lang) {
+    if (lang === 'zh') {
+        document.body.classList.add('zh');
+    } else {
+        document.body.classList.remove('zh');
+    }
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    try { localStorage.setItem('fto_lang', lang); } catch(e) {}
+}
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        var saved = localStorage.getItem('fto_lang');
+        if (saved === 'zh') setLang('zh');
+    } catch(e) {}
+});
+</script>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TITLE -->
+<!-- ═══════════════════════════════════════════════════ -->
+<h1 class="lang-en">Face-Turning Octahedron (FTO) Tutorial: Bencisco Method</h1>
+<h1 class="lang-zh">正八面体魔方 (FTO) 教程：Bencisco 解法</h1>
+
+<p class="lang-en">
+    The <strong>Bencisco Method</strong> is the premier speedsolving method for the Face-Turning Octahedron (FTO).
+    This comprehensive guide walks you through the method step by step — from basic notation all the way to solving the last layer.
+    It is designed for people who want to learn to solve the FTO but haven't been able to yet.
 </p>
-<p>
-    The name is a portmanteau of Ben's first name (<em>Ben</em>) and <em>Triangular Francisco</em> (a 3x3 method family whose naming scheme was adapted for FTO).
-</p>
-
-<h2>Method Overview</h2>
-
-<p>
-    Bencisco structures an FTO solve into four distinct steps:
-    <ol>
-        <li><strong>First Block (dBL Block):</strong> Build a 4-piece block on the down-back-left side of the puzzle.</li>
-        <li><strong>Last 3 Large Centers (L3C):</strong> Solve the remaining 3 large center faces while preserving the first block.</li>
-        <li><strong>Top Corner Pair (UBL Corner & Centers):</strong> Solve the UBL corner and its 2 adjacent small centers to finalize the left portion of the puzzle.</li>
-        <li><strong>Last 3 Triplets (L3T):</strong> Solve the remaining corners and centers on the right and front faces using intuitive insertions and algorithmic cases.</li>
-    </ol>
-</p>
-
-<h2>Step-by-Step Breakdown</h2>
-
-<h3>Step 1: First Block (dBL Block)</h3>
-<p>
-    In this initial phase, you construct a block around the <code>dBL</code> (down-back-left) face. 
-    This involves pairing up one large center with its adjacent corner and edge pieces to create a solid anchor block.
-    <br><br>
-    <em>Key tip:</em> Because this step is entirely intuitive, practice inspecting the full block during your pre-solve inspection time to achieve a seamless transition into step 2.
-</p>
-
-<h3>Step 2: Last 3 Large Centers (L3C)</h3>
-<p>
-    With the <code>dBL</code> block stored safely out of the way on your left, you solve the remaining 3 large centers. 
-    This step relies on intuitive slice-turn-slice movements (similar to big cube center solving in methods like Yau), ensuring that the first block is never disturbed.
-</p>
-
-<h3>Step 3: UBL Corner and Centers (Top Corner Pair)</h3>
-<p>
-    Next, you pair up the <code>UBL</code> corner piece along with its two corresponding center pieces. 
-    Inserting this piece-group finishes off the entire left/back section of the FTO, leaving only the right/front layer triplets to solve.
+<p class="lang-zh">
+    <strong>Bencisco 解法</strong>是正八面体魔方 (Face-Turning Octahedron, 简称 FTO) 的主流速解法。
+    本教程将手把手带你从基础转动符号开始，一步步学会完整的 FTO 复原方法。
+    本教程面向想学习 FTO 但还不会复原的玩家。
 </p>
 
-<h3>Step 4: Last 3 Triplets (L3T)</h3>
-<p>
-    The final stage solves the remaining 3 sets of corners and small centers (the Last 3 Triplets). 
-    Solvers generally accomplish this using a combination of intuitive insertions and algorithmic set combinations (such as 3-cycle commutators and orientation algorithms).
+<p class="lang-en">
+    <em>Note: This tutorial uses the <strong>DianSheng color scheme</strong> for all explanations.</em>
+</p>
+<p class="lang-zh">
+    <em>注意：本教程采用 <strong>DianSheng（点盛）配色方案</strong>进行说明。</em>
 </p>
 
-<h2>Why Learn Bencisco?</h2>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ① TERMINOLOGY, NOTATION & METHOD OVERVIEW -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">① Terminology, Notation & Method Overview</span>
+    <span class="lang-zh">① 术语、转动符号与解法流程</span>
+</div>
 
-<p>
-    Prior to Bencisco, FTO solving heavily relied on basic reduction methods that suffered from high move counts and awkward rotations. Bencisco offers several major advantages:
-    <ul>
-        <li><strong>Great Ergonomics:</strong> Keeps the solved block on the left/back, allowing you to execute most moves using fast R, U, and F turns.</li>
-        <li><strong>Low Move Count:</strong> A typical Bencisco solve requires significantly fewer moves than standard reduction methods.</li>
-        <li><strong>High TPS & Lookahead:</strong> Once the first block is placed, lookahead becomes very fluid through the center and triplet stages.</li>
-    </ul>
+<p class="lang-en">
+    The FTO has 8 faces, each of which can be turned. The standard notation assigns a letter to each face:
+    <strong>U</strong> (Up), <strong>D</strong> (Down), <strong>L</strong> (Left), <strong>R</strong> (Right),
+    <strong>F</strong> (Front), <strong>B</strong> (Back), <strong>BL</strong> (Back-Left), <strong>BR</strong> (Back-Right).
+    A prime symbol (') after a letter means counter-clockwise.
+</p>
+<p class="lang-zh">
+    FTO 有 8 个面，每个面都可以转动。标准转动符号为每个面分配一个字母：
+    <strong>U</strong>（上）、<strong>D</strong>（下）、<strong>L</strong>（左）、<strong>R</strong>（右）、
+    <strong>F</strong>（前）、<strong>B</strong>（后）、<strong>BL</strong>（后左）、<strong>BR</strong>（后右）。
+    字母后加撇号(')表示逆时针转动。
 </p>
 
-<h2>Improvement & Progression Plan</h2>
-
-<p>
-    If you are getting started with FTO speedsolving, here is a recommended path for mastering Bencisco:
-    <ol>
-        <li><strong>Master Block Building:</strong> Spend time building the <code>dBL</code> block untimed until you can consistently construct it in under 10-12 moves.</li>
-        <li><strong>Fluid Center Solving:</strong> Practice solving the last 3 large centers without looking at the first block, training yourself to use wide slice turns effortlessly.</li>
-        <li><strong>Intuitive L3T:</strong> Learn the basic 3-cycle commutators for the last 3 triplets before memorizing dedicated algorithm sets.</li>
-        <li><strong>Full Inspection:</strong> Work toward planning the entire <code>dBL</code> block during 15-second inspection.</li>
-    </ol>
+<p class="lang-en">
+    For reference, here is the notation used by <a href="https://alpha.twizzle.net/edit/" target="_blank" rel="noopener noreferrer">Twizzle Editor</a>, a very useful interactive tool:
+</p>
+<p class="lang-zh">
+    以下是 <a href="https://alpha.twizzle.net/edit/" target="_blank" rel="noopener noreferrer">Twizzle Editor</a>（一个非常实用的在线互动工具）所使用的符号对照表：
 </p>
 
-<h2>External Links & History</h2>
+<table class="notation-table">
+    <tr>
+        <th><span class="lang-en">Type</span><span class="lang-zh">类型</span></th>
+        <th><span class="lang-en">Notation</span><span class="lang-zh">符号</span></th>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Single-layer (uppercase)</span><span class="lang-zh">单层转动（大写）</span></td>
+        <td>U &nbsp; D &nbsp; L &nbsp; R &nbsp; F &nbsp; B &nbsp; BL &nbsp; BR</td>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Double-layer (lowercase)</span><span class="lang-zh">双层转动（小写）</span></td>
+        <td>u &nbsp; d &nbsp; l &nbsp; r &nbsp; f &nbsp; b &nbsp; bl &nbsp; br</td>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Mid-layer</span><span class="lang-zh">中层转动</span></td>
+        <td>2U &nbsp; 2D &nbsp; 2L &nbsp; 2R &nbsp; 2F &nbsp; 2B &nbsp; 2BL &nbsp; 2BR</td>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Rotation (whole puzzle)</span><span class="lang-zh">整体持换</span></td>
+        <td>Uv &nbsp; Dv &nbsp; Lv &nbsp; Rv &nbsp; Fv &nbsp; Bv &nbsp; BLv &nbsp; BRv</td>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Center-corner axis rotation</span><span class="lang-zh">中心角轴旋转</span></td>
+        <td>T</td>
+    </tr>
+</table>
 
-<p>
-    For historical records, example solves, and original community documentation, check out:
-    <ul>
-        <li><a href="https://www.cubinghistory.com/FTO/Methods/Bencisco" target="_blank" rel="noopener noreferrer">Cubing History: Bencisco Method</a></li>
-        <li><a href="https://docs.google.com/document/d/e/2PACX-1vTDL7-XvpNrhIc2Q_1nHfeJyG7tIazgBCq88PE8ahqIbvPb3LPQsM3_vsdqX6y8sxte1n5jGk2J3c5V/pub" target="_blank" rel="noopener noreferrer">Ben Streeter's Original Bencisco Document</a></li>
-    </ul>
+<div class="tip-box">
+    <span class="lang-en"><strong>Note:</strong> Mid-layer equivalences: 2U = 2D', 2L = 2BR', 2R = 2BL', 2F = 2B'.</span>
+    <span class="lang-zh"><strong>注意：</strong>中层转动等价关系：2U = 2D'，2L = 2BR'，2R = 2BL'，2F = 2B'。</span>
+</div>
+
+<p class="lang-en"><strong>Method Overview — 10 Steps:</strong></p>
+<p class="lang-zh"><strong>解法流程 — 共 10 步：</strong></p>
+<ol>
+    <li class="lang-en"><strong>1st Center</strong> — Solve the white center face</li>
+    <li class="lang-zh"><strong>第一个中心面 (1st Center)</strong> — 复原白色中心面</li>
+    <li class="lang-en"><strong>F2T (First 2 Triples)</strong> — Build 2 white-corner triples</li>
+    <li class="lang-zh"><strong>F2T（前两个三元组）</strong> — 构建 2 个白色角块三元组</li>
+    <li class="lang-en"><strong>2nd Center</strong> — Solve the green center face</li>
+    <li class="lang-zh"><strong>第二个中心面 (2nd Center)</strong> — 复原绿色中心面</li>
+    <li class="lang-en"><strong>L2C (Last 2 Centers)</strong> — Solve orange & gray centers</li>
+    <li class="lang-zh"><strong>L2C（最后两个中心面）</strong> — 复原橙色和灰色中心面</li>
+    <li class="lang-en"><strong>LBT (Last Bottom Triple)</strong> — Solve the remaining white triple</li>
+    <li class="lang-zh"><strong>LBT（最后底层三元组）</strong> — 复原剩余的白色三元组</li>
+    <li class="lang-en"><strong>L3T (Last 3 Triples)</strong> — Solve the last 3 yellow triples (final step)</li>
+    <li class="lang-zh"><strong>L3T（最后三个三元组）</strong> — 复原最后 3 个黄色三元组（最终步骤）</li>
+</ol>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ② FTO PROPERTIES -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">② FTO Properties</span>
+    <span class="lang-zh">② FTO 的特性</span>
+</div>
+
+<h3 class="lang-en">Piece Types</h3>
+<h3 class="lang-zh">零件类型</h3>
+<p class="lang-en">
+    The FTO is made of 3 types of pieces: <strong>triangles</strong> (center triangular facets), <strong>edges</strong>, and <strong>corners</strong>.
+    An important distinction from the 3×3: <strong>all three piece types move</strong> — there is no fixed center piece. Therefore, you must memorize the color scheme in advance.
+</p>
+<p class="lang-zh">
+    FTO 由 3 种零件组成：<strong>三角块</strong>（中心三角面）、<strong>棱块</strong>和<strong>角块</strong>。
+    与三阶魔方的重要区别：<strong>所有三种零件都会移动</strong>——没有固定的中心块。因此，你需要提前记住配色方案。
 </p>
 
+<h3 class="lang-en">DianSheng Color Scheme</h3>
+<h3 class="lang-zh">DianSheng 配色方案</h3>
+<p class="lang-en">
+    The DianSheng color scheme uses 8 colors:
+    <span class="color-dot" style="background:#fff"></span> White,
+    <span class="color-dot" style="background:#4CAF50"></span> Green,
+    <span class="color-dot" style="background:#9e9e9e"></span> Gray,
+    <span class="color-dot" style="background:#ff9800"></span> Orange
+    and
+    <span class="color-dot" style="background:#ffeb3b"></span> Yellow,
+    <span class="color-dot" style="background:#f44336"></span> Red,
+    <span class="color-dot" style="background:#2196F3"></span> Blue,
+    <span class="color-dot" style="background:#9C27B0"></span> Purple.
+</p>
+<p class="lang-zh">
+    DianSheng 配色方案使用 8 种颜色：
+    <span class="color-dot" style="background:#fff"></span> 白、
+    <span class="color-dot" style="background:#4CAF50"></span> 绿、
+    <span class="color-dot" style="background:#9e9e9e"></span> 灰、
+    <span class="color-dot" style="background:#ff9800"></span> 橙
+    和
+    <span class="color-dot" style="background:#ffeb3b"></span> 黄、
+    <span class="color-dot" style="background:#f44336"></span> 红、
+    <span class="color-dot" style="background:#2196F3"></span> 蓝、
+    <span class="color-dot" style="background:#9C27B0"></span> 紫。
+</p>
+
+<p class="lang-en">Key adjacency rules to memorize:</p>
+<p class="lang-zh">需要记住的相邻颜色规则：</p>
+<ul>
+    <li class="lang-en"><span class="color-dot" style="background:#fff"></span> <strong>White</strong> is surrounded (counter-clockwise) by <strong>Red → Blue → Purple</strong></li>
+    <li class="lang-zh"><span class="color-dot" style="background:#fff"></span> <strong>白色</strong>周围（逆时针）为<strong>红 → 蓝 → 紫</strong></li>
+    <li class="lang-en"><span class="color-dot" style="background:#fff"></span> <strong>White</strong> is opposite <span class="color-dot" style="background:#ffeb3b"></span> <strong>Yellow</strong></li>
+    <li class="lang-zh"><span class="color-dot" style="background:#fff"></span> <strong>白色</strong>对面是 <span class="color-dot" style="background:#ffeb3b"></span> <strong>黄色</strong></li>
+    <li class="lang-en">Between Red & Blue → <span class="color-dot" style="background:#9e9e9e"></span> <strong>Gray</strong></li>
+    <li class="lang-zh">红与蓝之间 → <span class="color-dot" style="background:#9e9e9e"></span> <strong>灰色</strong></li>
+    <li class="lang-en">Between Blue & Purple → <span class="color-dot" style="background:#ff9800"></span> <strong>Orange</strong></li>
+    <li class="lang-zh">蓝与紫之间 → <span class="color-dot" style="background:#ff9800"></span> <strong>橙色</strong></li>
+    <li class="lang-en">Between Purple & Red → <span class="color-dot" style="background:#4CAF50"></span> <strong>Green</strong></li>
+    <li class="lang-zh">紫与红之间 → <span class="color-dot" style="background:#4CAF50"></span> <strong>绿色</strong></li>
+</ul>
+
+<h3 class="lang-en">The Orbit Concept</h3>
+<h3 class="lang-zh">Orbit（轨道）概念</h3>
+<p class="lang-en">
+    Although the FTO has 8 faces, not all 8 colors can mix with each other. The colors are divided into <strong>two orbits</strong> of 4 colors each:
+</p>
+<p class="lang-zh">
+    虽然 FTO 有 8 个面，但并非所有 8 种颜色都能相互混合。颜色分为<strong>两个轨道 (orbit)</strong>，每个轨道包含 4 种颜色：
+</p>
+<ul>
+    <li class="lang-en"><strong>Orbit 1:</strong> White, Green, Gray, Orange (faces U, F, BL, BR)</li>
+    <li class="lang-zh"><strong>轨道 1：</strong>白、绿、灰、橙（面 U、F、BL、BR）</li>
+    <li class="lang-en"><strong>Orbit 2:</strong> Yellow, Red, Blue, Purple (faces L, R, D, B)</li>
+    <li class="lang-zh"><strong>轨道 2：</strong>黄、红、蓝、紫（面 L、R、D、B）</li>
+</ul>
+<p class="lang-en">
+    Because of this property, edges never flip, and corners have only 2 possible orientations (good or flipped) rather than the 4 you might expect.
+    When searching for a piece, you only need to look at the 4 faces in the relevant orbit.
+</p>
+<p class="lang-zh">
+    由于这个特性，棱块永远不会翻转，角块也只有 2 种可能的朝向（正确或翻转），而不是你可能预期的 4 种。
+    寻找零件时，只需查看相关轨道的 4 个面即可。
+</p>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ③ HOLDING & TURNING -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">③ Holding & Turning</span>
+    <span class="lang-zh">③ 持握与转动方法</span>
+</div>
+
+<h3 class="lang-en">Basic Hold (1st Center through L2C)</h3>
+<h3 class="lang-zh">基本持握方式（从第一中心到 L2C）</h3>
+<p class="lang-en">
+    Hold the FTO with the <strong>1st center face (white) pointing left</strong>. This is the default hold for most of the solve.
+    <strong>U / U'</strong> are executed with triggers (index/middle finger), and <strong>R / R'</strong> are turned by gripping with the right hand.
+</p>
+<p class="lang-zh">
+    将 FTO 的<strong>第一个中心面（白色面）朝左</strong>持握。这是大部分复原过程的默认持握方式。
+    <strong>U / U'</strong> 用手指触发（食指/中指），<strong>R / R'</strong> 用右手抓握转动。
+</p>
+
+<h3 class="lang-en">Sledgehammer & Hedgeslammer</h3>
+<h3 class="lang-zh">Sledgehammer（雪橇锤）与 Hedgeslammer（篱笆锤）</h3>
+<p class="lang-en">
+    These two move sequences are used extensively in the <strong>LBT</strong> and <strong>L3T</strong> steps. They flip triples.
+</p>
+<p class="lang-zh">
+    这两个转动序列在 <strong>LBT</strong> 和 <strong>L3T</strong> 步骤中大量使用。它们的作用是翻转三元组。
+</p>
+<table class="notation-table">
+    <tr>
+        <th><span class="lang-en">Name</span><span class="lang-zh">名称</span></th>
+        <th><span class="lang-en">Algorithm</span><span class="lang-zh">公式</span></th>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Sledgehammer (S)</span><span class="lang-zh">雪橇锤 (S)</span></td>
+        <td class="alg-box" style="border:none;margin:0;padding:4px 8px;">R' L R L'</td>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Inverse Sledgehammer (S')</span><span class="lang-zh">逆雪橇锤 (S')</span></td>
+        <td class="alg-box" style="border:none;margin:0;padding:4px 8px;">L R' L' R</td>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Hedgeslammer (H)</span><span class="lang-zh">篱笆锤 (H)</span></td>
+        <td class="alg-box" style="border:none;margin:0;padding:4px 8px;">R B' R' B</td>
+    </tr>
+    <tr>
+        <td><span class="lang-en">Inverse Hedgeslammer (H')</span><span class="lang-zh">逆篱笆锤 (H')</span></td>
+        <td class="alg-box" style="border:none;margin:0;padding:4px 8px;">B' R B R'</td>
+    </tr>
+</table>
+<div class="tip-box">
+    <span class="lang-en"><strong>Tip:</strong> When you execute a Sledgehammer or Hedgeslammer, the first move flips two triples. By combining these with U / U' moves, you can align corners and triangles.</span>
+    <span class="lang-zh"><strong>提示：</strong>执行雪橇锤或篱笆锤时，第一步会翻转两个三元组。将这些动作与 U / U' 组合使用，可以对齐角块和三角块。</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ④ 1ST CENTER -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">④ Step 1: 1st Center (White Center)</span>
+    <span class="lang-zh">④ 第一步：第一中心面（白色中心）</span>
+</div>
+
+<p class="lang-en"><strong>Goal:</strong> Solve the white center face.</p>
+<p class="lang-zh"><strong>目标：</strong>复原白色中心面。</p>
+
+<p class="lang-en">
+    A center is generally divided into two shapes: the <strong>large trapezoid</strong> (a triangle flanked by 2 edges) and the <strong>small trapezoid</strong> (an edge flanked by 2 triangles).
+    It is recommended to build the <strong>large trapezoid first</strong> to avoid color-scheme mistakes, especially while you're still learning.
+</p>
+<p class="lang-zh">
+    中心面通常分为两个形状：<strong>大梯形</strong>（1 个三角块夹在 2 个棱块之间）和<strong>小梯形</strong>（1 个棱块夹在 2 个三角块之间）。
+    建议<strong>先构建大梯形</strong>，以避免配色错误，尤其是在初学阶段。
+</p>
+
+<p class="lang-en">
+    Remember: in the DianSheng color scheme, white is surrounded counter-clockwise by <strong>Red → Blue → Purple</strong>. The Red-Blue relationship is the same as on a 3×3, which can help as a reference point.
+</p>
+<p class="lang-zh">
+    记住：在 DianSheng 配色中，白色周围逆时针为<strong>红 → 蓝 → 紫</strong>。红蓝关系与三阶魔方相同，可以作为参考。
+</p>
+
+<p class="lang-en">Here are 3 useful small-trapezoid algorithms (these create a small trapezoid on the U face, minimizing rotations):</p>
+<p class="lang-zh">以下是 3 个实用的小梯形公式（在 U 面形成小梯形，减少持换）：</p>
+
+<p class="lang-en"><em>When the two triangles are far apart:</em></p>
+<p class="lang-zh"><em>当两个三角块距离较远时：</em></p>
+<div class="alg-box">R U R' → R' U R'</div>
+
+<p class="lang-en"><em>When the two triangles are close together:</em></p>
+<p class="lang-zh"><em>当两个三角块距离较近时：</em></p>
+<div class="alg-box">R U R → R' U R</div>
+
+<p class="lang-en"><em>When both triangles are on the same face:</em></p>
+<p class="lang-zh"><em>当两个三角块在同一面上时：</em></p>
+<div class="alg-box">R U R' U R</div>
+
+<div class="tip-box">
+    <span class="lang-en"><strong>Tip:</strong> This step (and most of this method) is like 3×3 cross — there are very few fixed algorithms. Practice scrambling and re-solving to develop your own efficient solutions. That's part of the fun!</span>
+    <span class="lang-zh"><strong>提示：</strong>这一步（以及这个解法的大部分步骤）就像三阶的十字——几乎没有固定公式。通过反复打乱和复原来开发你自己的高效解法，这也是乐趣所在！</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ⑤ F2T -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">⑤ Step 2: F2T (First 2 Triples)</span>
+    <span class="lang-zh">⑤ 第二步：F2T（前两个三元组）</span>
+</div>
+
+<p class="lang-en"><strong>Goal:</strong> Build 2 triples around white corners (leave one spot open, like Yau cross edges).</p>
+<p class="lang-zh"><strong>目标：</strong>围绕白色角块构建 2 个三元组（留一个空位，类似 Yau 方法的十字棱块）。</p>
+
+<p class="lang-en">
+    Hold the FTO in the basic hold (white face left). Use only moves that don't break the white center:
+    <strong>U / U'</strong>, <strong>R / R'</strong>, <strong>r / r'</strong>, and <strong>Rv / Rv'</strong> rotations.
+</p>
+<p class="lang-zh">
+    以基本持握方式（白色面朝左）持握 FTO。只使用不破坏白色中心的转动：
+    <strong>U / U'</strong>、<strong>R / R'</strong>、<strong>r / r'</strong> 和 <strong>Rv / Rv'</strong> 持换。
+</p>
+
+<p class="lang-en">
+    This step has very high degrees of freedom, so it may feel difficult at first. Keep practicing — repeatedly scramble and re-solve to get comfortable with the FTO's unique movement patterns. Watching example solves on YouTube is also very helpful.
+</p>
+<p class="lang-zh">
+    这一步自由度非常高，所以一开始可能会觉得困难。坚持练习——反复打乱和复原，熟悉 FTO 独特的运动模式。观看 YouTube 上的示范解法也非常有帮助。
+</p>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ⑥ 2ND CENTER -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">⑥ Step 3: 2nd Center (Green Center)</span>
+    <span class="lang-zh">⑥ 第三步：第二中心面（绿色中心）</span>
+</div>
+
+<p class="lang-en"><strong>Goal:</strong> Solve the green center face.</p>
+<p class="lang-zh"><strong>目标：</strong>复原绿色中心面。</p>
+
+<p class="lang-en">
+    It's best to fix the color of the 2nd center you solve. This tutorial solves the <strong>green center</strong>.
+    Just like the 1st center, build the <strong>large trapezoid first</strong>, then the small trapezoid.
+</p>
+<p class="lang-zh">
+    最好固定第二个中心面的颜色。本教程选择复原<strong>绿色中心</strong>。
+    与第一中心面一样，先构建<strong>大梯形</strong>，再构建小梯形。
+</p>
+
+<p class="lang-en">
+    Now that F2T is done, your available moves are more restricted. Only use:
+    <strong>U / U'</strong>, <strong>R / R'</strong>, <strong>r / r'</strong>.
+</p>
+<p class="lang-zh">
+    由于 F2T 已完成，可用转动更加受限。只使用：
+    <strong>U / U'</strong>、<strong>R / R'</strong>、<strong>r / r'</strong>。
+</p>
+
+<p class="lang-en">
+    Green center color reference: looking at the green face, <strong>counter-clockwise → Yellow → Red → Purple</strong>. Be careful with the color scheme.
+</p>
+<p class="lang-zh">
+    绿色中心配色参考：正视绿色面时，<strong>逆时针 → 黄 → 红 → 紫</strong>。注意配色。
+</p>
+
+<div class="tip-box">
+    <span class="lang-en"><strong>Tip:</strong> While it's good to fix which color you solve second, ideally you should be able to start from any of the three large-trapezoid pairs (Red-Purple, Purple-Yellow, or Yellow-Red). Learn the color scheme well.</span>
+    <span class="lang-zh"><strong>提示：</strong>虽然固定第二个颜色比较好，但理想情况下你应该能从任意大梯形颜色对（红紫、紫黄或黄红）开始。牢记配色方案。</span>
+</div>
+
+<p class="lang-en">
+    After completing the 2nd center, do an AUF (Adjust U Face) so that the <strong>yellow edge faces right</strong>.
+</p>
+<p class="lang-zh">
+    完成第二中心面后，进行 AUF（调整 U 面），使<strong>黄色棱块朝右</strong>。
+</p>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ⑦ L2C -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">⑦ Step 4: L2C (Last 2 Centers)</span>
+    <span class="lang-zh">⑦ 第四步：L2C（最后两个中心面）</span>
+</div>
+
+<p class="lang-en"><strong>Goal:</strong> Solve the remaining 2 center faces (orange & gray).</p>
+<p class="lang-zh"><strong>目标：</strong>复原剩余的 2 个中心面（橙色和灰色）。</p>
+
+<p class="lang-en">
+    While maintaining the basic hold, set the <strong>orange face as U</strong> (the gray face becomes F).
+    Solving either orange or gray will automatically solve the other one.
+</p>
+<p class="lang-zh">
+    保持基本持握方式，将<strong>橙色面设为 U 面</strong>（灰色面变为 F 面）。
+    复原橙色或灰色中任一面，另一面也会自动复原。
+</p>
+
+<p class="lang-en">
+    Again, start by building the large trapezoid. The key moves are:
+</p>
+<p class="lang-zh">
+    同样从大梯形开始构建。关键转动为：
+</p>
+<div class="alg-box">R U R' &nbsp;&nbsp; R U' R' &nbsp;&nbsp; r R' U R r' &nbsp;&nbsp; r R' U' R' r'</div>
+<p class="lang-en">Combine these with <strong>U / U'</strong> between them to solve L2C without breaking the 2nd center.</p>
+<p class="lang-zh">在这些公式之间穿插 <strong>U / U'</strong>，即可在不破坏第二中心面的情况下复原 L2C。</p>
+
+<div class="warning-box">
+    <span class="lang-en"><strong>Color fix algorithm:</strong> If you made a color mistake on a center, hold the wrong center as U and F, then execute:</span>
+    <span class="lang-zh"><strong>配色修正公式：</strong>如果中心面配色出错，将错误的中心面设为 U 和 F，然后执行：</span>
+    <div class="alg-box">R U' R' U r U R' U' R (U r' U')</div>
+    <a href="https://alpha.twizzle.net/edit/?puzzle=FTO&alg=R+U'+R'+U+r+U+R'+U'+R+U+r'+U'" target="_blank" rel="noopener noreferrer" class="twizzle-link">Twizzle Editor</a>
+</div>
+
+<p class="lang-en">
+    After L2C, make sure <strong>both orange and gray centers have their yellow edges facing right</strong> (AUF both).
+</p>
+<p class="lang-zh">
+    L2C 完成后，确保<strong>橙色和灰色中心面的黄色棱块都朝右</strong>（两面都进行 AUF）。
+</p>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ⑧ LBT -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">⑧ Step 5: LBT (Last Bottom Triple)</span>
+    <span class="lang-zh">⑧ 第五步：LBT（最后底层三元组）</span>
+</div>
+
+<p class="lang-en"><strong>Goal:</strong> Solve the remaining white triple that was left open during F2T.</p>
+<p class="lang-zh"><strong>目标：</strong>复原 F2T 时留下的最后一个白色三元组。</p>
+
+<p class="lang-en">
+    From this step onward, switch to holding the <strong>yellow face as U</strong>.
+    You will now heavily use Sledgehammer and Hedgeslammer.
+</p>
+<p class="lang-zh">
+    从这一步开始，切换为<strong>黄色面朝上</strong>的持握方式。
+    接下来将大量使用雪橇锤和篱笆锤。
+</p>
+
+<p class="lang-en">
+    <strong>How it works:</strong> Sledge/Hedge flips the two triples moved by the first turn. By flipping triples and interleaving <strong>U / U'</strong> moves, you align the white corner with its matching triangles.
+</p>
+<p class="lang-zh">
+    <strong>原理：</strong>雪橇锤/篱笆锤会翻转第一步移动的两个三元组。通过翻转三元组并穿插 <strong>U / U'</strong> 转动，将白色角块与对应的三角块对齐。
+</p>
+
+<p class="lang-en"><strong>Example solve (LBT):</strong></p>
+<p class="lang-zh"><strong>示范解法（LBT）：</strong></p>
+<div class="alg-box">Uv' L R' L' R U' L R' L' R U</div>
+<p class="lang-en">
+    In this example: After a Uv' rotation, the white corner is at the back-right and a red triangle is at the top-left of U.
+    The first inverse Sledgehammer flips the red triangle to the side without flipping the white corner. Then U' aligns red.
+    The second inverse Sledgehammer flips both the corner and the purple triangle. Then U completes the triple.
+</p>
+<p class="lang-zh">
+    在此示例中：Uv' 持换后，白色角块在右后方，红色三角块在 U 面左后方。
+    第一个逆雪橇锤将红色三角块翻到侧面，而不翻转白色角块。然后 U' 对齐红色。
+    第二个逆雪橇锤同时翻转角块和紫色三角块。然后 U 完成三元组。
+</p>
+
+<div class="tip-box">
+    <span class="lang-en"><strong>Bringing pieces up:</strong> If the piece you need (white corner or triangle) is on the bottom, bring the triple to the lower-left position and execute <strong>L' R' L R</strong> to move it to the U face.</span>
+    <span class="lang-zh"><strong>将零件移上来：</strong>如果需要的零件（白色角块或三角块）在底层，将三元组移到左下位置，执行 <strong>L' R' L R</strong> 将其移到 U 面。</span>
+</div>
+
+<p class="lang-en">
+    Once the triple is built, insert it into the empty slot below. There are <strong>2 insertion patterns</strong> depending on whether the white sticker faces up or to the side. Use <strong>D / D'</strong> to align the slot (then ADF — Adjust D Face — afterward).
+</p>
+<p class="lang-zh">
+    三元组构建完成后，将其插入下方的空位。根据白色贴纸朝上或朝侧面，有 <strong>2 种插入模式</strong>。使用 <strong>D / D'</strong> 对齐空位（之后进行 ADF — 调整 D 面）。
+</p>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ⑨ L3T -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">⑨ Step 6: L3T (Last 3 Triples) — The Final Step</span>
+    <span class="lang-zh">⑨ 第六步：L3T（最后三个三元组）— 最终步骤</span>
+</div>
+
+<p class="lang-en"><strong>Goal:</strong> Match the yellow corners with the yellow triangles. This is the hardest step of Bencisco.</p>
+<p class="lang-zh"><strong>目标：</strong>将黄色角块与黄色三角块匹配。这是 Bencisco 中最难的一步。</p>
+
+<p class="lang-en">
+    Continue holding <strong>yellow face as U</strong>. Use Sledgehammer, Hedgeslammer, and U / U' moves.
+</p>
+<p class="lang-zh">
+    继续以<strong>黄色面朝上</strong>持握。使用雪橇锤、篱笆锤和 U / U' 转动。
+</p>
+
+<h3 class="lang-en">Identifying the Case</h3>
+<h3 class="lang-zh">判断情况</h3>
+<p class="lang-en">Look at the U face and check:</p>
+<p class="lang-zh">观察 U 面并检查：</p>
+<ul>
+    <li class="lang-en">How many side-colored (non-yellow) triangles are on the U face?</li>
+    <li class="lang-zh">U 面上有多少个非黄色三角块？</li>
+    <li class="lang-en">Are any corners flipped?</li>
+    <li class="lang-zh">是否有角块翻转？</li>
+    <li class="lang-en">Where are the side triangles located?</li>
+    <li class="lang-zh">侧面三角块的位置在哪？</li>
+</ul>
+
+<div class="tip-box">
+    <span class="lang-en"><strong>Special case:</strong> If the yellow face looks solved but the triples are scrambled, check: if either (a) the side triangles are wrong but corners are correct, or (b) corners are wrong but side triangles are correct — then you can skip the Hedgeslammer (H) and jump straight to CP or 2-swap below.</span>
+    <span class="lang-zh"><strong>特殊情况：</strong>如果黄色面看起来已复原但三元组仍混乱，检查：如果 (a) 侧面三角块错误但角块正确，或 (b) 角块错误但侧面三角块正确——则可跳过篱笆锤 (H)，直接进入下面的 CP 或二元交换。</span>
+</div>
+
+<p class="lang-en">
+    In all other cases, apply <strong>H</strong> (<code>R B' R' B</code>) to reach a standard state with all yellow on top but triangles mismatched on the sides.
+</p>
+<p class="lang-zh">
+    在所有其他情况下，执行 <strong>H</strong>（<code>R B' R' B</code>）以达到标准状态——所有黄色朝上，但侧面三角块错位。
+</p>
+
+<h3 class="lang-en">Even vs. Odd Parity</h3>
+<h3 class="lang-zh">偶数 (Even) 与奇数 (Odd) 奇偶性</h3>
+<p class="lang-en">
+    Once you reach the standard state, classify it as <strong>even</strong> or <strong>odd</strong>:
+</p>
+<p class="lang-zh">
+    达到标准状态后，将其分类为<strong>偶数 (even)</strong> 或<strong>奇数 (odd)</strong>：
+</p>
+<table class="notation-table">
+    <tr>
+        <th><span class="lang-en">Parity</span><span class="lang-zh">奇偶性</span></th>
+        <th><span class="lang-en">Condition</span><span class="lang-zh">判断条件</span></th>
+    </tr>
+    <tr>
+        <td><strong>Even</strong></td>
+        <td>
+            <span class="lang-en">All 3 triples match their side colors <strong>OR</strong> none of the 3 triples match</span>
+            <span class="lang-zh">3 个三元组全部颜色匹配<strong>或</strong>全部不匹配</span>
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Odd</strong></td>
+        <td>
+            <span class="lang-en">Exactly 1 triple matches its side color, the other 2 do not</span>
+            <span class="lang-zh">恰好 1 个三元组颜色匹配，其余 2 个不匹配</span>
+        </td>
+    </tr>
+</table>
+
+<h3 class="lang-en">Even Case</h3>
+<h3 class="lang-zh">偶数情况 (Even)</h3>
+<p class="lang-en">
+    Re-orient the puzzle and observe the relationship between the flipped corner's side color and the adjacent triangle color. There are 3 sub-patterns — apply the matching Sledgehammer or Hedgeslammer to solve the yellow face.
+</p>
+<p class="lang-zh">
+    重新调整方向，观察翻转角块侧面颜色与相邻三角块颜色的关系。共有 3 种子模式——执行对应的雪橇锤或篱笆锤来复原黄色面。
+</p>
+<p class="lang-en">
+    After the yellow face is solved, check the corners. If they're correct — <strong>congratulations, the FTO is solved!</strong>
+    If not, apply one of the CP (Corner Permutation) algorithms:
+</p>
+<p class="lang-zh">
+    黄色面复原后，检查角块。如果正确——<strong>恭喜，FTO 复原完成！</strong>
+    如果不正确，执行以下 CP（角块排列）公式之一：
+</p>
+
+<p><strong>CP1 (<span class="lang-en">clockwise</span><span class="lang-zh">顺时针</span>):</strong></p>
+<div class="alg-box">F' D F' U' F D' F' U F'</div>
+<a href="https://alpha.twizzle.net/edit/?puzzle=FTO&alg=F'+D+F'+U'+F+D'+F'+U+F'" target="_blank" rel="noopener noreferrer" class="twizzle-link">Twizzle Editor</a>
+
+<p><strong>CP2 (<span class="lang-en">counter-clockwise</span><span class="lang-zh">逆时针</span>):</strong></p>
+<div class="alg-box">F U' F D F' U F D' F</div>
+<a href="https://alpha.twizzle.net/edit/?puzzle=FTO&alg=F+U'+F+D+F'+U+F+D'+F" target="_blank" rel="noopener noreferrer" class="twizzle-link">Twizzle Editor</a>
+
+<div class="tip-box">
+    <span class="lang-en"><strong>Execution tip:</strong> The notation uses F/F', but it's easier to hold the yellow face toward you and imagine F as a 3×3 R move. Think of it as RUD-style moves.</span>
+    <span class="lang-zh"><strong>执行提示：</strong>符号使用 F/F'，但实际操作时将黄色面朝向自己，将 F 想象成三阶的 R 转动会更容易。可以视为 RUD 系转动。</span>
+</div>
+
+<h3 class="lang-en">Odd Case</h3>
+<h3 class="lang-zh">奇数情况 (Odd)</h3>
+<p class="lang-en">
+    Re-orient the puzzle and check the side color of the flipped corner. There are 3 sub-patterns.
+    Apply the corresponding algorithm to solve the yellow face.
+</p>
+<p class="lang-zh">
+    重新调整方向并检查翻转角块的侧面颜色。共有 3 种子模式。
+    执行对应公式来复原黄色面。
+</p>
+
+<p class="lang-en">
+    After solving the yellow face in an odd case, the side triangles will always have a <strong>2-swap</strong> (two triangles exchanged). Apply the 2-swap algorithm:
+</p>
+<p class="lang-zh">
+    在奇数情况下复原黄色面后，侧面三角块一定会出现<strong>二元交换</strong>（两个三角块互换）。执行二元交换公式：
+</p>
+
+<p><strong><span class="lang-en">2-Swap Algorithm:</span><span class="lang-zh">二元交换公式：</span></strong></p>
+<div class="alg-box">br U BR' U' 2L U BR U' BR'</div>
+<p><span class="lang-en">(where 2L = br' BR)</span><span class="lang-zh">（其中 2L = br' BR）</span></p>
+<a href="https://alpha.twizzle.net/edit/?puzzle=FTO&alg=br+U+BR'+U'+2L+U+BR+U'+BR'" target="_blank" rel="noopener noreferrer" class="twizzle-link">Twizzle Editor</a>
+
+<div class="tip-box">
+    <span class="lang-en"><strong>Tip:</strong> The mid-layer move 2L is hard to turn. In practice, execute it as <strong>br' BR</strong> instead. If you think of BR as R and 2L as M, the algorithm becomes <code>r U R' U' M U R U' R'</code> — the same as 3×3 OLL 28! Easy to remember.</span>
+    <span class="lang-zh"><strong>提示：</strong>中层转动 2L 很难执行。实际操作中用 <strong>br' BR</strong> 代替。如果将 BR 看作 R、2L 看作 M，公式变为 <code>r U R' U' M U R U' R'</code>——和三阶 OLL 28 一样！容易记忆。</span>
+</div>
+
+<div class="tip-box">
+    <span class="lang-en"><strong>Commutator note:</strong> In commutator notation this is <code>[2L', BR U BR' U']</code>. Mid-layer interchange commutators can generate many different triangle-swap algorithms.</span>
+    <span class="lang-zh"><strong>交换子注释：</strong>用交换子表示法为 <code>[2L', BR U BR' U']</code>。中层交换子可以生成许多不同的三角块交换公式。</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ⑩ RESOURCE LINKS -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="step-header">
+    <span class="lang-en">⑩ Resource Links</span>
+    <span class="lang-zh">⑩ 资源链接</span>
+</div>
+
+<p class="lang-en">If you need more help or want to get faster, check out these resources:</p>
+<p class="lang-zh">如果需要更多帮助或想提高速度，请参考以下资源：</p>
+
+<ul>
+    <li>
+        <strong><a href="https://alpha.twizzle.net/edit/?puzzle=FTO" target="_blank" rel="noopener noreferrer">FTO Notation (Twizzle Editor)</a></strong><br>
+        <span class="lang-en">Detailed interactive notation reference.</span>
+        <span class="lang-zh">详细的互动转动符号参考。</span>
+    </li>
+    <li>
+        <strong><span class="lang-en">Chris Choi's Bencisco Tutorial (YouTube)</span><span class="lang-zh">Chris Choi 的 Bencisco 教程（YouTube）</span></strong><br>
+        <span class="lang-en">If anything in this article is unclear, check this video tutorial.</span>
+        <span class="lang-zh">如果本教程有不清楚的地方，可以参考这个视频教程。</span>
+    </li>
+    <li>
+        <strong><span class="lang-en">Benpuzzles' Bencisco Explanation (YouTube Playlist)</span><span class="lang-zh">Benpuzzles 的 Bencisco 讲解（YouTube 播放列表）</span></strong><br>
+        <span class="lang-en">Created by Ben Streeter (the inventor of Bencisco). Step-by-step playlist — consult the specific video for any step you're struggling with.</span>
+        <span class="lang-zh">由 Ben Streeter（Bencisco 发明者）制作。逐步讲解播放列表——遇到困难的步骤时可以查看对应视频。</span>
+    </li>
+    <li>
+        <strong><a href="https://www.youtube.com/playlist?list=PLkSg2lRGRpMObK1p8C2HXA1H3FNfVQaAH" target="_blank" rel="noopener noreferrer">FTO Friday (YouTube Playlist)</a></strong><br>
+        <span class="lang-en">EddtheRexMan's series on advanced Bencisco techniques. Regularly updated.</span>
+        <span class="lang-zh">EddtheRexMan 的 Bencisco 进阶技巧系列。持续更新中。</span>
+    </li>
+    <li>
+        <strong><span class="lang-en">LBT Algorithm Table</span><span class="lang-zh">LBT 公式表</span></strong><br>
+        <span class="lang-en">Complete set of LBT algorithms. You don't need to memorize them all, but browsing through can give you useful insights.</span>
+        <span class="lang-zh">完整的 LBT 公式集。不需要全部记住，但浏览一下会有有用的启发。</span>
+    </li>
+    <li>
+        <strong><span class="lang-en">OLP Algorithm Table (by Ben Streeter)</span><span class="lang-zh">OLP 公式表（Ben Streeter 制作）</span></strong><br>
+        <span class="lang-en">Algorithms for solving L3T in a single look. Memorizing these eliminates mid-step decisions and speeds you up.</span>
+        <span class="lang-zh">用于一次观察完成 L3T 的公式集。记住这些公式可以省去中途判断，提高速度。</span>
+    </li>
+    <li>
+        <strong><span class="lang-en">TCP Algorithm Table</span><span class="lang-zh">TCP 公式表</span></strong><br>
+        <span class="lang-en">Created by Edd Dibley with Japanese annotations by Kitamura-san. A great starting point for learning TCP algorithms.</span>
+        <span class="lang-zh">由 Edd Dibley 制作，北村先生加注日文。学习 TCP 公式的好起点。</span>
+    </li>
+    <li>
+        <strong><span class="lang-en">L3T Algorithm Table (Aedan Bryant)</span><span class="lang-zh">L3T 公式表（Aedan Bryant 制作）</span></strong><br>
+        <span class="lang-en">Comprehensive L3T algorithm collection (some gaps). Recommended for those who want to learn more algorithms.</span>
+        <span class="lang-zh">全面的 L3T 公式集（部分空缺）。推荐给想学习更多公式的玩家。</span>
+    </li>
+    <li>
+        <strong><span class="lang-en">L3T Algorithm Table (Nathan)</span><span class="lang-zh">L3T 公式表（Nathan 制作）</span></strong><br>
+        <span class="lang-en">Another comprehensive L3T reference, similar in content to Aedan's table.</span>
+        <span class="lang-zh">另一个全面的 L3T 参考资料，内容与 Aedan 的表格类似。</span>
+    </li>
+    <li>
+        <strong><a href="https://www.cubinghistory.com/FTO/Methods/Bencisco" target="_blank" rel="noopener noreferrer">Cubing History: Bencisco Method</a></strong><br>
+        <span class="lang-en">Historical records and original documentation.</span>
+        <span class="lang-zh">历史记录和原始文档。</span>
+    </li>
+    <li>
+        <strong><a href="https://docs.google.com/document/d/e/2PACX-1vTDL7-XvpNrhIc2Q_1nHfeJyG7tIazgBCq88PE8ahqIbvPb3LPQsM3_vsdqX6y8sxte1n5jGk2J3c5V/pub" target="_blank" rel="noopener noreferrer"><span class="lang-en">Ben Streeter's Original Bencisco Document</span><span class="lang-zh">Ben Streeter 的 Bencisco 原始文档</span></a></strong>
+    </li>
+</ul>
+
+<!-- Credit -->
+<div class="credit-box">
+    <span class="lang-en">
+        This tutorial is based on the excellent Japanese guide
+        "<a href="https://note.com/wajimaji/n/nc06ea912d878" target="_blank" rel="noopener noreferrer">FTOの揃え方～Bencisco Method～</a>"
+        by <strong>wajimaji</strong> (2024). Translated, adapted, and expanded for an international audience.
+    </span>
+    <span class="lang-zh">
+        本教程基于 <strong>wajimaji</strong>（2024）撰写的优秀日文教程
+        「<a href="https://note.com/wajimaji/n/nc06ea912d878" target="_blank" rel="noopener noreferrer">FTOの揃え方～Bencisco Method～</a>」。
+        经翻译、改编并扩展，面向国际读者。
+    </span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- HARDWARE SECTION (preserved from original) -->
+<!-- ═══════════════════════════════════════════════════ -->
 <hr style="margin: 40px 0; border: 0; border-top: 1px solid #e9ecef;">
 
-<!-- Merged Hardware Section -->
 <div class="hardware-promo-hero">
     <h2>Recommended FTO Speed Cubes (Hardware Guide)</h2>
     <p>Ready to practice Bencisco on top-tier hardware? Here are the best flagship FTO speed cubes on the market.</p>
-    
+
     <div class="promo-code-badge" onclick="navigator.clipboard.writeText('CUBINGPRO'); this.querySelector('.promo-code-text').textContent='COPIED!'; setTimeout(() => this.querySelector('.promo-code-text').textContent='CUBINGPRO', 1500);">
         <div class="promo-code-text">CUBINGPRO</div>
         <div class="promo-code-sub">🎁 Click to copy • Save 5% at TheCubicle & SpeedCubeShop</div>
