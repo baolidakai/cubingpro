@@ -159,12 +159,16 @@ if IS_HEROKU_APP:
     # https://devcenter.heroku.com/articles/provisioning-heroku-postgres#application-config-vars
     # https://github.com/jazzband/dj-database-url
     DATABASES = {
-        "default": dj_database_url.config(
-            env="DATABASE_URL",
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True,
-        ),
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": ":memory:",
+        },
+        # "default": dj_database_url.config(
+        #     env="DATABASE_URL",
+        #     conn_max_age=600,
+        #     conn_health_checks=True,
+        #     ssl_require=True,
+        # ),
     }
 else:
     # When running locally in development or in CI, a sqlite database file will be used instead
