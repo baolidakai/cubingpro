@@ -3,6 +3,14 @@
 
 {% block content %}
 
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+    mermaid.initialize({
+        startOnLoad: true
+    });
+</script>
+
 <h1>FMC Domino Reduction</h1>
 <div>
     <h1>A domino reduction guide for FMC</h1>
@@ -18,13 +26,13 @@
         in general, and no exception for domino reduction.</p>
     <p>Below are the stages in a vanilla FMC solution, we will find a holistic solution which minimizes the total move
         count:<br>
-        - Step 1 (Edge Orientation): Apply moves so all edges are oriented, so the cube can be solved with only <u,
-            d, l, r, f2, b2>.<br>
+        - Step 1 (Edge Orientation): Apply moves so all edges are oriented, so the cube can be solved with only <u, d,
+            l, r, f2, b2>.<br>
             - Step 2 (Domino Reduction): Apply moves so all corners are oriented, and all E-edges are on the E-layer, so
             the cube can be solved with only <u, d, l2, r2, f2, b2>. If step 1 already oriented all
                 corners or step 1 already put all E-edges on E-layer, this step is called partial domino reduction.<br>
                 - Step 3 (Finish): Solve the cube.
-        </u,>
+            </u,>
     </p>
     <p>In this tutorial, we will focus on the vanilla method. You may refer to the document at the beginning of this
         page for more advanced tricks.</p>
@@ -34,13 +42,13 @@
         If feasible, try to find a sequence that solves a "good" EO, with most corners oriented and some E-edges already
         in the E-layer.<br>
         Also, make sure to check all cube orientations: you may aim F/B EO &lt;u, d, l, r, f2, b2&gt; or L/R EO
-            <u, d, l2, r2, f, b> or U/D EO &lt;u2, d2, l, r, f, b&gt;. For each EO, you may make
-                    a z rotation for the DR.<br>
-                    For example, F/B EO can be reduced to &lt;u, d, l2, r2, f2, b2&gt; without a z rotation,
-                        but you may also make a z rotation, and reduce to &lt;u2, d2, l, r, f2, b2&gt;.
-                    </u,>
-                </u2,>
-            </u,>
+        <u, d, l2, r2, f, b> or U/D EO &lt;u2, d2, l, r, f, b&gt;. For each EO, you may make
+            a z rotation for the DR.<br>
+            For example, F/B EO can be reduced to &lt;u, d, l2, r2, f2, b2&gt; without a z rotation,
+            but you may also make a z rotation, and reduce to &lt;u2, d2, l, r, f2, b2&gt;.
+        </u,>
+        </u2,>
+        </u,>
         </u,>
     </p>
     <p>For example, use the scramble R' U' F D2 R2 B2 D2 R2 B' F' L2 U' F2 U2 L D U' F' L' D' R2 U R' U' F U' F.<br>
@@ -50,8 +58,8 @@
     <p>Notice this cube is already in F/B EO. Currently, there are only two corners oriented (UBR and DLB), and two
         E-edges in E-layer (FR and BR).<br>
         However, you may make a z rotation, the cube is still in EO. But if you target &lt;u2, d2, l, r, f2,
-            b2&gt; domino reduction, there are four corners oriented and three E-edges in E-layer. This is more likely
-            to lead to a shorter solution in step 2.</u2,>
+        b2&gt; domino reduction, there are four corners oriented and three E-edges in E-layer. This is more likely
+        to lead to a shorter solution in step 2.</u2,>
     </p>
     <p>Therefore, the strategy in step 1 is to try all 6 different EO.</p>
     <h2>Domino Reduction</h2>
@@ -86,28 +94,969 @@
         <li>Method 2: Solve corners while try to influence more edges. Then use edge insertions.</li>
         <li>Method 3: Build blocks intuitively.</li>
         <li>Method 4: This can be used rarely, but reduce into Half Turn Reduction (HTR) &lt;u2, d2, f2, b2,
-                l2, r2&gt;, and then it's very easy to solve.
+            l2, r2&gt;, and then it's very easy to solve.
         </li>
     </ul>
-    <h3>(WIP) HTR</h3>
-    <p>HTR refers to half turn reduction, meaning reduce the cube into a state solvable with only half turns.</p>
-    <p>Once DR is reached, the number of quarter turns (not counting half turns) required is at most 5.</p>
-    <p>If 0 or 8 corners are misoriented, the case is called 0c. If 2 or 6 corners are misoriented, the case is called 2c. If 4 corners are misoriented, the case is called 4c.</p>
-    <p>Misoriented corner means corner that cannot be placed with only half turns.</p>
-    <p>We can categorize all DR cases into 14 categories quarter turn count towards HTR state.</p>
-    <h4>0 corners</h4>
-    <p>Categories: 0c0, 0c3, 0c4 are the three categories.</p>
-    <p>If it's not HRT, do blind tracing to count parity to distinguish 0c3 and 0c4.</p>
-    <h4>2 corners</h4>
-    <p>Categories: 2c3, 2c4, 2c5</p>
-    <p>2c4 is distinguishable by blind tracing.</p>
-    <p>To differentiate 2c3 and 2c5, swapping the two misoriented corners (mentally) would bring to fake HTR for 2c3; and bring to real HTR for 2c5.</p>
-    <h4>4 corners</h4>
-    <p>4a: four misoriented corners can be put on 1 side with only half turn; 4b: four misoriented corners cannot be put on 1 side with only half turn.</p>
-    <p>Categories: 4a1, 4a2, 4a3, 4a4, 4b2, 4b3, 4b4, 4b5</p>
-    <p>For 4b case, can use blind parity trace to differentiate 4b2/4b4 and 4b3/4b5.</p>
-    <p>4b3/4a3 and 4b4/4a4 are inverse of each other, so if you can identify if your case is one of these by checking the pattern of the inverse scramble.</p>
-    <p>(TODO): How to identify the inverse case quickly? One temporary solution is to use NISS to get the inverse scramble.</p>
+    <h3>HTR Recognition</h3>
+
+    <p>
+        HTR (Half Turn Reduction) means reaching a state that can be solved using only half turns.
+    </p>
+
+    <p>
+        Once DR is reached, the cube is at most <strong>5 quarter turns (QTs)</strong> away from HTR.
+        This makes HTR recognition a small, structured classification problem.
+    </p>
+
+    <h4>What does “QT distance” mean?</h4>
+
+    <p>
+        Once we are in <strong>DR</strong>, we are allowed to use the same DR-preserving moves while
+        searching for HTR. In particular, <strong>half turns are free for the purpose of counting
+            QT distance</strong>.
+    </p>
+
+    <p>
+        A <strong>QT (quarter turn)</strong> is a 90° turn such as <code>R</code>, <code>R'</code>,
+        <code>U</code>, or <code>U'</code>. A half turn such as <code>R2</code> does not count.
+    </p>
+
+    <p>
+        More importantly, when stepping from DR toward HTR, the QTs are applied on a
+        <strong>single axis at a time</strong>, with half turns used to move between the axes.
+        So a typical DR → HTR solution has the structure:
+    </p>
+
+    <p class="lead">
+        <code>HT + QT + HT + QT + HT + QT + ...</code>
+    </p>
+
+    <p>
+        For example, a route such as
+    </p>
+
+    <p>
+        <code>R2 U' F2 R U2 F2 L' D2</code>
+    </p>
+
+    <p>
+        has only <strong>3 QTs</strong>: <code>U'</code>, <code>R</code>, and <code>L'</code>.
+        The half turns <code>R2</code>, <code>F2</code>, <code>U2</code>, and <code>D2</code>
+        do not contribute to the QT count.
+    </p>
+
+    <p>
+        This is why QT distance is such a useful indicator in DR → HTR search:
+        <strong>the number of QTs gives a good estimate of how much non-HT work is still
+            needed, while the half turns take care of the necessary setup between them.</strong>
+    </p>
+
+    <p>
+        For example:
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>DR → HTR route</th>
+                <th>QT distance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>R2 U' F2</code></td>
+                <td><strong>1 QT</strong></td>
+            </tr>
+            <tr>
+                <td><code>R2 U' F2 R D2</code></td>
+                <td><strong>2 QTs</strong></td>
+            </tr>
+            <tr>
+                <td><code>R2 U' F2 R D2 L'</code></td>
+                <td><strong>3 QTs</strong></td>
+            </tr>
+            <tr>
+                <td><code>R2 U' F2 R D2 L' B</code></td>
+                <td><strong>4 QTs</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        Therefore, <strong>4a3</strong> means that the DR position is a 4a position and that
+        the shortest DR-preserving route to HTR requires <strong>3 QTs</strong>, with
+        half turns used as needed between those QTs.
+    </p>
+
+    <div class="callout">
+        <strong>Practical takeaway:</strong>
+        When you are already in DR, you can often think of HTR search as
+        <strong>“How many QTs away am I?”</strong> rather than counting every move.
+        The QT count is usually a much better indication of the remaining work.
+    </div>
+
+    <h4>1. What are we recognizing?</h4>
+
+    <p>
+        Every DR position belongs to one of three corner categories:
+    </p>
+
+    <ul>
+        <li><strong>0c:</strong> 0 or 8 misoriented corners</li>
+        <li><strong>2c:</strong> 2 or 6 misoriented corners</li>
+        <li><strong>4c:</strong> 4 misoriented corners</li>
+    </ul>
+
+    <p>
+        A corner is <strong>misoriented</strong> if it cannot be placed correctly using only half turns.
+    </p>
+
+    <p>
+        The number after the category is the minimum number of quarter turns required to reach HTR.
+        For example, <strong>2c4</strong> means a 2c position that is 4 QTs from HTR.
+    </p>
+
+    <h4>2. The complete classification</h4>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Corner type</th>
+                <th>Possible cases</th>
+                <th>QT distance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>0c</strong></td>
+                <td>0c0, 0c3, 0c4</td>
+                <td>0, 3, 4</td>
+            </tr>
+            <tr>
+                <td><strong>2c</strong></td>
+                <td>2c3, 2c4, 2c5</td>
+                <td>3, 4, 5</td>
+            </tr>
+            <tr>
+                <td><strong>4a</strong></td>
+                <td>4a1, 4a2, 4a3, 4a4</td>
+                <td>1, 2, 3, 4</td>
+            </tr>
+            <tr>
+                <td><strong>4b</strong></td>
+                <td>4b2, 4b3, 4b4, 4b5</td>
+                <td>2, 3, 4, 5</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        Notice two useful facts:
+    </p>
+
+    <ul>
+        <li><strong>4a1 exists, but 4b1 does not.</strong></li>
+        <li><strong>4b can be as far as 5 QTs from HTR.</strong></li>
+    </ul>
+
+    <hr>
+
+    <h4>3. Recognition: 0c</h4>
+
+    <p>
+        There are only three possibilities:
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Case</th>
+                <th>Recognition</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>0c0</strong></td>
+                <td>Already HTR.</td>
+            </tr>
+            <tr>
+                <td><strong>0c3 / 0c4</strong></td>
+                <td>Use parity / blind tracing to distinguish them.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        If the position is not already HTR, there is no need to guess between 0c3 and 0c4.
+        A quick parity trace tells you which one it is.
+    </p>
+
+    <hr>
+
+    <h4>4. Recognition: 2c</h4>
+
+    <p>
+        There are three possibilities:
+        <strong>2c3, 2c4, 2c5</strong>.
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Case</th>
+                <th>How to recognize</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>2c4</strong></td>
+                <td>Identify it using blind tracing.</td>
+            </tr>
+            <tr>
+                <td><strong>2c3 / 2c5</strong></td>
+                <td>Mentally swap the two misoriented corners.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        The mental-swap test is particularly useful:
+    </p>
+
+    <ul>
+        <li>If swapping the two misoriented corners produces <strong>fake HTR</strong>, the case is
+            <strong>2c3</strong>.
+        </li>
+        <li>If it produces <strong>real HTR</strong>, the case is <strong>2c5</strong>.</li>
+    </ul>
+
+    <hr>
+
+    <h4>5. Recognition: 4c</h4>
+
+    <p>
+        4c has the most cases, but it becomes much easier if you recognize it in stages.
+    </p>
+
+    <p>
+        <strong>Do not try to memorize eight independent cases.</strong>
+        Instead, use:
+    </p>
+
+    <ol>
+        <li><strong>Shape</strong></li>
+        <li><strong>Parity</strong></li>
+        <li><strong>Inverse shape</strong></li>
+    </ol>
+
+    <h5>Step 1 — Determine the shape</h5>
+
+    <p>
+        First determine whether the position is <strong>4a</strong> or <strong>4b</strong>.
+    </p>
+
+    <ul>
+        <li><strong>4a:</strong> the four misoriented corners can be put on one side using only half turns.</li>
+        <li><strong>4b:</strong> they cannot.</li>
+    </ul>
+
+    <h5>Step 2 — Use parity</h5>
+
+    <p>
+        Parity narrows the possible QT distances.
+        The recognition tree is:
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Shape</th>
+                <th>Parity</th>
+                <th>Remaining possibilities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>4a</td>
+                <td>even</td>
+                <td><strong>4a1 / 4a3</strong></td>
+            </tr>
+            <tr>
+                <td>4a</td>
+                <td>odd</td>
+                <td><strong>4a2 / 4a4</strong></td>
+            </tr>
+            <tr>
+                <td>4b</td>
+                <td>even</td>
+                <td><strong>4b2 / 4b4</strong></td>
+            </tr>
+            <tr>
+                <td>4b</td>
+                <td>odd</td>
+                <td><strong>4b3 / 4b5</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        This is already enough to reduce eight cases to just two candidates.
+    </p>
+
+    <div class="callout">
+        <strong>Important:</strong> parity does <em>not</em> distinguish 4b3 from 4b5.
+        Both have odd parity.
+    </div>
+
+    <h5>Step 3 — Check the inverse shape</h5>
+
+    <p>
+        The remaining ambiguity can be resolved by looking at the shape of the inverse position.
+        The important inverse relationships are:
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Current case</th>
+                <th>Inverse case</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>4a3</strong></td>
+                <td><strong>4b3</strong></td>
+            </tr>
+            <tr>
+                <td><strong>4b3</strong></td>
+                <td><strong>4a3</strong></td>
+            </tr>
+            <tr>
+                <td><strong>4a4</strong></td>
+                <td><strong>4b4</strong></td>
+            </tr>
+            <tr>
+                <td><strong>4b4</strong></td>
+                <td><strong>4a4</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        This gives a very practical recognition rule:
+    </p>
+
+    <ol>
+        <li>Recognize <strong>4a or 4b</strong>.</li>
+        <li>Use <strong>parity</strong> to reduce it to two possibilities.</li>
+        <li>Check the <strong>inverse shape</strong> to identify the exact case.</li>
+    </ol>
+
+    <p>
+        For example, suppose you recognize a <strong>4a</strong> position with the parity corresponding to
+        <strong>4a2 / 4a4</strong>. If the inverse has the <strong>4b shape</strong>, the case is <strong>4a4</strong>.
+        If the inverse has the <strong>4a shape</strong>, it is <strong>4a2</strong>.
+    </p>
+
+    <p>
+        NISS makes this especially convenient: switch to the inverse scramble, recognize the shape,
+        then switch back.
+    </p>
+
+    <div class="callout">
+        <strong>Recognition mindset:</strong>
+        You are not memorizing eight cases. You are answering three simple questions:
+        <strong>What shape? What parity? What does the inverse look like?</strong>
+    </div>
+
+    <hr>
+
+    <h4>6. The QT-counting hack</h4>
+
+    <p>
+        There is also a simpler way to approach HTR recognition when the position is visually obvious.
+        Instead of immediately assigning a case name, ask:
+    </p>
+
+    <p class="lead">
+        <strong>“How many quarter turns do I need to reach HTR?”</strong>
+    </p>
+
+    <p>
+        Because every DR position is at most 5 QTs from HTR, this is a very small search.
+        If you can quickly see a short sequence that reaches HTR, simply count the QTs.
+        You do not necessarily need to identify the formal case first.
+    </p>
+
+    <p>
+        For example, recognizing that a position is <strong>4 QTs away</strong> may be enough to guide your
+        search, even before you care whether you would formally call it 4a4 or 4b4.
+    </p>
+
+    <p>
+        As you become faster, the formal classification and the QT count naturally become the same recognition process.
+    </p>
+
+    <hr>
+
+    <h3>HTR Stepping: Reducing the QT Count</h3>
+
+    <p>
+        Once you recognize the HTR subset, the next question is:
+    </p>
+
+    <p class="lead">
+        <strong>“What should I do to get to a subset with fewer QTs?”</strong>
+    </p>
+
+    <p>
+        The important idea is that you usually do <strong>not</strong> need to search for HTR directly.
+        Instead, move through the HTR subsets one step at a time, reducing the QT distance until you
+        reach <strong>0c0</strong>.
+    </p>
+
+    <h4>The basic transition map</h4>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Current subset</th>
+                <th>QT</th>
+                <th>Target subset</th>
+                <th>New QT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>0c4</strong></td>
+                <td>4</td>
+                <td>4a3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td><strong>0c3</strong></td>
+                <td>3</td>
+                <td>4a2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td><strong>4a4</strong></td>
+                <td>4</td>
+                <td>4a3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td><strong>4a3</strong></td>
+                <td>3</td>
+                <td>4b2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td><strong>4a2</strong></td>
+                <td>2</td>
+                <td>4a1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td><strong>4a1</strong></td>
+                <td>1</td>
+                <td>0c0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td><strong>4b5</strong></td>
+                <td>5</td>
+                <td>2c4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td><strong>4b4</strong></td>
+                <td>4</td>
+                <td>4a3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td><strong>4b3</strong></td>
+                <td>3</td>
+                <td>4a2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td><strong>4b2</strong></td>
+                <td>2</td>
+                <td>4a1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td><strong>2c5</strong></td>
+                <td>5</td>
+                <td>2c4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td><strong>2c3</strong></td>
+                <td>3</td>
+                <td>4b2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td><strong>2c4</strong></td>
+                <td>4</td>
+                <td><strong>2c3</strong></td>
+                <td>3</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        The table is not meant to be memorized as a list of algorithms.
+        The useful part is understanding <strong>how to arrange the bad corners</strong> so that a QT
+        moves you into the desired subset.
+    </p>
+
+    <hr>
+
+    <h4>1. 0c → 4a</h4>
+
+    <p>
+        For a 0c position, use a <strong>U or U'</strong> move to change the corner structure into 4a.
+        This always gives you a useful next step.
+    </p>
+
+    <p>
+        The important distinction is which 4a subset you create:
+    </p>
+
+    <ul>
+        <li><strong>0c3 → 4a2</strong></li>
+        <li><strong>0c4 → 4a3</strong></li>
+    </ul>
+
+    <p>
+        The QT count therefore drops by one.
+    </p>
+
+    <div class="callout">
+        <strong>0c3 → 4a2 → 4a1 → 0c0</strong><br>
+        <strong>0c4 → 4a3 → 4b2 → 4a1 → 0c0</strong>
+    </div>
+
+    <p>
+        For 0c3, be careful: not every way of making a 4a state gives the desired 4a2.
+        You want the 4a state that is actually 2 QTs from HTR, rather than accidentally creating 4a4.
+    </p>
+
+    <hr>
+
+    <h4>2. 4a → 0c</h4>
+
+    <p>
+        To move from 4a toward HTR, try to put all four bad corners on the
+        <strong>U or D face</strong>.
+    </p>
+
+    <p>
+        This produces a 0c state.
+        For the useful transition:
+    </p>
+
+    <p class="lead">
+        <strong>4a1 → 0c0</strong>
+    </p>
+
+    <p>
+        This is the final step: once the four bad corners can be arranged this way with only one QT,
+        the corner state becomes HTR.
+    </p>
+
+    <hr>
+
+    <h4>3. 4a → 4a</h4>
+
+    <p>
+        Sometimes the best next step keeps the position in 4a while reducing the QT count.
+        The trick is to arrange the four bad corners on the two diagonals:
+    </p>
+
+    <ul>
+        <li><strong>FL + BR</strong>, or</li>
+        <li><strong>FR + BL</strong>.</li>
+    </ul>
+
+    <p>
+        Then a <code>U</code> or <code>U'</code> changes which U-layer corners are bad while
+        keeping the position in the 4a family.
+    </p>
+
+    <p>
+        This gives the useful transition:
+    </p>
+
+    <p class="lead">
+        <strong>4a2 → 4a1</strong>
+    </p>
+
+    <p>
+        and eventually:
+    </p>
+
+    <p>
+        <strong>4a1 → 0c0</strong>.
+    </p>
+
+    <hr>
+
+    <h4>4. 4a → 4b</h4>
+
+    <p>
+        This is the important transition for <strong>4a3</strong>.
+    </p>
+
+    <p>
+        Arrange the four bad corners so that there are:
+    </p>
+
+    <ul>
+        <li><strong>2 bad corners on U</strong></li>
+        <li><strong>2 bad corners on D</strong></li>
+    </ul>
+
+    <p>
+        Then a suitable <code>U</code> or <code>U'</code> step changes the state from 4a to 4b.
+        For the correct setup:
+    </p>
+
+    <p class="lead">
+        <strong>4a3 → 4b2</strong>
+    </p>
+
+    <p>
+        This reduces the QT distance from 3 to 2.
+        From there:
+    </p>
+
+    <p>
+        <strong>4b2 → 4a1 → 0c0</strong>.
+    </p>
+
+    <div class="callout">
+        <strong>Important:</strong>
+        Not every 2-2 setup from 4a3 is good.
+        You want the one that produces <strong>4b2</strong>, not 4b4.
+    </div>
+
+    <hr>
+
+    <h4>5. 4b → 4a</h4>
+
+    <p>
+        The reverse transition uses the same basic idea:
+        put <strong>2 bad corners on U and 2 on D</strong>.
+    </p>
+
+    <p>
+        For the useful 4b subsets:
+    </p>
+
+    <ul>
+        <li><strong>4b2 → 4a1</strong></li>
+        <li><strong>4b3 → 4a2</strong></li>
+        <li><strong>4b4 → 4a3</strong></li>
+    </ul>
+
+    <p>
+        Each transition reduces the QT count by one or more.
+    </p>
+
+    <p>
+        The particularly important one is:
+    </p>
+
+    <p class="lead">
+        <strong>4b2 → 4a1 → 0c0</strong>
+    </p>
+
+    <p>
+        This is why 4b2 is such a useful stepping point.
+    </p>
+
+    <hr>
+
+    <h4>6. 4b → 2c</h4>
+
+    <p>
+        For a 4b position, another useful transition is to split the bad corners
+        <strong>1 on one of U/D and 3 on the other</strong>.
+    </p>
+
+    <p>
+        This produces a 2c state.
+        The main transition is:
+    </p>
+
+    <p class="lead">
+        <strong>4b5 → 2c4</strong>
+    </p>
+
+    <p>
+        From there, the goal is to turn 2c4 into 2c3 rather than 2c5.
+    </p>
+
+    <p>
+        So the useful path is:
+    </p>
+
+    <p>
+        <strong>4b5 → 2c4 → 2c3 → 4b2 → 4a1 → 0c0</strong>.
+    </p>
+
+    <hr>
+
+    <h4>7. 2c → 4b</h4>
+
+    <p>
+        For a 2c position, you can move toward 4b by arranging the two bad corners
+        so that there is <strong>one bad corner on U and one on D</strong>.
+    </p>
+
+    <p>
+        The useful transition is:
+    </p>
+
+    <p class="lead">
+        <strong>2c3 → 4b2</strong>
+    </p>
+
+    <p>
+        This is a very efficient transition because it drops the QT distance from 3 to 2.
+    </p>
+
+    <p>
+        Then:
+    </p>
+
+    <p>
+        <strong>4b2 → 4a1 → 0c0</strong>.
+    </p>
+
+    <hr>
+
+    <h4>8. 2c → 2c</h4>
+
+    <p>
+        This is the special case.
+        For <strong>2c4</strong>, the goal is to stay in 2c but turn it into
+        <strong>2c3</strong>.
+    </p>
+
+    <p>
+        First put the two bad corners on the same U or D face, then apply the appropriate
+        <code>U</code> or <code>U'</code>.
+    </p>
+
+    <p>
+        You must choose the direction that produces:
+    </p>
+
+    <p class="lead">
+        <strong>2c4 → 2c3</strong>
+    </p>
+
+    <p>
+        rather than 2c5.
+    </p>
+
+    <p>
+        The distinction can be checked using the same recognition method described earlier:
+        after the step, re-recognize the 2c state.
+    </p>
+
+    <div class="callout">
+        <strong>Do not blindly step 2c4.</strong>
+        A bad choice can turn 2c4 into 2c5, increasing the QT distance.
+        The whole point of recognition is to choose the direction that goes downhill.
+    </div>
+
+    <hr>
+
+    <h4>9. The whole downhill map</h4>
+
+    <p>
+        Once you understand the transitions, the entire HTR process becomes much easier to visualize:
+    </p>
+
+    <div class="callout">
+        <strong>0c4 → 4a3 → 4b2 → 4a1 → 0c0</strong>
+        <br><br>
+        <strong>0c3 → 4a2 → 4a1 → 0c0</strong>
+        <br><br>
+        <strong>4a4 → 4a3 → 4b2 → 4a1 → 0c0</strong>
+        <br><br>
+        <strong>4b4 → 4a3 → 4b2 → 4a1 → 0c0</strong>
+        <br><br>
+        <strong>4b3 → 4a2 → 4a1 → 0c0</strong>
+        <br><br>
+        <strong>4b5 → 2c4 → 2c3 → 4b2 → 4a1 → 0c0</strong>
+        <br><br>
+        <strong>2c5 → 2c4 → 2c3 → 4b2 → 4a1 → 0c0</strong>
+    </div>
+
+    <p>
+        These are the <strong>downhill routes</strong>, not necessarily the exact move sequences.
+        At each stage, use half turns to set up the bad-corner arrangement, then use the appropriate
+        quarter turn to make the transition.
+    </p>
+
+    <h4>10. What should I actually remember?</h4>
+
+    <p>
+        You do not need to memorize every transition as a separate algorithm.
+        Remember the structural rules:
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Transition</th>
+                <th>How to set it up</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>0c → 4a</strong></td>
+                <td>Use U/U' to enter a useful 4a state.</td>
+            </tr>
+            <tr>
+                <td><strong>4a → 0c</strong></td>
+                <td>Put all 4 bad corners on U or D.</td>
+            </tr>
+            <tr>
+                <td><strong>4a → 4a</strong></td>
+                <td>Arrange bad corners on opposite diagonals.</td>
+            </tr>
+            <tr>
+                <td><strong>4a → 4b</strong></td>
+                <td>Split bad corners 2 + 2 between U and D.</td>
+            </tr>
+            <tr>
+                <td><strong>4b → 4a</strong></td>
+                <td>Split bad corners 2 + 2 between U and D.</td>
+            </tr>
+            <tr>
+                <td><strong>4b → 2c</strong></td>
+                <td>Split bad corners 1 + 3 between U and D.</td>
+            </tr>
+            <tr>
+                <td><strong>2c → 4b</strong></td>
+                <td>Put 1 bad corner on U and 1 on D.</td>
+            </tr>
+            <tr>
+                <td><strong>2c → 2c</strong></td>
+                <td>Put both bad corners on the same U/D face.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        The most important mindset is:
+        <strong>recognize the current subset, identify its downhill neighbor, use half turns to
+            set up that transition, then make the QT.</strong>
+    </p>
+
+    <p>
+        After the QT, recognize again. You should now be in a subset with a smaller QT number.
+        Repeat until you reach <strong>0c0</strong>.
+    </p>
+
+    <h4>HTR Downhill Paths</h4>
+
+    <p>
+        Once you recognize your current subset, you can use the diagram below to decide where to step next.
+        Every arrow points toward a state with a smaller QT distance.
+    </p>
+
+    <p>
+        Remember that the arrow represents a <strong>QT step</strong>. Half turns are used to set up
+        the position between QTs, but they do not increase the QT count.
+    </p>
+
+    <div class="mermaid">
+        flowchart LR
+
+        ```
+        A["2c5<br><small>5 QT</small>"] --> B["2c4<br><small>4 QT</small>"]
+        B --> C["2c3<br><small>3 QT</small>"]
+        C --> D["4b2<br><small>2 QT</small>"]
+        D --> E["4a1<br><small>1 QT</small>"]
+        E --> F["0c0<br><small>HTR</small>"]
+
+        G["4b5<br><small>5 QT</small>"] --> B
+
+        H["0c4<br><small>4 QT</small>"] --> I["4a3<br><small>3 QT</small>"]
+        I --> D
+
+        J["4a4<br><small>4 QT</small>"] --> I
+        K["4b4<br><small>4 QT</small>"] --> I
+
+        L["0c3<br><small>3 QT</small>"] --> M["4a2<br><small>2 QT</small>"]
+        M --> E
+
+        N["4b3<br><small>3 QT</small>"] --> M
+        ```
+
+    </div>
+
+    <p>
+        The most important paths to remember are:
+    </p>
+
+    <ul>
+        <li><code>2c5 → 2c4 → 2c3 → 4b2 → 4a1 → HTR</code></li>
+        <li><code>4b5 → 2c4 → 2c3 → 4b2 → 4a1 → HTR</code></li>
+        <li><code>0c4 → 4a3 → 4b2 → 4a1 → HTR</code></li>
+        <li><code>4a4 → 4a3 → 4b2 → 4a1 → HTR</code></li>
+        <li><code>4b4 → 4a3 → 4b2 → 4a1 → HTR</code></li>
+        <li><code>0c3 → 4a2 → 4a1 → HTR</code></li>
+        <li><code>4b3 → 4a2 → 4a1 → HTR</code></li>
+    </ul>
+
+    <div class="callout">
+        <strong>How to use the diagram:</strong>
+        <br><br>
+        Recognize your current case → find it in the diagram → follow the arrow →
+        use half turns to set up the indicated QT → make the QT → recognize again.
+    </div>
+
+    <h5>Why the QT count is useful</h5>
+
+    <p>
+        The diagram also explains why QT distance is such a useful search indicator.
+        A DR → HTR solution can be thought of as:
+    </p>
+
+    <p class="lead">
+        <code>HT + QT + HT + QT + HT + QT + ...</code>
+    </p>
+
+    <p>
+        The half turns handle the setup between the important quarter turns.
+        Therefore, reducing the QT count generally means reducing the number of
+        non-half-turn steps that remain before HTR.
+    </p>
+
+    <p>
+        For example, if you recognize <strong>4b5</strong>, you do not need to search
+        randomly for HTR. The diagram tells you to first target <strong>2c4</strong>.
+        After that, target <strong>2c3</strong>, then <strong>4b2</strong>, then
+        <strong>4a1</strong>, and finally HTR.
+    </p>
+
+    <div class="callout">
+        <strong>Don't memorize the arrows as algorithms.</strong>
+        The arrows tell you <em>which state to target</em>.
+        The half turns are your setup; the QT is the actual step downhill.
+    </div>
+
     <h4>How to Solve HTR</h4>
     <p>To solve 0c0, </p>
 </div>
